@@ -17,17 +17,15 @@ import NekoEmoji from '@/components/NekoEmoji';
 import type { CoverTheme, FontStyle, Language } from '@/store/types';
 
 const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string; bg: string; accent: string }[] = [
-  { key: 'leather', label: 'Leather', labelJa: 'レザー', bg: '#8B6340', accent: '#C4956A' },
-  { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ', bg: '#F5F0EB', accent: '#F9A8C9' },
   { key: 'spring', label: 'Spring', labelJa: 'はる', bg: '#FADADD', accent: '#D45B7A' },
-  { key: 'blue', label: 'Blue', labelJa: 'みずいろ', bg: '#C8E6F5', accent: '#3A8BAD' },
+  { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ', bg: '#F5F0EB', accent: '#F9A8C9' },
+  { key: 'leather', label: 'Leather', labelJa: 'レザー', bg: '#8B6340', accent: '#C4956A' },
 ];
 
 const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
   leather: require('@/assets/cover_leather.png'),
   fluffy: require('@/assets/cover_fluffy.png'),
   spring: require('@/assets/cover_spring.png'),
-  blue: require('@/assets/cover_blue.png'),
 };
 
 const FONT_STYLES: { key: FontStyle; label: string; labelJa: string; preview: string }[] = [

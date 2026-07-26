@@ -23,10 +23,9 @@ import { Fonts } from '@/constants/Typography';
 import type { CoverTheme, Notebook } from '@/store/types';
 
 const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string }[] = [
-  { key: 'leather', label: 'Leather', labelJa: 'レザー' },
-  { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ' },
   { key: 'spring', label: 'Spring', labelJa: 'はる' },
-  { key: 'blue', label: 'Blue', labelJa: 'みずいろ' },
+  { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ' },
+  { key: 'leather', label: 'Leather', labelJa: 'レザー' },
 ];
 
 // Cover image sources
@@ -34,14 +33,12 @@ const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
   leather: require('@/assets/cover_leather.png'),
   fluffy: require('@/assets/cover_fluffy.png'),
   spring: require('@/assets/cover_spring.png'),
-  blue: require('@/assets/cover_blue.png'),
 };
 
 const COVER_COLORS: Record<CoverTheme, { bg: string; accent: string; spine: string; text: string }> = {
   fluffy: { bg: '#F5F0EB', accent: '#F9A8C9', spine: '#E8C9D5', text: '#5C4A4A' },
   leather: { bg: '#8B6340', accent: '#C4956A', spine: '#6B4D30', text: '#FFF5EB' },
   spring: { bg: '#FADADD', accent: '#D45B7A', spine: '#F5B8CC', text: '#5C4A4A' },
-  blue: { bg: '#D6EEF8', accent: '#3A8BAD', spine: '#A8D8EA', text: '#1A4A5C' },
 };
 
 function PawSvg({ color, size = 18 }: { color: string; size?: number }) {
@@ -195,7 +192,7 @@ export default function HomeScreen() {
         {/* Mascot + greeting */}
         <View style={styles.mascotRow}>
           <Image
-            source={require('@/assets/neko_mascot_final.png')}
+            source={require('@/assets/neko_mascot_v2.png')}
             style={styles.mascotImage}
             contentFit="contain"
           />
