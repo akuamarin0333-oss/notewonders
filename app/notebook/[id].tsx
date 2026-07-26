@@ -9,32 +9,85 @@ import {
   Animated,
   Alert,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import Svg, { Path, Circle, Ellipse } from 'react-native-svg';
 import { useAppStore } from '@/store/useAppStore';
 import { useStickerStore } from '@/store/useStickerStore';
 import StickerCanvas from '@/components/StickerCanvas';
 import { Colors, Shadow, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
 import type { Sticker } from '@/store/types';
-import Svg, { Path, Circle, Ellipse } from 'react-native-svg';
 
 const generateId = () => `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
-function PawPrintDecor({ style }: { style?: object }) {
+function SakuraDecor({ size = 16, color = '#FFB7C5', style }: { size?: number; color?: string; style?: object }) {
   return (
-    <View style={[{ opacity: 0.18 }, style]} pointerEvents="none">
-      <Svg width={32} height={32} viewBox="0 0 32 32">
-        <Ellipse cx={16} cy={22} rx={8} ry={6} fill={Colors.primary} />
-        <Circle cx={8} cy={13} r={4} fill={Colors.primary} />
-        <Circle cx={16} cy={10} r={4} fill={Colors.primary} />
-        <Circle cx={24} cy={13} r={4} fill={Colors.primary} />
-        <Ellipse cx={11} cy={22} rx={2} ry={2.5} fill="#E8809E" />
-        <Ellipse cx={16} cy={24} rx={2} ry={2.5} fill="#E8809E" />
-        <Ellipse cx={21} cy={22} rx={2} ry={2.5} fill="#E8809E" />
+    <View style={[{ opacity: 0.7 }, style]} pointerEvents="none">
+      <Svg width={size} height={size} viewBox="0 0 24 24">
+        <Path
+          d="M12 2C9.5 5 7 6 5 6c2 2 2 4 0 6 2.5-1 4.5 0 5.5 2 1-2 3-3 5.5-2-2-2-2-4 0-6-2 0-4.5-1-4-4z"
+          fill={color}
+        />
+        <Circle cx={12} cy={9} r={2} fill="rgba(255,255,255,0.5)" />
       </Svg>
     </View>
+  );
+}
+
+function PawDecor({ style }: { style?: object }) {
+  return (
+    <View style={[{ opacity: 0.15 }, style]} pointerEvents="none">
+      <Svg width={28} height={28} viewBox="0 0 32 32">
+        <Ellipse cx={16} cy={22} rx={7} ry={5.5} fill={Colors.primary} />
+        <Circle cx={8.5} cy={13.5} r={3.5} fill={Colors.primary} />
+        <Circle cx={16} cy={11} r={3.5} fill={Colors.primary} />
+        <Circle cx={23.5} cy={13.5} r={3.5} fill={Colors.primary} />
+      </Svg>
+    </View>
+  );
+}
+
+function LadybugDecor({ size = 28, style }: { size?: number; style?: object }) {
+  return (
+    <View style={[{ opacity: 0.85 }, style]} pointerEvents="none">
+      <Svg width={size} height={size} viewBox="0 0 40 40">
+        <Ellipse cx={20} cy={24} rx={13} ry={11} fill="#E53935" />
+        <Path d="M20 13 C13 13 7 18 7 24 Q7 16 20 13Z" fill="#1a1a1a" />
+        <Path d="M20 13 C27 13 33 18 33 24 Q33 16 20 13Z" fill="#1a1a1a" />
+        <Path d="M20 13 L20 35" stroke="#1a1a1a" strokeWidth={2} />
+        <Circle cx={13} cy={24} r={3} fill="#1a1a1a" />
+        <Circle cx={27} cy={24} r={3} fill="#1a1a1a" />
+        <Circle cx={13} cy={31} r={2.5} fill="#1a1a1a" />
+        <Circle cx={27} cy={31} r={2.5} fill="#1a1a1a" />
+        <Circle cx={20} cy={11} r={4} fill="#1a1a1a" />
+      </Svg>
+    </View>
+  );
+}
+
+function StampButton({
+  icon,
+  label,
+  onPress,
+  color,
+  active,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  onPress: () => void;
+  color: string;
+  active?: boolean;
+}) {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.stampBtn} activeOpacity={0.75}>
+      <View style={[styles.stampIcon, { backgroundColor: active ? color : '#F5F0EB', borderColor: color }]}>
+        <Ionicons name={icon} size={20} color={active ? '#FFFFFF' : color} />
+      </View>
+      <Text style={[styles.stampLabel, { color: Colors.textLight }]}>{label}</Text>
+    </TouchableOpacity>
   );
 }
 
@@ -67,10 +120,11 @@ export default function NotebookPageView() {
 
   const currentPage = notebookPages[currentIndex] ?? null;
 
-  const pageWidth = width - Spacing.md * 2;
-  const leftPageWidth = pageWidth * 0.52;
-  const rightPageWidth = pageWidth * 0.48;
-  const pageHeight = height * 0.6;
+  // Spread dimensions — full width book
+  const spreadWidth = width - Spacing.md * 2;
+  const leftW = Math.floor(spreadWidth * 0.5);
+  const rightW = spreadWidth - leftW;
+  const spreadH = Math.min(height * 0.58, 380);
 
   const handleAddPage = useCallback(() => {
     if (!id) return;
@@ -83,8 +137,8 @@ export default function NotebookPageView() {
       const next = currentIndex + dir;
       if (next < 0 || next >= notebookPages.length) return;
       Animated.sequence([
-        Animated.timing(slideAnim, { toValue: dir * -30, duration: 80, useNativeDriver: true }),
-        Animated.timing(slideAnim, { toValue: 0, duration: 120, useNativeDriver: true }),
+        Animated.timing(slideAnim, { toValue: dir * -20, duration: 70, useNativeDriver: true }),
+        Animated.timing(slideAnim, { toValue: 0, duration: 110, useNativeDriver: true }),
       ]).start();
       setCurrentIndex(next);
     },
@@ -97,24 +151,24 @@ export default function NotebookPageView() {
       const sticker: Sticker = {
         id: generateId(),
         type,
-        x: 20 + Math.random() * (rightPageWidth - 70),
-        y: 20 + Math.random() * (pageHeight - 70),
+        x: 16 + Math.random() * (rightW - 60),
+        y: 16 + Math.random() * (spreadH - 60),
         scale: 1,
       };
       addSticker(currentPage.id, sticker);
     },
-    [currentPage, addSticker, rightPageWidth, pageHeight]
+    [currentPage, addSticker, rightW, spreadH]
   );
 
   const handleDeletePage = useCallback(() => {
     if (!currentPage) return;
     Alert.alert(
-      'Delete Page',
-      `Delete page ${currentPage.pageNumber}? This cannot be undone.`,
+      'ページを削除',
+      `ページ ${currentPage.pageNumber} を削除しますか？`,
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: 'キャンセル', style: 'cancel' },
         {
-          text: 'Delete',
+          text: '削除',
           style: 'destructive',
           onPress: () => {
             deletePage(currentPage.id);
@@ -128,8 +182,8 @@ export default function NotebookPageView() {
   const handleRenameNotebook = useCallback(() => {
     if (!notebook) return;
     Alert.prompt(
-      'Rename Notebook',
-      'Enter a new name:',
+      'ノート名を変更',
+      '新しい名前を入力してください：',
       (newTitle) => {
         if (newTitle?.trim()) {
           updateNotebook(notebook.id, { title: newTitle.trim() });
@@ -140,7 +194,6 @@ export default function NotebookPageView() {
     );
   }, [notebook, updateNotebook]);
 
-  // Consume pending sticker from sticker-pack modal
   useEffect(() => {
     if (pendingSticker && currentPage) {
       handleAddSticker(pendingSticker);
@@ -151,9 +204,9 @@ export default function NotebookPageView() {
   if (!notebook) {
     return (
       <View style={[styles.root, styles.center]}>
-        <Text style={styles.errorText}>Notebook not found</Text>
+        <Text style={styles.errorText}>ノートが見つかりません</Text>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Text style={styles.backBtnText}>Go Back</Text>
+          <Text style={styles.backBtnText}>戻る</Text>
         </TouchableOpacity>
       </View>
     );
@@ -162,198 +215,205 @@ export default function NotebookPageView() {
   const COVER_ACCENT: Record<string, string> = {
     fluffy: Colors.primary,
     leather: '#C4956A',
-    spring: Colors.accent,
+    spring: '#A8D8EA',
   };
   const accent = COVER_ACCENT[notebook.coverTheme] ?? Colors.primary;
 
+  const pageDate = currentPage
+    ? new Date(currentPage.updatedAt).toLocaleDateString('ja-JP', {
+        month: 'long',
+        day: 'numeric',
+        weekday: 'short',
+      })
+    : '';
+
   return (
     <View style={[styles.root, { backgroundColor: Colors.background }]}>
-      {/* Top bar (stamp-style) */}
-      <View style={[styles.topBar, { paddingTop: insets.top + 4 }]}>
+      {/* Top stamp bar */}
+      <View style={[styles.topBar, { paddingTop: insets.top + 6 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backIcon}>
-          <Ionicons name="chevron-back" size={24} color={Colors.text} />
+          <Ionicons name="chevron-back" size={22} color={Colors.text} />
         </TouchableOpacity>
-        <TouchableOpacity onLongPress={handleRenameNotebook} style={{ flex: 1 }}>
-          <Text style={styles.notebookTitle} numberOfLines={1}>
-            {notebook.title}
-          </Text>
-        </TouchableOpacity>
-        {/* Stamp icons */}
+
         <View style={styles.stampRow}>
-          <TouchableOpacity onPress={handleAddPage} style={[styles.stampBtn, { borderColor: accent }]}>
-            <Ionicons name="add-circle-outline" size={18} color={accent} />
-            <Text style={[styles.stampLabel, { color: accent }]}>add page</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          <StampButton
+            icon="add-circle-outline"
+            label="ページ追加"
+            onPress={handleAddPage}
+            color={accent}
+          />
+          <StampButton
+            icon={currentPage?.isFavorite ? 'bookmark' : 'bookmark-outline'}
+            label="お気に入り"
             onPress={() => currentPage && toggleFavorite(currentPage.id)}
-            style={[styles.stampBtn, { borderColor: Colors.accentGreen }]}
-          >
-            <Ionicons
-              name={currentPage?.isFavorite ? 'bookmark' : 'bookmark-outline'}
-              size={18}
-              color={currentPage?.isFavorite ? Colors.favorite : Colors.accentGreen}
-            />
-            <Text style={[styles.stampLabel, { color: Colors.accentGreen }]}>favorites</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+            color={Colors.accentGreen}
+            active={currentPage?.isFavorite}
+          />
+          <StampButton
+            icon="home-outline"
+            label="ホーム"
             onPress={() => router.push('/(tabs)')}
-            style={[styles.stampBtn, { borderColor: Colors.textLight }]}
-          >
-            <Ionicons name="home-outline" size={18} color={Colors.textLight} />
-            <Text style={[styles.stampLabel, { color: Colors.textLight }]}>home</Text>
-          </TouchableOpacity>
+            color={Colors.textLight}
+          />
           {currentPage !== null && (
-            <TouchableOpacity
+            <StampButton
+              icon="trash-outline"
+              label="削除"
               onPress={handleDeletePage}
-              style={[styles.stampBtn, { borderColor: Colors.error }]}
-            >
-              <Ionicons name="trash-outline" size={18} color={Colors.error} />
-              <Text style={[styles.stampLabel, { color: Colors.error }]}>delete</Text>
-            </TouchableOpacity>
+              color={Colors.error}
+            />
           )}
         </View>
       </View>
 
-      {/* Page counter */}
-      <View style={styles.pageCounter}>
-        <Text style={styles.pageCounterText}>
-          {notebookPages.length === 0
-            ? 'No pages yet'
-            : `Page ${currentIndex + 1} / ${notebookPages.length}`}
-        </Text>
-      </View>
+      {/* Notebook title */}
+      <TouchableOpacity onLongPress={handleRenameNotebook} style={styles.notebookTitleWrap}>
+        <Text style={styles.notebookTitle} numberOfLines={1}>{notebook.title}</Text>
+      </TouchableOpacity>
 
-      {/* Notebook spread */}
+      {/* Book spread */}
       {notebookPages.length === 0 ? (
         <View style={styles.emptyNotebook}>
-          <Text style={styles.emptyText}>This notebook is empty</Text>
+          <Text style={styles.emptyText}>このノートはまだ空です</Text>
           <TouchableOpacity style={[styles.addPageBtn, { backgroundColor: accent }]} onPress={handleAddPage}>
             <Ionicons name="add" size={20} color={Colors.white} />
-            <Text style={styles.addPageBtnText}>Add First Page</Text>
+            <Text style={styles.addPageBtnText}>最初のページを追加</Text>
           </TouchableOpacity>
         </View>
       ) : (
-        <Animated.View
-          style={[
-            styles.spreadWrapper,
-            { transform: [{ translateX: slideAnim }] },
-          ]}
-        >
-          <View style={[styles.spread, { width: pageWidth, minHeight: pageHeight }]}>
-            {/* Left page — writing area */}
-            <View style={[styles.leftPage, { width: leftPageWidth, minHeight: pageHeight }]}>
-              {/* Page label A */}
-              <View style={styles.pageLabel}>
-                <Text style={[styles.pageLabelText, { color: accent }]}>A</Text>
-              </View>
-              {/* Title input */}
+        <View style={styles.spreadWrap}>
+          <Animated.View
+            style={[
+              styles.spread,
+              {
+                width: spreadWidth,
+                height: spreadH,
+                transform: [{ translateX: slideAnim }],
+              },
+              Shadow.large,
+            ]}
+          >
+            {/* Left page — writing */}
+            <View style={[styles.leftPage, { width: leftW, height: spreadH }]}>
+              {/* Ruled lines */}
+              {Array.from({ length: 12 }).map((_, i) => (
+                <View key={i} style={[styles.ruleLine, { top: 50 + i * 26 }]} />
+              ))}
+
+              {/* Page title input */}
               <TextInput
                 style={styles.pageTitle}
-                placeholder="Spring Thoughts..."
+                placeholder="Spring Thoughts / はるのきもち"
                 placeholderTextColor={Colors.textMuted}
                 value={currentPage?.title ?? ''}
                 onChangeText={(t) => currentPage && updatePage(currentPage.id, { title: t })}
                 maxLength={60}
               />
-              {/* Subtitle */}
-              {currentPage?.title ? (
-                <Text style={styles.pageTitleJa}>（はるのきもち）</Text>
-              ) : null}
-              {/* Ruled lines + text area */}
-              <View style={styles.ruledArea}>
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <View key={i} style={styles.rule} />
-                ))}
-                <TextInput
-                  style={styles.pageContent}
-                  multiline
-                  placeholder="Write your thoughts here..."
-                  placeholderTextColor={Colors.textMuted}
-                  value={currentPage?.content ?? ''}
-                  onChangeText={(t) => currentPage && updatePage(currentPage.id, { content: t })}
-                  textAlignVertical="top"
-                />
-              </View>
-              {/* Paw decoration */}
-              <PawPrintDecor style={{ position: 'absolute', bottom: 24, right: 12 }} />
-              {/* Sakura corner */}
-              <View style={{ position: 'absolute', bottom: 20, left: 12, opacity: 0.25 }}>
-                <Svg width={20} height={20} viewBox="0 0 24 24">
-                  <Path d="M12 2 C10 5 6 6 4 6 C6 8 6 10 4 12 C7 11 9 12 10 14 C11 12 13 11 16 12 C14 10 14 8 16 6 C14 6 14 5 12 2Z" fill={Colors.sakura} />
-                </Svg>
-              </View>
+
+              {/* Date line */}
+              <Text style={styles.pageDate}>{pageDate}</Text>
+
+              {/* Content area */}
+              <TextInput
+                style={[styles.pageContent, { height: spreadH - 90 }]}
+                multiline
+                placeholder={'今日はぽかぽかして、\nおさんぽ日和だったね。\nさくらのはながきれいで、\nこころまであたたかくなったよ。'}
+                placeholderTextColor={Colors.textMuted}
+                value={currentPage?.content ?? ''}
+                onChangeText={(t) => currentPage && updatePage(currentPage.id, { content: t })}
+                textAlignVertical="top"
+              />
+
+              {/* Decorations */}
+              <PawDecor style={{ position: 'absolute', bottom: 12, right: 8 }} />
+              <SakuraDecor size={14} style={{ position: 'absolute', bottom: 14, left: 14 }} />
             </View>
 
             {/* Spine shadow */}
-            <View style={styles.spineShadow} />
+            <View style={styles.spine}>
+              <View style={styles.spineInner} />
+            </View>
 
             {/* Right page — sticker canvas */}
-            <View style={[styles.rightPage, { width: rightPageWidth, minHeight: pageHeight }]}>
-              {/* Page label B */}
-              <View style={[styles.pageLabel, { left: 8 }]}>
-                <Text style={[styles.pageLabelText, { color: accent }]}>B</Text>
-              </View>
-              {/* Cat icon top right */}
-              <View style={styles.catIcon}>
-                <Ionicons name="paw" size={14} color={Colors.primary} />
+            <View style={[styles.rightPage, { width: rightW, height: spreadH }]}>
+              {/* Cat photo sticker - decorative */}
+              <View style={styles.photoSticker}>
+                <View style={styles.photoFrame}>
+                  <Image
+                    source={require('@/assets/neko_cat_mascot.png')}
+                    style={styles.photoImage}
+                    contentFit="contain"
+                  />
+                  <View style={styles.photoTape} />
+                  <View style={styles.photoBubble}>
+                    <Text style={styles.photoBubbleText}>にゃー</Text>
+                  </View>
+                </View>
               </View>
 
+              {/* Sticker canvas on top */}
               <StickerCanvas
                 stickers={currentPage?.stickers ?? []}
                 onUpdateSticker={(sid, updates) =>
                   currentPage && updateSticker(currentPage.id, sid, updates)
                 }
-                onRemoveSticker={(sid) =>
-                  currentPage && removeSticker(currentPage.id, sid)
-                }
-                width={rightPageWidth}
-                height={pageHeight}
+                onRemoveSticker={(sid) => currentPage && removeSticker(currentPage.id, sid)}
+                width={rightW}
+                height={spreadH}
               />
+
+              {/* Sakura decors */}
+              <SakuraDecor size={18} color={Colors.sakura} style={{ position: 'absolute', top: 10, right: 14, zIndex: 0 }} />
+              <SakuraDecor size={12} color={Colors.sakura} style={{ position: 'absolute', top: 30, left: 10, zIndex: 0 }} />
+
+              {/* Ladybug */}
+              <LadybugDecor size={32} style={{ position: 'absolute', bottom: 32, right: 8, zIndex: 1 }} />
 
               {/* Sticker pack button */}
               <TouchableOpacity
-                style={[styles.stickerPickerBtn, { borderColor: accent, bottom: 12, right: 8 }]}
+                style={[styles.stickerBtn, { borderColor: accent }]}
                 onPress={() => router.push('/notebook/sticker-pack')}
               >
-                <Ionicons name="happy-outline" size={16} color={accent} />
-                <Text style={[styles.stickerPickerText, { color: accent }]}>stickers</Text>
+                <Ionicons name="happy-outline" size={14} color={accent} />
+                <Text style={[styles.stickerBtnText, { color: accent }]}>ステッカー</Text>
               </TouchableOpacity>
             </View>
-          </View>
-        </Animated.View>
+          </Animated.View>
+
+          {/* Sakura petals around spread */}
+          <SakuraDecor size={13} style={{ position: 'absolute', left: 10, top: 20 }} />
+          <SakuraDecor size={10} style={{ position: 'absolute', right: 12, top: 8 }} />
+        </View>
       )}
 
       {/* Page navigation */}
-      {notebookPages.length > 1 && (
-        <View style={[styles.navRow, { paddingBottom: insets.bottom + 64 }]}>
+      <View style={[styles.navRow, { paddingBottom: insets.bottom + 68 }]}>
+        {notebookPages.length > 1 && (
           <TouchableOpacity
             onPress={() => handleNav(-1)}
             disabled={currentIndex === 0}
             style={[styles.navBtn, currentIndex === 0 && styles.navBtnDisabled]}
           >
-            <Ionicons name="chevron-back-circle" size={32} color={Colors.primary} />
+            <Ionicons name="chevron-back-circle" size={30} color={accent} />
           </TouchableOpacity>
-          {/* Ladybug page turn icon */}
-          <View style={styles.ladybugIcon}>
-            <Svg width={24} height={24} viewBox="0 0 40 40">
-              <Ellipse cx={20} cy={22} rx={12} ry={10} fill={Colors.ladybug} />
-              <Path d="M20 12 C14 12 8 17 8 22 Q8 14 20 12Z" fill="#1a1a1a" />
-              <Path d="M20 12 C26 12 32 17 32 22 Q32 14 20 12Z" fill="#1a1a1a" />
-              <Path d="M20 12 L20 32" stroke="#1a1a1a" strokeWidth={1.5} />
-              <Circle cx={14} cy={22} r={3} fill="#1a1a1a" />
-              <Circle cx={26} cy={22} r={3} fill="#1a1a1a" />
-              <Circle cx={20} cy={10} r={4} fill="#1a1a1a" />
-            </Svg>
-          </View>
+        )}
+        <View style={styles.pageCounterWrap}>
+          <Text style={styles.pageCounter}>
+            {notebookPages.length === 0
+              ? 'ページなし'
+              : `${currentIndex + 1} / ${notebookPages.length}`}
+          </Text>
+        </View>
+        {notebookPages.length > 1 && (
           <TouchableOpacity
             onPress={() => handleNav(1)}
             disabled={currentIndex >= notebookPages.length - 1}
             style={[styles.navBtn, currentIndex >= notebookPages.length - 1 && styles.navBtnDisabled]}
           >
-            <Ionicons name="chevron-forward-circle" size={32} color={Colors.primary} />
+            <Ionicons name="chevron-forward-circle" size={30} color={accent} />
           </TouchableOpacity>
-        </View>
-      )}
+        )}
+      </View>
     </View>
   );
 }
@@ -363,140 +423,214 @@ const styles = StyleSheet.create({
   center: { alignItems: 'center', justifyContent: 'center' },
   topBar: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingHorizontal: Spacing.md,
     paddingBottom: Spacing.sm,
-    backgroundColor: Colors.surface,
-    borderBottomColor: Colors.border,
-    borderBottomWidth: 1,
-    gap: 8,
+    gap: Spacing.sm,
   },
-  backIcon: { padding: 4 },
-  notebookTitle: {
-    fontFamily: Fonts.handwrittenBold,
-    fontSize: 20,
-    color: Colors.text,
-    flex: 1,
+  backIcon: {
+    width: 36,
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: BorderRadius.sm,
+    backgroundColor: 'rgba(249,168,201,0.12)',
+    borderWidth: 1,
+    borderColor: Colors.border,
+    marginTop: 4,
   },
   stampRow: {
+    flex: 1,
     flexDirection: 'row',
-    gap: 6,
+    gap: 10,
+    flexWrap: 'wrap',
   },
   stampBtn: {
     alignItems: 'center',
-    gap: 2,
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-    borderWidth: 1,
-    borderRadius: BorderRadius.sm,
-    borderStyle: 'dashed',
+    gap: 3,
+  },
+  stampIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: BorderRadius.md,
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderCurve: 'continuous',
   },
   stampLabel: {
     fontFamily: Fonts.regular,
-    fontSize: 8,
+    fontSize: 9,
+    letterSpacing: 0.2,
   },
-  pageCounter: {
-    alignItems: 'center',
-    paddingVertical: 6,
+  notebookTitleWrap: {
+    paddingHorizontal: Spacing.lg,
+    paddingBottom: 4,
   },
-  pageCounterText: {
-    fontFamily: Fonts.regular,
-    fontSize: 12,
-    color: Colors.textLight,
+  notebookTitle: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 18,
+    color: Colors.text,
+    fontStyle: 'italic',
   },
-  spreadWrapper: {
+  spreadWrap: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: Spacing.md,
+    position: 'relative',
   },
   spread: {
     flexDirection: 'row',
-    borderRadius: BorderRadius.md,
+    borderRadius: BorderRadius.lg,
     overflow: 'hidden',
-    ...Shadow.large,
+    borderCurve: 'continuous',
   },
   leftPage: {
-    backgroundColor: '#FFFDF8',
-    padding: Spacing.md,
-    position: 'relative',
-  },
-  rightPage: {
-    backgroundColor: '#F8FFFE',
+    backgroundColor: '#FFFEF8',
+    padding: 12,
+    paddingTop: 10,
     position: 'relative',
     overflow: 'hidden',
   },
-  spineShadow: {
-    width: 6,
-    backgroundColor: 'rgba(92,74,74,0.12)',
-  },
-  pageLabel: {
+  ruleLine: {
     position: 'absolute',
-    top: 8,
-    right: 10,
-    zIndex: 2,
-  },
-  pageLabelText: {
-    fontFamily: Fonts.handwrittenBold,
-    fontSize: 18,
-    opacity: 0.4,
+    left: 12,
+    right: 12,
+    height: 1,
+    backgroundColor: Colors.pageLine,
   },
   pageTitle: {
     fontFamily: Fonts.handwrittenBold,
-    fontSize: 20,
+    fontSize: 17,
     color: Colors.text,
-    marginBottom: 2,
-    marginTop: 8,
+    fontStyle: 'italic',
+    zIndex: 2,
+    paddingBottom: 2,
   },
-  pageTitleJa: {
+  pageDate: {
     fontFamily: Fonts.handwritten,
     fontSize: 13,
-    color: Colors.textLight,
-    marginBottom: 8,
-  },
-  ruledArea: {
-    flex: 1,
-    position: 'relative',
-    paddingTop: 4,
-  },
-  rule: {
-    height: 1,
-    backgroundColor: Colors.pageLine,
-    marginBottom: 24,
-  },
-  pageContent: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    fontFamily: Fonts.handwritten,
-    fontSize: 16,
-    color: Colors.text,
-    lineHeight: 25,
-  },
-  catIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
+    color: Colors.primary,
+    marginBottom: 4,
     zIndex: 2,
   },
-  stickerPickerBtn: {
+  pageContent: {
+    fontFamily: Fonts.handwritten,
+    fontSize: 15,
+    color: Colors.text,
+    lineHeight: 26,
+    zIndex: 2,
+    paddingTop: 2,
+  },
+  spine: {
+    width: 10,
+    backgroundColor: 'rgba(92,74,74,0.04)',
+    alignItems: 'center',
+  },
+  spineInner: {
+    flex: 1,
+    width: 2,
+    backgroundColor: 'rgba(92,74,74,0.1)',
+  },
+  rightPage: {
+    backgroundColor: '#FFF5F8',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  photoSticker: {
     position: 'absolute',
+    top: 24,
+    left: 8,
+    right: 8,
+    alignItems: 'center',
+    zIndex: 1,
+    transform: [{ rotate: '2deg' }],
+  },
+  photoFrame: {
+    backgroundColor: Colors.surface,
+    padding: 6,
+    paddingBottom: 18,
+    borderRadius: 4,
+    shadowColor: '#5C4A4A',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
+    position: 'relative',
+  },
+  photoImage: {
+    width: 110,
+    height: 100,
+  },
+  photoTape: {
+    position: 'absolute',
+    top: -8,
+    left: '50%',
+    marginLeft: -18,
+    width: 36,
+    height: 14,
+    backgroundColor: 'rgba(249,168,201,0.45)',
+    borderRadius: 2,
+    transform: [{ rotate: '-2deg' }],
+  },
+  photoBubble: {
+    position: 'absolute',
+    top: 12,
+    right: -18,
+    backgroundColor: Colors.surface,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  photoBubbleText: {
+    fontFamily: Fonts.handwritten,
+    fontSize: 10,
+    color: Colors.text,
+  },
+  stickerBtn: {
+    position: 'absolute',
+    bottom: 10,
+    right: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 3,
     borderWidth: 1,
     borderStyle: 'dashed',
     borderRadius: BorderRadius.round,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    zIndex: 3,
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    zIndex: 4,
   },
-  stickerPickerText: {
+  stickerBtnText: {
     fontFamily: Fonts.regular,
     fontSize: 10,
+  },
+  navRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 6,
+    gap: 16,
+  },
+  navBtn: { padding: 4 },
+  navBtnDisabled: { opacity: 0.28 },
+  pageCounterWrap: {
+    backgroundColor: Colors.surface,
+    paddingHorizontal: 20,
+    paddingVertical: 6,
+    borderRadius: BorderRadius.round,
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+  },
+  pageCounter: {
+    fontFamily: Fonts.handwritten,
+    fontSize: 16,
+    color: Colors.text,
+    letterSpacing: 1,
   },
   emptyNotebook: {
     flex: 1,
@@ -506,7 +640,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontFamily: Fonts.handwritten,
-    fontSize: 20,
+    fontSize: 18,
     color: Colors.textLight,
   },
   addPageBtn: {
@@ -522,19 +656,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: Colors.white,
   },
-  navRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 8,
-    gap: 24,
-  },
-  navBtn: { padding: 4 },
-  navBtnDisabled: { opacity: 0.3 },
-  ladybugIcon: { opacity: 0.8 },
   errorText: {
     fontFamily: Fonts.handwritten,
-    fontSize: 20,
+    fontSize: 18,
     color: Colors.textLight,
   },
   backBtn: {

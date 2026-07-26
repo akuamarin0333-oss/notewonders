@@ -8,20 +8,26 @@ import { Fonts } from '@/constants/Typography';
 type TabIconProps = {
   name: keyof typeof Ionicons.glyphMap;
   focused: boolean;
-  color: string;
-  size: number;
   label: string;
-  labelJa: string;
 };
 
-function TabIcon({ name, focused, color, size, label, labelJa }: TabIconProps) {
+function TabIcon({ name, focused, label }: TabIconProps) {
   return (
     <View style={[tabStyles.iconWrap, focused && tabStyles.iconWrapActive]}>
-      <Ionicons name={name} size={size} color={focused ? Colors.primary : Colors.textLight} />
-      <Text style={[tabStyles.label, { color: focused ? Colors.primary : Colors.textLight }]}>
+      <Ionicons
+        name={name}
+        size={22}
+        color={focused ? Colors.primary : Colors.textLight}
+      />
+      <Text
+        style={[
+          tabStyles.label,
+          { color: focused ? Colors.primary : Colors.textLight },
+          focused && tabStyles.labelActive,
+        ]}
+      >
         {label}
       </Text>
-      {focused && <Text style={tabStyles.labelJa}>{labelJa}</Text>}
     </View>
   );
 }
@@ -29,10 +35,12 @@ function TabIcon({ name, focused, color, size, label, labelJa }: TabIconProps) {
 const tabStyles = StyleSheet.create({
   iconWrap: {
     alignItems: 'center',
-    paddingTop: 6,
-    paddingHorizontal: 6,
-    borderRadius: BorderRadius.md,
+    paddingTop: 4,
+    paddingHorizontal: 8,
+    paddingBottom: 2,
+    borderRadius: BorderRadius.sm,
     gap: 2,
+    minWidth: 48,
   },
   iconWrapActive: {
     backgroundColor: '#FFF0F5',
@@ -41,10 +49,8 @@ const tabStyles = StyleSheet.create({
     fontSize: 10,
     fontFamily: Fonts.regular,
   },
-  labelJa: {
-    fontSize: 8,
-    color: Colors.primary,
-    fontFamily: Fonts.regular,
+  labelActive: {
+    fontFamily: Fonts.semiBold,
   },
 });
 
@@ -61,7 +67,7 @@ export default function TabsLayout() {
           borderTopColor: Colors.tabBarBorder,
           borderTopWidth: 1.5,
           paddingBottom: insets.bottom,
-          height: 64 + insets.bottom,
+          height: 60 + insets.bottom,
           paddingTop: 4,
         },
         tabBarActiveTintColor: Colors.primary,
@@ -71,49 +77,47 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon name="book-outline" focused={focused} color={color} size={size} label="Notes" labelJa="ノート" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="pet"
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon name="heart-outline" focused={focused} color={color} size={size} label="Pet" labelJa="なでなで" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name="home" focused={focused} label="ホーム" />
           ),
         }}
       />
       <Tabs.Screen
         name="calendar"
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon name="calendar-outline" focused={focused} color={color} size={size} label="Calendar" labelJa="カレンダー" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name="calendar-outline" focused={focused} label="カレンダー" />
           ),
         }}
       />
       <Tabs.Screen
-        name="audio"
+        name="pet"
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon name="mic-outline" focused={focused} color={color} size={size} label="Audio" labelJa="おと" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name="paw-outline" focused={focused} label="にゃんこ" />
           ),
         }}
       />
       <Tabs.Screen
         name="favorites"
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon name="bookmark-outline" focused={focused} color={color} size={size} label="Saved" labelJa="お気に入り" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name="star-outline" focused={focused} label="お気に入り" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="audio"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name="ellipsis-horizontal" focused={focused} label="その他" />
           ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon name="settings-outline" focused={focused} color={color} size={size} label="Settings" labelJa="せってい" />
-          ),
+          href: null,
         }}
       />
     </Tabs>
