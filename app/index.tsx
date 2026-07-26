@@ -165,7 +165,7 @@ export default function CoverScreen() {
         {/* Cat mascot */}
         <View style={styles.catSection}>
           <Image
-            source={require('@/assets/neko_cat_mascot.png')}
+            source={require('@/assets/neko_new_mascot.png')}
             style={styles.catImage}
             contentFit="contain"
           />

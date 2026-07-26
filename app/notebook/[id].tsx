@@ -9,14 +9,11 @@ import {
   Animated,
   Alert,
   ScrollView,
+  PanResponder,
+  Platform,
 } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
-import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import Reanimated, {
-  useSharedValue,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -30,14 +27,41 @@ import type { Sticker } from '@/store/types';
 
 const generateId = () => `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
+interface PhotoItem {
+  id: string;
+  uri: string | null;
+  x: number;
+  y: number;
+  scale: number;
+  isTransformMode: boolean;
+}
+
+// ─── Masking tape decoration ──────────────────────────────────────────────────
+
+function MaskingTape({ width = 76 }: { width?: number }) {
+  const count = Math.max(2, Math.floor(width / 14));
+  return (
+    <View style={[styles.tapeStrip, { width }]}>
+      {Array.from({ length: count }).map((_, i) => (
+        <Svg key={i} width={10} height={10} viewBox="0 0 20 20">
+          <Circle cx={10} cy={4} r={2.5} fill="rgba(255,255,255,0.6)" />
+          <Circle cx={16} cy={10} r={2.5} fill="rgba(255,255,255,0.6)" />
+          <Circle cx={10} cy={16} r={2.5} fill="rgba(255,255,255,0.6)" />
+          <Circle cx={4} cy={10} r={2.5} fill="rgba(255,255,255,0.6)" />
+          <Circle cx={10} cy={10} r={2} fill="rgba(255,200,215,0.88)" />
+        </Svg>
+      ))}
+    </View>
+  );
+}
+
+// ─── Decorative SVG helpers ───────────────────────────────────────────────────
+
 function SakuraDecor({ size = 16, color = '#FFB7C5', style }: { size?: number; color?: string; style?: object }) {
   return (
     <View style={[{ opacity: 0.7 }, style]} pointerEvents="none">
       <Svg width={size} height={size} viewBox="0 0 24 24">
-        <Path
-          d="M12 2C9.5 5 7 6 5 6c2 2 2 4 0 6 2.5-1 4.5 0 5.5 2 1-2 3-3 5.5-2-2-2-2-4 0-6-2 0-4.5-1-4-4z"
-          fill={color}
-        />
+        <Path d="M12 2C9.5 5 7 6 5 6c2 2 2 4 0 6 2.5-1 4.5 0 5.5 2 1-2 3-3 5.5-2-2-2-2-4 0-6-2 0-4.5-1-4-4z" fill={color} />
         <Circle cx={12} cy={9} r={2} fill="rgba(255,255,255,0.5)" />
       </Svg>
     </View>
@@ -75,12 +99,10 @@ function LadybugDecor({ size = 28, style }: { size?: number; style?: object }) {
   );
 }
 
+// ─── Stamp button ─────────────────────────────────────────────────────────────
+
 function StampButton({
-  icon,
-  label,
-  onPress,
-  color,
-  active,
+  icon, label, onPress, color, active,
 }: {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
@@ -98,21 +120,154 @@ function StampButton({
   );
 }
 
+// ─── Polaroid photo item ──────────────────────────────────────────────────────
+
+interface PolaroidItemProps {
+  photo: PhotoItem;
+  onPickPhoto: (id: string) => void;
+  onRemove: (id: string) => void;
+  onUpdatePhoto: (id: string, updates: Partial<PhotoItem>) => void;
+  onToggleTransform: (id: string) => void;
+}
+
+function PolaroidItem({ photo, onPickPhoto, onRemove, onUpdatePhoto, onToggleTransform }: PolaroidItemProps) {
+  // Use refs to track current values without causing stale closures
+  const basePos = useRef({ x: photo.x, y: photo.y });
+  const photoRef = useRef(photo);
+  photoRef.current = photo;
+  const onUpdateRef = useRef(onUpdatePhoto);
+  onUpdateRef.current = onUpdatePhoto;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => photoRef.current.isTransformMode,
+      onMoveShouldSetPanResponder: () => photoRef.current.isTransformMode,
+      onPanResponderGrant: () => {
+        // Sync base position at start of each gesture
+        basePos.current = { x: photoRef.current.x, y: photoRef.current.y };
+      },
+      onPanResponderMove: (_, gs) => {
+        onUpdateRef.current(photoRef.current.id, {
+          x: basePos.current.x + gs.dx,
+          y: basePos.current.y + gs.dy,
+        });
+      },
+      onPanResponderRelease: (_, gs) => {
+        basePos.current = {
+          x: basePos.current.x + gs.dx,
+          y: basePos.current.y + gs.dy,
+        };
+      },
+    })
+  ).current;
+
+  // Cosmetic rotation — consistent per photo id, not animated
+  const rotDeg = (photo.id.charCodeAt(0) % 7) - 3;
+
+  return (
+    <View
+      {...panResponder.panHandlers}
+      style={[
+        styles.polaroidOuter,
+        { left: photo.x, top: photo.y, transform: [{ scale: photo.scale }] },
+      ]}
+    >
+      {/* Masking tape — centered, slightly overhanging card */}
+      <View style={styles.polaroidTapeRow}>
+        <MaskingTape width={74} />
+      </View>
+
+      {/* White polaroid card — slight rotation for charm */}
+      <View style={[
+        styles.polaroidCard,
+        { transform: [{ rotate: `${rotDeg}deg` }] },
+        photo.isTransformMode && styles.polaroidCardActive,
+      ]}>
+        {/* Controls overlay — pointerEvents="box-none" so card image receives unhandled touches */}
+        <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+          {/* Transform toggle — top right, always visible */}
+          <TouchableOpacity
+            style={[styles.polaroidToggleBtn, photo.isTransformMode && styles.polaroidToggleBtnOn]}
+            onPress={() => onToggleTransform(photo.id)}
+            hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+          >
+            <Ionicons
+              name={photo.isTransformMode ? 'move' : 'expand-outline'}
+              size={12}
+              color={photo.isTransformMode ? Colors.white : Colors.textLight}
+            />
+          </TouchableOpacity>
+
+          {/* Remove — top left, only in transform mode */}
+          {photo.isTransformMode && (
+            <TouchableOpacity
+              style={styles.polaroidRemoveBtn}
+              onPress={() => onRemove(photo.id)}
+              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+            >
+              <Ionicons name="close" size={11} color={Colors.white} />
+            </TouchableOpacity>
+          )}
+
+          {/* Scale − — bottom left, transform mode */}
+          {photo.isTransformMode && (
+            <TouchableOpacity
+              style={styles.polaroidScaleBtn}
+              onPress={() => onUpdateRef.current(photo.id, { scale: Math.max(0.4, photo.scale - 0.15) })}
+              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+            >
+              <Ionicons name="remove-outline" size={12} color={Colors.primary} />
+            </TouchableOpacity>
+          )}
+
+          {/* Scale + — bottom right, transform mode */}
+          {photo.isTransformMode && (
+            <TouchableOpacity
+              style={[styles.polaroidScaleBtn, { left: undefined, right: 4 }]}
+              onPress={() => onUpdateRef.current(photo.id, { scale: Math.min(3.5, photo.scale + 0.15) })}
+              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+            >
+              <Ionicons name="add-outline" size={12} color={Colors.primary} />
+            </TouchableOpacity>
+          )}
+        </View>
+
+        {/* Photo / default cat image */}
+        <TouchableOpacity
+          onPress={() => !photo.isTransformMode && onPickPhoto(photo.id)}
+          activeOpacity={photo.isTransformMode ? 1 : 0.85}
+          disabled={photo.isTransformMode}
+        >
+          <Image
+            source={photo.uri ? { uri: photo.uri } : require('@/assets/neko_new_mascot.png')}
+            style={styles.polaroidImage}
+            contentFit={photo.uri ? 'cover' : 'contain'}
+          />
+        </TouchableOpacity>
+
+        {/* Polaroid film area at bottom */}
+        <View style={styles.polaroidFilm}>
+          {!photo.uri && (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+              <Ionicons name="camera-outline" size={9} color={Colors.textMuted} />
+              <Text style={styles.polaroidHint}>タップして写真</Text>
+            </View>
+          )}
+        </View>
+      </View>
+    </View>
+  );
+}
+
+// ─── Main screen ──────────────────────────────────────────────────────────────
+
 export default function NotebookPageView() {
   const insets = useSafeAreaInsets();
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
   const {
-    notebooks,
-    pages,
-    addPage,
-    updatePage,
-    deletePage,
-    updateNotebook,
-    toggleFavorite,
-    addSticker,
-    updateSticker,
-    removeSticker,
+    notebooks, pages, addPage, updatePage, deletePage,
+    updateNotebook, toggleFavorite, addSticker, updateSticker, removeSticker,
   } = useAppStore();
 
   const notebook = useMemo(() => notebooks.find((n) => n.id === id), [notebooks, id]);
@@ -125,25 +280,19 @@ export default function NotebookPageView() {
   const slideAnim = useRef(new Animated.Value(0)).current;
   const { pendingSticker, setPendingSticker } = useStickerStore();
 
-  // Photo state for right page
-  const [photoUri, setPhotoUri] = useState<string | null>(null);
-  const [isTransformMode, setIsTransformMode] = useState(false);
-
-  // Gesture transform values
-  const scale = useSharedValue(1);
-  const savedScale = useSharedValue(1);
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
-  const savedTranslateX = useSharedValue(0);
-  const savedTranslateY = useSharedValue(0);
+  // Multiple polaroid photos on the right page
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  // Measured right page dimensions for sticker canvas + initial photo placement
+  const [rightPageDims, setRightPageDims] = useState({ width: 180, height: 400 });
 
   const currentPage = notebookPages[currentIndex] ?? null;
 
-  // Spread dimensions — full width book
+  // Spread width — fixed width, height fills remaining screen
   const spreadWidth = width - Spacing.md * 2;
   const leftW = Math.floor(spreadWidth * 0.5);
   const rightW = spreadWidth - leftW;
-  const spreadH = Math.min(height * 0.58, 380);
+
+  // ─── Callbacks ──────────────────────────────────────────────────────────────
 
   const handleAddPage = useCallback(() => {
     if (!id) return;
@@ -170,13 +319,13 @@ export default function NotebookPageView() {
       const sticker: Sticker = {
         id: generateId(),
         type,
-        x: 16 + Math.random() * (rightW - 60),
-        y: 16 + Math.random() * (spreadH - 60),
+        x: 16 + Math.random() * (rightPageDims.width - 60),
+        y: 16 + Math.random() * (rightPageDims.height - 60),
         scale: 1,
       };
       addSticker(currentPage.id, sticker);
     },
-    [currentPage, addSticker, rightW, spreadH]
+    [currentPage, addSticker, rightPageDims]
   );
 
   const handleDeletePage = useCallback(() => {
@@ -199,7 +348,7 @@ export default function NotebookPageView() {
   }, [currentPage, deletePage]);
 
   const handleRenameNotebook = useCallback(() => {
-    if (!notebook) return;
+    if (!notebook || Platform.OS !== 'ios') return;
     Alert.prompt(
       'ノート名を変更',
       '新しい名前を入力してください：',
@@ -213,15 +362,25 @@ export default function NotebookPageView() {
     );
   }, [notebook, updateNotebook]);
 
-  useEffect(() => {
-    if (pendingSticker && currentPage) {
-      handleAddSticker(pendingSticker);
-      setPendingSticker(null);
-    }
-  }, [pendingSticker, currentPage, handleAddSticker, setPendingSticker]);
+  // Add a new polaroid photo item to the right page
+  const handleAddPhoto = useCallback(() => {
+    if (!currentPage) return;
+    const offset = photos.length * 22;
+    const maxX = Math.max(10, rightPageDims.width - 144);
+    const maxY = Math.max(24, rightPageDims.height - 180);
+    const newPhoto: PhotoItem = {
+      id: generateId(),
+      uri: null,
+      x: Math.max(8, (16 + offset) % maxX),
+      y: Math.max(22, (28 + offset) % maxY),
+      scale: 1,
+      isTransformMode: false,
+    };
+    setPhotos((prev) => [...prev, newPhoto]);
+  }, [currentPage, photos.length, rightPageDims]);
 
-  const handlePickPhoto = useCallback(async () => {
-    if (isTransformMode) return;
+  // Pick gallery photo for a specific polaroid item
+  const handlePickPhotoForItem = useCallback(async (photoId: string) => {
     try {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
@@ -234,55 +393,38 @@ export default function NotebookPageView() {
         quality: 0.8,
       });
       if (!result.canceled && result.assets[0]) {
-        setPhotoUri(result.assets[0].uri);
-        // Reset transform when new photo is picked
-        scale.value = 1;
-        savedScale.value = 1;
-        translateX.value = 0;
-        translateY.value = 0;
-        savedTranslateX.value = 0;
-        savedTranslateY.value = 0;
+        const uri = result.assets[0].uri;
+        setPhotos((prev) => prev.map((p) => (p.id === photoId ? { ...p, uri } : p)));
       }
     } catch {
       Alert.alert('エラー', '写真の選択に失敗しました。');
     }
-  }, [isTransformMode, scale, savedScale, translateX, translateY, savedTranslateX, savedTranslateY]);
-
-  const handleToggleTransform = useCallback(() => {
-    setIsTransformMode((prev) => !prev);
   }, []);
 
-  // Pinch gesture for scaling
-  const pinchGesture = Gesture.Pinch()
-    .enabled(isTransformMode)
-    .onUpdate((e) => {
-      scale.value = Math.max(0.5, Math.min(4, savedScale.value * e.scale));
-    })
-    .onEnd(() => {
-      savedScale.value = scale.value;
-    });
+  // Stable update — uses functional state to avoid stale closure on photos array
+  const handleUpdatePhoto = useCallback((photoId: string, updates: Partial<PhotoItem>) => {
+    setPhotos((prev) => prev.map((p) => (p.id === photoId ? { ...p, ...updates } : p)));
+  }, []);
 
-  // Pan gesture for dragging
-  const panGesture = Gesture.Pan()
-    .enabled(isTransformMode)
-    .onUpdate((e) => {
-      translateX.value = savedTranslateX.value + e.translationX;
-      translateY.value = savedTranslateY.value + e.translationY;
-    })
-    .onEnd(() => {
-      savedTranslateX.value = translateX.value;
-      savedTranslateY.value = translateY.value;
-    });
+  const handleToggleTransform = useCallback((photoId: string) => {
+    setPhotos((prev) =>
+      prev.map((p) => (p.id === photoId ? { ...p, isTransformMode: !p.isTransformMode } : p))
+    );
+  }, []);
 
-  const composedGesture = Gesture.Simultaneous(pinchGesture, panGesture);
+  const handleRemovePhoto = useCallback((photoId: string) => {
+    setPhotos((prev) => prev.filter((p) => p.id !== photoId));
+  }, []);
 
-  const photoAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: translateX.value },
-      { translateY: translateY.value },
-      { scale: scale.value },
-    ],
-  }));
+  // Apply pending sticker from sticker pack modal
+  useEffect(() => {
+    if (pendingSticker && currentPage) {
+      handleAddSticker(pendingSticker);
+      setPendingSticker(null);
+    }
+  }, [pendingSticker, currentPage, handleAddSticker, setPendingSticker]);
+
+  // ─── Guard ───────────────────────────────────────────────────────────────────
 
   if (!notebook) {
     return (
@@ -310,6 +452,8 @@ export default function NotebookPageView() {
       })
     : '';
 
+  // ─── Render ──────────────────────────────────────────────────────────────────
+
   return (
     <View style={[styles.root, { backgroundColor: Colors.background }]}>
       {/* Top stamp bar */}
@@ -318,12 +462,23 @@ export default function NotebookPageView() {
           <Ionicons name="chevron-back" size={22} color={Colors.text} />
         </TouchableOpacity>
 
-        <View style={styles.stampRow}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ flexGrow: 0 }}
+          contentContainerStyle={styles.stampRow}
+        >
           <StampButton
             icon="add-circle-outline"
             label="ページ追加"
             onPress={handleAddPage}
             color={accent}
+          />
+          <StampButton
+            icon="camera-outline"
+            label="写真追加"
+            onPress={handleAddPhoto}
+            color={Colors.accent}
           />
           <StampButton
             icon={currentPage?.isFavorite ? 'bookmark' : 'bookmark-outline'}
@@ -346,7 +501,7 @@ export default function NotebookPageView() {
               color={Colors.error}
             />
           )}
-        </View>
+        </ScrollView>
       </View>
 
       {/* Notebook title */}
@@ -354,7 +509,7 @@ export default function NotebookPageView() {
         <Text style={styles.notebookTitle} numberOfLines={1}>{notebook.title}</Text>
       </TouchableOpacity>
 
-      {/* Book spread */}
+      {/* Book spread — fills remaining screen height */}
       {notebookPages.length === 0 ? (
         <View style={styles.emptyNotebook}>
           <Text style={styles.emptyText}>このノートはまだ空です</Text>
@@ -368,22 +523,15 @@ export default function NotebookPageView() {
           <Animated.View
             style={[
               styles.spread,
-              {
-                width: spreadWidth,
-                height: spreadH,
-                transform: [{ translateX: slideAnim }],
-              },
+              { width: spreadWidth, transform: [{ translateX: slideAnim }] },
               Shadow.large,
             ]}
           >
             {/* Left page — writing */}
-            <View style={[styles.leftPage, { width: leftW, height: spreadH }]}>
-              {/* Ruled lines */}
+            <View style={[styles.leftPage, { width: leftW }]}>
               {Array.from({ length: 12 }).map((_, i) => (
                 <View key={i} style={[styles.ruleLine, { top: 50 + i * 26 }]} />
               ))}
-
-              {/* Page title input */}
               <TextInput
                 style={styles.pageTitle}
                 placeholder=""
@@ -392,13 +540,9 @@ export default function NotebookPageView() {
                 onChangeText={(t) => currentPage && updatePage(currentPage.id, { title: t })}
                 maxLength={60}
               />
-
-              {/* Date line */}
               <Text style={styles.pageDate}>{pageDate}</Text>
-
-              {/* Scrollable content area */}
               <ScrollView
-                style={[styles.pageContentScroll, { height: spreadH - 90 }]}
+                style={styles.pageContentScroll}
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled
@@ -414,83 +558,64 @@ export default function NotebookPageView() {
                   scrollEnabled={false}
                 />
               </ScrollView>
-
-              {/* Decorations */}
               <PawDecor style={{ position: 'absolute', bottom: 12, right: 8 }} />
               <SakuraDecor size={14} style={{ position: 'absolute', bottom: 14, left: 14 }} />
             </View>
 
-            {/* Spine shadow */}
+            {/* Spine */}
             <View style={styles.spine}>
               <View style={styles.spineInner} />
             </View>
 
-            {/* Right page — sticker canvas */}
-            <View style={[styles.rightPage, { width: rightW, height: spreadH }]}>
-              {/* Photo area with transform toggle */}
-              <View style={styles.photoSticker}>
-                {/* Transform toggle button */}
-                <TouchableOpacity
-                  style={[
-                    styles.transformToggleBtn,
-                    isTransformMode && styles.transformToggleBtnActive,
-                  ]}
-                  onPress={handleToggleTransform}
-                  activeOpacity={0.75}
-                >
-                  <Ionicons
-                    name={isTransformMode ? 'move' : 'expand-outline'}
-                    size={14}
-                    color={isTransformMode ? Colors.white : Colors.textLight}
-                  />
-                </TouchableOpacity>
+            {/* Right page — photos + stickers */}
+            <View
+              style={[styles.rightPage, { width: rightW }]}
+              onLayout={(e) =>
+                setRightPageDims({
+                  width: e.nativeEvent.layout.width,
+                  height: e.nativeEvent.layout.height,
+                })
+              }
+            >
+              {/* Polaroid photo items */}
+              {photos.map((photo) => (
+                <PolaroidItem
+                  key={photo.id}
+                  photo={photo}
+                  onPickPhoto={handlePickPhotoForItem}
+                  onRemove={handleRemovePhoto}
+                  onUpdatePhoto={handleUpdatePhoto}
+                  onToggleTransform={handleToggleTransform}
+                />
+              ))}
 
-                {/* Photo frame with gesture support */}
-                <GestureDetector gesture={composedGesture}>
-                  <View style={[styles.photoFrame, isTransformMode && styles.photoFrameActive]}>
-                    <TouchableOpacity
-                      activeOpacity={isTransformMode ? 1 : 0.8}
-                      onPress={handlePickPhoto}
-                      disabled={isTransformMode}
-                    >
-                      <Reanimated.View style={photoAnimatedStyle}>
-                        <Image
-                          source={photoUri ? { uri: photoUri } : require('@/assets/neko_cat_mascot.png')}
-                          style={styles.photoImage}
-                          contentFit={photoUri ? 'cover' : 'contain'}
-                        />
-                      </Reanimated.View>
-                    </TouchableOpacity>
-                    {!photoUri && (
-                      <View style={styles.photoHint}>
-                        <Ionicons name="image-outline" size={12} color={Colors.textMuted} />
-                      </View>
-                    )}
-                    <View style={styles.photoTape} />
-                    <View style={styles.photoBubble}>
-                      <Text style={styles.photoBubbleText}>にゃー</Text>
-                    </View>
-                  </View>
-                </GestureDetector>
+              {/* Sticker canvas — absolutely covers the right page */}
+              <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+                <StickerCanvas
+                  stickers={currentPage?.stickers ?? []}
+                  onUpdateSticker={(sid, updates) =>
+                    currentPage && updateSticker(currentPage.id, sid, updates)
+                  }
+                  onRemoveSticker={(sid) => currentPage && removeSticker(currentPage.id, sid)}
+                  width={rightPageDims.width}
+                  height={rightPageDims.height}
+                />
               </View>
 
-              {/* Sticker canvas on top */}
-              <StickerCanvas
-                stickers={currentPage?.stickers ?? []}
-                onUpdateSticker={(sid, updates) =>
-                  currentPage && updateSticker(currentPage.id, sid, updates)
-                }
-                onRemoveSticker={(sid) => currentPage && removeSticker(currentPage.id, sid)}
-                width={rightW}
-                height={spreadH}
+              {/* Sakura decors */}
+              <SakuraDecor
+                size={18}
+                color={Colors.sakura}
+                style={{ position: 'absolute', top: 10, right: 14, zIndex: 0 }}
+              />
+              <SakuraDecor
+                size={12}
+                color={Colors.sakura}
+                style={{ position: 'absolute', top: 30, left: 10, zIndex: 0 }}
               />
 
-              {/* Sakura decors */}
-              <SakuraDecor size={18} color={Colors.sakura} style={{ position: 'absolute', top: 10, right: 14, zIndex: 0 }} />
-              <SakuraDecor size={12} color={Colors.sakura} style={{ position: 'absolute', top: 30, left: 10, zIndex: 0 }} />
-
               {/* Ladybug */}
-              <LadybugDecor size={32} style={{ position: 'absolute', bottom: 32, right: 8, zIndex: 1 }} />
+              <LadybugDecor size={32} style={{ position: 'absolute', bottom: 60, right: 8, zIndex: 1 }} />
 
               {/* Sticker pack button */}
               <TouchableOpacity
@@ -503,47 +628,49 @@ export default function NotebookPageView() {
             </View>
           </Animated.View>
 
-          {/* Sakura petals around spread */}
-          <SakuraDecor size={13} style={{ position: 'absolute', left: 10, top: 20 }} />
-          <SakuraDecor size={10} style={{ position: 'absolute', right: 12, top: 8 }} />
+          {/* Sakura petals framing the spread */}
+          <SakuraDecor size={13} style={{ position: 'absolute', left: 6, top: 16 }} />
+          <SakuraDecor size={10} style={{ position: 'absolute', right: 8, top: 6 }} />
+
+          {/* Page counter — overlaid at bottom of spread */}
+          <View style={[styles.pageCounterOverlay, { bottom: insets.bottom + 10 }]}>
+            {notebookPages.length > 1 && (
+              <TouchableOpacity
+                onPress={() => handleNav(-1)}
+                disabled={currentIndex === 0}
+                style={[styles.navBtn, currentIndex === 0 && styles.navBtnDisabled]}
+              >
+                <Ionicons name="chevron-back-circle" size={28} color={accent} />
+              </TouchableOpacity>
+            )}
+            <View style={styles.pageCounterWrap}>
+              <Text style={styles.pageCounter}>
+                {`${currentIndex + 1} / ${notebookPages.length}`}
+              </Text>
+            </View>
+            {notebookPages.length > 1 && (
+              <TouchableOpacity
+                onPress={() => handleNav(1)}
+                disabled={currentIndex >= notebookPages.length - 1}
+                style={[styles.navBtn, currentIndex >= notebookPages.length - 1 && styles.navBtnDisabled]}
+              >
+                <Ionicons name="chevron-forward-circle" size={28} color={accent} />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       )}
-
-      {/* Page navigation */}
-      <View style={[styles.navRow, { paddingBottom: insets.bottom + 68 }]}>
-        {notebookPages.length > 1 && (
-          <TouchableOpacity
-            onPress={() => handleNav(-1)}
-            disabled={currentIndex === 0}
-            style={[styles.navBtn, currentIndex === 0 && styles.navBtnDisabled]}
-          >
-            <Ionicons name="chevron-back-circle" size={30} color={accent} />
-          </TouchableOpacity>
-        )}
-        <View style={styles.pageCounterWrap}>
-          <Text style={styles.pageCounter}>
-            {notebookPages.length === 0
-              ? 'ページなし'
-              : `${currentIndex + 1} / ${notebookPages.length}`}
-          </Text>
-        </View>
-        {notebookPages.length > 1 && (
-          <TouchableOpacity
-            onPress={() => handleNav(1)}
-            disabled={currentIndex >= notebookPages.length - 1}
-            style={[styles.navBtn, currentIndex >= notebookPages.length - 1 && styles.navBtnDisabled]}
-          >
-            <Ionicons name="chevron-forward-circle" size={30} color={accent} />
-          </TouchableOpacity>
-        )}
-      </View>
     </View>
   );
 }
 
+// ─── Styles ───────────────────────────────────────────────────────────────────
+
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: Colors.background },
   center: { alignItems: 'center', justifyContent: 'center' },
+
+  // Top bar
   topBar: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -561,17 +688,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
     marginTop: 4,
+    flexShrink: 0,
   },
   stampRow: {
-    flex: 1,
     flexDirection: 'row',
-    gap: 10,
-    flexWrap: 'wrap',
+    gap: 8,
+    paddingRight: 4,
   },
-  stampBtn: {
-    alignItems: 'center',
-    gap: 3,
-  },
+  stampBtn: { alignItems: 'center', gap: 3 },
   stampIcon: {
     width: 44,
     height: 44,
@@ -586,6 +710,8 @@ const styles = StyleSheet.create({
     fontSize: 9,
     letterSpacing: 0.2,
   },
+
+  // Title
   notebookTitleWrap: {
     paddingHorizontal: Spacing.lg,
     paddingBottom: 4,
@@ -596,19 +722,22 @@ const styles = StyleSheet.create({
     color: Colors.text,
     fontStyle: 'italic',
   },
+
+  // Spread — fills remaining height
   spreadWrap: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: Spacing.md,
     position: 'relative',
   },
   spread: {
+    flex: 1,
     flexDirection: 'row',
     borderRadius: BorderRadius.lg,
     overflow: 'hidden',
     borderCurve: 'continuous',
   },
+
+  // Left page
   leftPage: {
     backgroundColor: '#FFFEF8',
     padding: 12,
@@ -641,6 +770,7 @@ const styles = StyleSheet.create({
   pageContentScroll: {
     zIndex: 2,
     flexGrow: 0,
+    flex: 1,
   },
   pageContent: {
     fontFamily: Fonts.handwritten,
@@ -650,6 +780,8 @@ const styles = StyleSheet.create({
     paddingTop: 2,
     minHeight: 200,
   },
+
+  // Spine
   spine: {
     width: 10,
     backgroundColor: 'rgba(92,74,74,0.04)',
@@ -660,102 +792,18 @@ const styles = StyleSheet.create({
     width: 2,
     backgroundColor: 'rgba(92,74,74,0.1)',
   },
+
+  // Right page
   rightPage: {
     backgroundColor: '#FFF5F8',
     position: 'relative',
     overflow: 'hidden',
   },
-  photoSticker: {
-    position: 'absolute',
-    top: 24,
-    left: 8,
-    right: 8,
-    alignItems: 'center',
-    zIndex: 2,
-    transform: [{ rotate: '2deg' }],
-  },
-  transformToggleBtn: {
-    position: 'absolute',
-    top: -10,
-    right: -6,
-    zIndex: 10,
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    backgroundColor: Colors.surface,
-    borderWidth: 1.5,
-    borderColor: Colors.border,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#5C4A4A',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  transformToggleBtnActive: {
-    backgroundColor: Colors.primary,
-    borderColor: Colors.primaryDark,
-  },
-  photoFrame: {
-    backgroundColor: Colors.surface,
-    padding: 6,
-    paddingBottom: 18,
-    borderRadius: 4,
-    shadowColor: '#5C4A4A',
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 3,
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  photoFrameActive: {
-    borderWidth: 1.5,
-    borderColor: Colors.primary,
-    borderStyle: 'dashed',
-  },
-  photoImage: {
-    width: 110,
-    height: 100,
-  },
-  photoHint: {
-    position: 'absolute',
-    bottom: 4,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
-  photoTape: {
-    position: 'absolute',
-    top: -8,
-    left: '50%',
-    marginLeft: -18,
-    width: 36,
-    height: 14,
-    backgroundColor: 'rgba(249,168,201,0.45)',
-    borderRadius: 2,
-    transform: [{ rotate: '-2deg' }],
-  },
-  photoBubble: {
-    position: 'absolute',
-    top: 12,
-    right: -18,
-    backgroundColor: Colors.surface,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  photoBubbleText: {
-    fontFamily: Fonts.handwritten,
-    fontSize: 10,
-    color: Colors.text,
-  },
+
+  // Sticker button
   stickerBtn: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 12,
     right: 8,
     flexDirection: 'row',
     alignItems: 'center',
@@ -772,29 +820,42 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: 10,
   },
-  navRow: {
+
+  // Page counter overlay (absolute, bottom of spread)
+  pageCounterOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 6,
-    gap: 16,
+    gap: 14,
+    zIndex: 20,
+    paddingHorizontal: Spacing.md,
   },
-  navBtn: { padding: 4 },
+  navBtn: { padding: 3 },
   navBtnDisabled: { opacity: 0.28 },
   pageCounterWrap: {
-    backgroundColor: Colors.surface,
-    paddingHorizontal: 20,
-    paddingVertical: 6,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    paddingHorizontal: 18,
+    paddingVertical: 5,
     borderRadius: BorderRadius.round,
     borderWidth: 1.5,
     borderColor: Colors.border,
+    shadowColor: '#5C4A4A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   pageCounter: {
     fontFamily: Fonts.handwritten,
-    fontSize: 16,
+    fontSize: 15,
     color: Colors.text,
     letterSpacing: 1,
   },
+
+  // Empty state
   emptyNotebook: {
     flex: 1,
     alignItems: 'center',
@@ -819,6 +880,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: Colors.white,
   },
+
+  // Error
   errorText: {
     fontFamily: Fonts.handwritten,
     fontSize: 18,
@@ -834,5 +897,123 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semiBold,
     color: Colors.white,
     fontSize: 14,
+  },
+
+  // ─── Masking tape ────────────────────────────────────────────────────────────
+  tapeStrip: {
+    height: 18,
+    backgroundColor: 'rgba(249,168,201,0.72)',
+    borderRadius: 3,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 3,
+    overflow: 'hidden',
+  },
+
+  // ─── Polaroid item ───────────────────────────────────────────────────────────
+  polaroidOuter: {
+    position: 'absolute',
+    alignItems: 'center',
+    zIndex: 3,
+  },
+  polaroidTapeRow: {
+    alignItems: 'center',
+    zIndex: 4,
+    marginBottom: -5, // tape overlaps top of card
+  },
+  polaroidCard: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 7,
+    paddingTop: 7,
+    paddingBottom: 0,
+    borderRadius: 3,
+    shadowColor: '#5C4A4A',
+    shadowOffset: { width: 1, height: 3 },
+    shadowOpacity: 0.22,
+    shadowRadius: 6,
+    elevation: 5,
+    position: 'relative',
+    overflow: 'visible',
+  },
+  polaroidCardActive: {
+    borderWidth: 1.5,
+    borderColor: Colors.primary,
+    borderStyle: 'dashed',
+  },
+  polaroidImage: {
+    width: 116,
+    height: 100,
+    borderRadius: 2,
+    backgroundColor: Colors.surfaceAlt,
+  },
+  polaroidFilm: {
+    width: 116,
+    height: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 4,
+    marginBottom: 7,
+  },
+  polaroidHint: {
+    fontFamily: Fonts.regular,
+    fontSize: 9,
+    color: Colors.textMuted,
+  },
+
+  // Polaroid control buttons (absolutely positioned within card)
+  polaroidToggleBtn: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+    elevation: 2,
+    zIndex: 10,
+  },
+  polaroidToggleBtnOn: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primaryDark,
+  },
+  polaroidRemoveBtn: {
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: Colors.error,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+    zIndex: 10,
+  },
+  polaroidScaleBtn: {
+    position: 'absolute',
+    bottom: 5,
+    left: 4,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: Colors.surface,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
   },
 });

@@ -212,7 +212,7 @@ export default function HomeScreen() {
         {/* Mascot + greeting */}
         <View style={styles.mascotRow}>
           <Image
-            source={require('@/assets/neko_cat_mascot.png')}
+            source={require('@/assets/neko_new_mascot.png')}
             style={styles.mascotImage}
             contentFit="contain"
           />
