@@ -23,6 +23,7 @@ import { useStickerStore } from '@/store/useStickerStore';
 import StickerCanvas from '@/components/StickerCanvas';
 import { Colors, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
+import { useTranslation } from '@/constants/i18n';
 import type { CoverTheme, Sticker } from '@/store/types';
 
 const generateId = () => `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
@@ -96,6 +97,18 @@ const PAGE_THEMES: Record<CoverTheme, PageTheme> = {
     spineColor: '#8B4050',
     spineAccent: '#A05060',
     coverEdgeColor: '#7A3545',
+  },
+  blue: {
+    leftBg: '#F0F8FF',
+    rightBg: '#E8F4FC',
+    ruleLine: '#B8D8F0',
+    dateColor: '#4A90C4',
+    tapeColor: 'rgba(100,180,230,0.65)',
+    accentColor: '#4A90C4',
+    decorColor: '#A8D8EA',
+    spineColor: '#2E6DA0',
+    spineAccent: '#3A80B8',
+    coverEdgeColor: '#2860A0',
   },
 };
 
@@ -357,6 +370,7 @@ export default function NotebookPageView() {
   const insets = useSafeAreaInsets();
   const { width, height: screenHeight } = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const t = useTranslation();
   const {
     notebooks, pages, addPage, updatePage, deletePage,
     updateNotebook, toggleFavorite, addSticker, updateSticker, removeSticker,
@@ -434,13 +448,15 @@ export default function NotebookPageView() {
     if (!currentPage) return;
     Alert.alert(
       'ページを削除',
-      `ページ ${currentPage.pageNumber} を削除しますか？`,
+      `このページ（テキスト・写真・ステッカー全て）を削除しますか？`,
       [
         { text: 'キャンセル', style: 'cancel' },
         {
           text: '削除',
           style: 'destructive',
           onPress: () => {
+            // Clear photos for this page
+            setPhotos([]);
             deletePage(currentPage.id);
             setCurrentIndex((prev) => Math.max(0, prev - 1));
           },
@@ -574,6 +590,15 @@ export default function NotebookPageView() {
         </>
       );
     }
+    if (theme === 'blue') {
+      return (
+        <>
+          <SakuraDecor size={18} color="#A8D8EA" style={{ position: 'absolute', top: 10, right: 14, zIndex: 0 }} />
+          <SakuraDecor size={12} color="#7EC8E3" style={{ position: 'absolute', top: 30, left: 10, zIndex: 0 }} />
+          <LadybugDecor size={28} style={{ position: 'absolute', bottom: 60, right: 8, zIndex: 1 }} />
+        </>
+      );
+    }
     return null;
   };
 
@@ -595,6 +620,14 @@ export default function NotebookPageView() {
         </>
       );
     }
+    if (theme === 'blue') {
+      return (
+        <>
+          <SakuraDecor size={14} color="#A8D8EA" style={{ position: 'absolute', bottom: 12, right: 8 }} />
+          <SakuraDecor size={10} color="#7EC8E3" style={{ position: 'absolute', bottom: 14, left: 14 }} />
+        </>
+      );
+    }
     return (
       <>
         <PawDecor style={{ position: 'absolute', bottom: 12, right: 8 }} />
@@ -605,8 +638,10 @@ export default function NotebookPageView() {
 
   // ─── Render ──────────────────────────────────────────────────────────────────
 
+  const bgColor = notebook.coverTheme === 'blue' ? '#4A90C4' : '#C8A882';
+
   return (
-    <View style={[styles.root, { backgroundColor: '#C8A882' }]}>
+    <View style={[styles.root, { backgroundColor: bgColor }]}>
       {/* Wooden table / fabric texture background */}
       <View style={StyleSheet.absoluteFillObject}>
         {/* Subtle wood grain lines */}
@@ -639,33 +674,33 @@ export default function NotebookPageView() {
         >
           <StampButton
             icon="add-circle-outline"
-            label="ページ追加"
+            label={t.addPage}
             onPress={handleAddPage}
             color={accent}
           />
           <StampButton
             icon="camera-outline"
-            label="写真追加"
+            label={t.addPhoto}
             onPress={handleAddPhoto}
             color={Colors.accent}
           />
           <StampButton
             icon={currentPage?.isFavorite ? 'bookmark' : 'bookmark-outline'}
-            label="お気に入り"
+            label={t.favorite}
             onPress={() => currentPage && toggleFavorite(currentPage.id)}
             color={Colors.accentGreen}
             active={currentPage?.isFavorite}
           />
           <StampButton
             icon="home-outline"
-            label="ホーム"
+            label={t.homeBtn}
             onPress={() => router.push('/(tabs)')}
             color={Colors.textLight}
           />
           {currentPage !== null && (
             <StampButton
               icon="trash-outline"
-              label="削除"
+              label={t.deleteBtn}
               onPress={handleDeletePage}
               color={Colors.error}
             />
@@ -1090,8 +1125,12 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     marginBottom: 2,
     borderWidth: 0,
+    borderColor: 'transparent',
     backgroundColor: 'transparent',
-  },
+    outlineWidth: 0,
+    outlineStyle: 'none',
+    outline: 'none',
+  } as object,
   pageDate: {
     fontFamily: Fonts.handwritten,
     fontSize: 12,
@@ -1106,10 +1145,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
     borderWidth: 0,
+    borderColor: 'transparent',
     backgroundColor: 'transparent',
     textAlignVertical: 'top',
     // No outline on web
     outlineWidth: 0,
+    outlineStyle: 'none',
+    outline: 'none',
   } as object,
 
   // Spine — realistic brown book spine

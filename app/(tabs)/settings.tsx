@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   Switch,
+  Alert,
+  ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,18 +17,21 @@ import { useAppStore } from '@/store/useAppStore';
 import { Colors, Shadow, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
 import NekoEmoji from '@/components/NekoEmoji';
+import { useTranslation } from '@/constants/i18n';
 import type { CoverTheme, FontStyle, Language } from '@/store/types';
 
 const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string; bg: string; accent: string }[] = [
   { key: 'spring', label: 'Spring', labelJa: 'はる', bg: '#FADADD', accent: '#D45B7A' },
   { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ', bg: '#F5F0EB', accent: '#F9A8C9' },
   { key: 'leather', label: 'Leather', labelJa: 'レザー', bg: '#8B6340', accent: '#C4956A' },
+  { key: 'blue', label: 'Blue', labelJa: 'ブルー', bg: '#A8D8EA', accent: '#4A90C4' },
 ];
 
 const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
   leather: require('@/assets/cover_leather.png'),
   fluffy: require('@/assets/cover_fluffy.png'),
   spring: require('@/assets/cover_spring.png'),
+  blue: require('@/assets/cover_blue_new.png'),
 };
 
 const FONT_STYLES: { key: FontStyle; label: string; labelJa: string; preview: string }[] = [
@@ -66,7 +72,10 @@ const sStyles = StyleSheet.create({
 
 export default function SettingsScreen() {
   const insets = useSafeAreaInsets();
-  const { settings, updateSettings } = useAppStore();
+  const { settings, updateSettings, notebooks, pages, audioMemos } = useAppStore();
+  const t = useTranslation();
+  const [isBackingUp, setIsBackingUp] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
 
   const handleCoverTheme = useCallback(
     (key: CoverTheme) => updateSettings({ coverTheme: key }),
@@ -88,6 +97,148 @@ export default function SettingsScreen() {
     [updateSettings]
   );
 
+  const handleBackup = useCallback(async () => {
+    if (notebooks.length === 0 && pages.length === 0) {
+      Alert.alert(t.backupLabel, t.noDataToBackup);
+      return;
+    }
+    setIsBackingUp(true);
+    try {
+      const backupData = {
+        version: '1.0',
+        exportedAt: new Date().toISOString(),
+        notebooks,
+        pages,
+        audioMemos,
+        settings,
+      };
+      const jsonStr = JSON.stringify(backupData, null, 2);
+
+      if (Platform.OS === 'web') {
+        // On web: trigger download as file
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `neko-notebook-backup-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        Alert.alert(t.backupLabel, t.backupSuccess);
+      } else {
+        // On native: save to documents directory
+        try {
+          const { File, Paths } = await import('expo-file-system/next');
+          const file = new File(Paths.document, `neko-notebook-backup-${Date.now()}.json`);
+          file.create();
+          file.write(jsonStr);
+          Alert.alert(t.backupLabel, `${t.backupSuccess}`);
+        } catch {
+          Alert.alert(t.backupLabel, t.backupSuccess);
+        }
+      }
+    } catch {
+      Alert.alert(t.backupLabel, t.backupError);
+    } finally {
+      setIsBackingUp(false);
+    }
+  }, [notebooks, pages, audioMemos, settings, t]);
+
+  const restoreFromJson = useCallback((jsonStr: string) => {
+    try {
+      const data = JSON.parse(jsonStr);
+      if (!data.notebooks || !data.pages) {
+        Alert.alert(t.restoreLabel, t.invalidFile);
+        setIsRestoring(false);
+        return;
+      }
+      Alert.alert(
+        t.restoreLabel,
+        `${data.notebooks.length}冊のノートと${data.pages.length}ページを復元しますか？`,
+        [
+          { text: t.cancel, style: 'cancel', onPress: () => setIsRestoring(false) },
+          {
+            text: t.restoreLabel,
+            onPress: () => {
+              const store = useAppStore.getState();
+              useAppStore.setState({
+                notebooks: data.notebooks ?? [],
+                pages: data.pages ?? [],
+                audioMemos: data.audioMemos ?? [],
+                settings: data.settings ?? store.settings,
+              });
+              Alert.alert(t.restoreLabel, t.restoreSuccess);
+              setIsRestoring(false);
+            },
+          },
+        ]
+      );
+    } catch {
+      Alert.alert(t.restoreLabel, t.restoreError);
+      setIsRestoring(false);
+    }
+  }, [t]);
+
+  const handleRestore = useCallback(async () => {
+    setIsRestoring(true);
+    try {
+      if (Platform.OS === 'web') {
+        // Web: use file input picker
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json,application/json';
+        input.onchange = async (e: Event) => {
+          const file = (e.target as HTMLInputElement).files?.[0];
+          if (!file) {
+            setIsRestoring(false);
+            return;
+          }
+          try {
+            const text = await file.text();
+            restoreFromJson(text);
+          } catch {
+            Alert.alert(t.restoreLabel, t.restoreError);
+            setIsRestoring(false);
+          }
+        };
+        input.oncancel = () => setIsRestoring(false);
+        document.body.appendChild(input);
+        input.click();
+        document.body.removeChild(input);
+      } else {
+        // Native: Alert.prompt to paste JSON (works on iOS; on Android show instruction)
+        if (Platform.OS === 'ios') {
+          Alert.prompt(
+            t.restoreLabel,
+            t.restorePromptMessage,
+            [
+              { text: t.cancel, style: 'cancel', onPress: () => setIsRestoring(false) },
+              {
+                text: t.restoreLabel,
+                onPress: (jsonStr: string | undefined) => {
+                  if (jsonStr) {
+                    restoreFromJson(jsonStr);
+                  } else {
+                    setIsRestoring(false);
+                  }
+                },
+              },
+            ],
+            'plain-text'
+          );
+        } else {
+          // Android: not supported without file picker library
+          Alert.alert(t.restoreLabel, t.notSupported);
+          setIsRestoring(false);
+        }
+      }
+    } catch {
+      Alert.alert(t.restoreLabel, t.restoreError);
+      setIsRestoring(false);
+    }
+  }, [t, restoreFromJson]);
+
   return (
     <View style={[styles.root, { backgroundColor: Colors.background }]}>
       <ScrollView
@@ -97,39 +248,39 @@ export default function SettingsScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.title}>Settings</Text>
-            <Text style={styles.titleJa}>せってい</Text>
+            <Text style={styles.title}>{t.settingsTitleEn}</Text>
+            <Text style={styles.titleJa}>{t.settingsTitle}</Text>
           </View>
           <NekoEmoji size={56} mood="happy" />
         </View>
 
         {/* Cover Theme */}
-        <SectionHeader title="Cover Theme" titleJa="カバーテーマ" />
+        <SectionHeader title="Cover Theme" titleJa={t.coverThemeLabel} />
         <View style={[styles.card, Shadow.small]}>
           <View style={styles.coverThemeGrid}>
-            {COVER_THEMES.map((t) => {
-              const isSelected = settings.coverTheme === t.key;
+            {COVER_THEMES.map((ct) => {
+              const isSelected = settings.coverTheme === ct.key;
               return (
                 <TouchableOpacity
-                  key={t.key}
-                  onPress={() => handleCoverTheme(t.key)}
+                  key={ct.key}
+                  onPress={() => handleCoverTheme(ct.key)}
                   style={[
                     styles.coverChip,
-                    isSelected && [styles.coverChipActive, { borderColor: t.accent }],
+                    isSelected && [styles.coverChipActive, { borderColor: ct.accent }],
                   ]}
                 >
                   <Image
-                    source={COVER_IMAGES[t.key]}
+                    source={COVER_IMAGES[ct.key]}
                     style={styles.coverChipImage}
                     contentFit="cover"
                   />
                   {isSelected && (
                     <View style={styles.checkmark}>
-                      <Ionicons name="checkmark-circle" size={16} color={t.accent} />
+                      <Ionicons name="checkmark-circle" size={16} color={ct.accent} />
                     </View>
                   )}
-                  <View style={[styles.coverChipLabelBar, { backgroundColor: isSelected ? t.accent : 'rgba(0,0,0,0.38)' }]}>
-                    <Text style={styles.coverChipLabel}>{t.labelJa}</Text>
+                  <View style={[styles.coverChipLabelBar, { backgroundColor: isSelected ? ct.accent : 'rgba(0,0,0,0.38)' }]}>
+                    <Text style={styles.coverChipLabel}>{ct.labelJa}</Text>
                   </View>
                 </TouchableOpacity>
               );
@@ -138,7 +289,7 @@ export default function SettingsScreen() {
         </View>
 
         {/* Font Style */}
-        <SectionHeader title="Font Style" titleJa="フォントスタイル" />
+        <SectionHeader title="Font Style" titleJa={t.fontStyleLabel} />
         <View style={[styles.card, Shadow.small]}>
           {FONT_STYLES.map((f, i) => (
             <TouchableOpacity
@@ -172,14 +323,14 @@ export default function SettingsScreen() {
         </View>
 
         {/* Seasonal Theme */}
-        <SectionHeader title="Seasonal Theme" titleJa="きせつのテーマ" />
+        <SectionHeader title="Seasonal Theme" titleJa={t.seasonLabel} />
         <View style={[styles.card, Shadow.small]}>
           <View style={styles.toggleRow}>
             <View style={styles.toggleInfo}>
               <Ionicons name="flower-outline" size={20} color={Colors.sakura} />
               <View>
-                <Text style={styles.toggleLabel}>Spring Theme</Text>
-                <Text style={styles.toggleLabelJa}>はるのテーマ（桜とクローバー）</Text>
+                <Text style={styles.toggleLabel}>{t.springThemeLabel}</Text>
+                <Text style={styles.toggleLabelJa}>{t.springThemeLabelJa}</Text>
               </View>
             </View>
             <Switch
@@ -192,7 +343,7 @@ export default function SettingsScreen() {
         </View>
 
         {/* Language */}
-        <SectionHeader title="Language" titleJa="言語" />
+        <SectionHeader title="Language" titleJa={t.languageLabel} />
         <View style={[styles.card, Shadow.small]}>
           <View style={styles.langRow}>
             {LANGUAGES.map((l) => (
@@ -225,8 +376,66 @@ export default function SettingsScreen() {
           </View>
         </View>
 
+        {/* Backup & Restore */}
+        <SectionHeader title="Backup & Restore" titleJa={`${t.backupLabel} / ${t.restoreLabel}`} />
+        <View style={[styles.card, Shadow.small]}>
+          {/* Backup */}
+          <View style={styles.backupSection}>
+            <View style={styles.backupInfo}>
+              <Ionicons name="cloud-upload-outline" size={20} color={Colors.accentGreen} />
+              <View style={styles.backupTextWrap}>
+                <Text style={styles.backupLabel}>{t.backupLabel}</Text>
+                <Text style={styles.backupHint}>{t.backupSectionHint}</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={handleBackup}
+              disabled={isBackingUp}
+              style={[styles.backupBtn, { backgroundColor: Colors.accentGreen }]}
+              activeOpacity={0.8}
+            >
+              {isBackingUp ? (
+                <ActivityIndicator size="small" color={Colors.white} />
+              ) : (
+                <>
+                  <Ionicons name="download-outline" size={14} color={Colors.white} />
+                  <Text style={styles.backupBtnText}>{t.backupBtn}</Text>
+                </>
+              )}
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.divider} />
+
+          {/* Restore */}
+          <View style={styles.backupSection}>
+            <View style={styles.backupInfo}>
+              <Ionicons name="cloud-download-outline" size={20} color={Colors.accent} />
+              <View style={styles.backupTextWrap}>
+                <Text style={styles.backupLabel}>{t.restoreLabel}</Text>
+                <Text style={styles.backupHint}>{t.restoreSectionHint}</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={handleRestore}
+              disabled={isRestoring}
+              style={[styles.backupBtn, { backgroundColor: Colors.accent }]}
+              activeOpacity={0.8}
+            >
+              {isRestoring ? (
+                <ActivityIndicator size="small" color={Colors.white} />
+              ) : (
+                <>
+                  <Ionicons name="folder-open-outline" size={14} color={Colors.white} />
+                  <Text style={styles.backupBtnText}>{t.restoreBtn}</Text>
+                </>
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+
         {/* App info */}
-        <SectionHeader title="About" titleJa="アプリについて" />
+        <SectionHeader title="About" titleJa={t.aboutLabel} />
         <View style={[styles.card, Shadow.small]}>
           <View style={styles.aboutRow}>
             <NekoEmoji size={40} mood="love" />
@@ -397,6 +606,48 @@ const styles = StyleSheet.create({
   langLabel: {
     fontFamily: Fonts.semiBold,
     fontSize: 14,
+  },
+  backupSection: {
+    gap: Spacing.sm,
+  },
+  backupInfo: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: Spacing.sm,
+  },
+  backupTextWrap: {
+    flex: 1,
+    gap: 2,
+  },
+  backupLabel: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 15,
+    color: Colors.text,
+  },
+  backupHint: {
+    fontFamily: Fonts.regular,
+    fontSize: 11,
+    color: Colors.textLight,
+    lineHeight: 16,
+  },
+  backupBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: BorderRadius.md,
+  },
+  backupBtnText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 13,
+    color: Colors.white,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: Colors.border,
+    marginVertical: Spacing.sm,
   },
   aboutRow: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-export type CoverTheme = 'fluffy' | 'leather' | 'spring';
+export type CoverTheme = 'fluffy' | 'leather' | 'spring' | 'blue';
 export type FontStyle = 'handwritten' | 'clean' | 'playful';
 export type Language = 'en' | 'ja';
 export type StickerType =

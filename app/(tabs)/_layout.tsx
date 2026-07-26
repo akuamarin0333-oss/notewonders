@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors, BorderRadius } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
+import { useTranslation } from '@/constants/i18n';
 
 type TabIconProps = {
   name: keyof typeof Ionicons.glyphMap;
@@ -56,6 +57,7 @@ const tabStyles = StyleSheet.create({
 
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
+  const t = useTranslation();
 
   return (
     <Tabs
@@ -78,7 +80,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon name="home" focused={focused} label="ホーム" />
+            <TabIcon name="home" focused={focused} label={t.tabHome} />
           ),
         }}
       />
@@ -86,15 +88,7 @@ export default function TabsLayout() {
         name="calendar"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon name="calendar-outline" focused={focused} label="カレンダー" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="pet"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name="paw-outline" focused={focused} label="にゃんこ" />
+            <TabIcon name="calendar-outline" focused={focused} label={t.tabCalendar} />
           ),
         }}
       />
@@ -102,23 +96,26 @@ export default function TabsLayout() {
         name="favorites"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon name="star-outline" focused={focused} label="お気に入り" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="audio"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name="ellipsis-horizontal" focused={focused} label="その他" />
+            <TabIcon name="star-outline" focused={focused} label={t.tabFavorites} />
           ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          href: null,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name="settings-outline" focused={focused} label={t.tabSettings} />
+          ),
         }}
+      />
+      {/* Hidden tabs — keep routes but don't show in tab bar */}
+      <Tabs.Screen
+        name="pet"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="audio"
+        options={{ href: null }}
       />
     </Tabs>
   );

@@ -6,6 +6,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Platform } from 'react-native';
+
+// Remove browser focus outline from text inputs on web
+if (Platform.OS === 'web' && typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = 'textarea:focus, input:focus { outline: none !important; box-shadow: none !important; }';
+  document.head.appendChild(style);
+}
 
 SplashScreen.preventAutoHideAsync();
 

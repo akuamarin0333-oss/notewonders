@@ -27,6 +27,7 @@ const THEMES: {
   { key: 'spring', label: 'Spring', labelJa: 'はる', bg: '#FADADD', accent: '#D45B7A' },
   { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ', bg: '#F5F0EB', accent: '#F9A8C9' },
   { key: 'leather', label: 'Leather', labelJa: 'レザー', bg: '#8B6340', accent: '#C4956A' },
+  { key: 'blue', label: 'Blue', labelJa: 'ブルー', bg: '#A8D8EA', accent: '#4A90C4' },
 ];
 
 // Cover background colors for the main cover display
@@ -34,12 +35,14 @@ const COVER_BG: Record<CoverTheme, string> = {
   leather: '#8B6340',
   fluffy: '#F5F0EB',
   spring: '#FADADD',
+  blue: '#A8D8EA',
 };
 
 const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
   leather: require('@/assets/cover_leather.png'),
   fluffy: require('@/assets/cover_fluffy.png'),
   spring: require('@/assets/cover_spring.png'),
+  blue: require('@/assets/cover_blue_new.png'),
 };
 
 function PawSvg({ color, size = 22 }: { color: string; size?: number }) {

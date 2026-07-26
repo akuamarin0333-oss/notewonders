@@ -20,12 +20,14 @@ import Svg, { Path, Circle, Ellipse } from 'react-native-svg';
 import { useAppStore } from '@/store/useAppStore';
 import { Colors, Shadow, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
+import { useTranslation } from '@/constants/i18n';
 import type { CoverTheme, Notebook } from '@/store/types';
 
 const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string }[] = [
   { key: 'spring', label: 'Spring', labelJa: 'はる' },
   { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ' },
   { key: 'leather', label: 'Leather', labelJa: 'レザー' },
+  { key: 'blue', label: 'Blue', labelJa: 'ブルー' },
 ];
 
 // Cover image sources
@@ -33,12 +35,14 @@ const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
   leather: require('@/assets/cover_leather.png'),
   fluffy: require('@/assets/cover_fluffy.png'),
   spring: require('@/assets/cover_spring.png'),
+  blue: require('@/assets/cover_blue_new.png'),
 };
 
 const COVER_COLORS: Record<CoverTheme, { bg: string; accent: string; spine: string; text: string }> = {
   fluffy: { bg: '#F5F0EB', accent: '#F9A8C9', spine: '#E8C9D5', text: '#5C4A4A' },
   leather: { bg: '#8B6340', accent: '#C4956A', spine: '#6B4D30', text: '#FFF5EB' },
   spring: { bg: '#FADADD', accent: '#D45B7A', spine: '#F5B8CC', text: '#5C4A4A' },
+  blue: { bg: '#A8D8EA', accent: '#4A90C4', spine: '#7EC8E3', text: '#2C5F7A' },
 };
 
 function PawSvg({ color, size = 18 }: { color: string; size?: number }) {
@@ -121,6 +125,7 @@ function NotebookCard({
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { notebooks, pages, addNotebook, deleteNotebook } = useAppStore();
+  const t = useTranslation();
   const [showNewModal, setShowNewModal] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newTheme, setNewTheme] = useState<CoverTheme>('fluffy');
@@ -163,10 +168,7 @@ export default function HomeScreen() {
     }
   }, [newTitle, newTheme, addNotebook]);
 
-  const greetings = useMemo(
-    () => ['こんにちは！今日も いい日だにゃ〜', '何を書く？楽しみだにゃ！', 'はるの おさんぽ日和だにゃ〜'],
-    []
-  );
+  const greetings = useMemo(() => t.greetings, [t]);
   const greeting = useMemo(
     () => greetings[notebooks.length % greetings.length],
     [notebooks.length, greetings]
@@ -206,8 +208,8 @@ export default function HomeScreen() {
         {/* Notebook grid */}
         {notebooks.length === 0 ? (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyTitle}>まだノートがありません</Text>
-            <Text style={styles.emptySubtitle}>下のボタンでノートを作ってみよう！</Text>
+            <Text style={styles.emptyTitle}>{t.noNotebooks}</Text>
+            <Text style={styles.emptySubtitle}>{t.noNotebooksHint}</Text>
           </View>
         ) : (
           <View style={styles.grid}>
@@ -234,7 +236,7 @@ export default function HomeScreen() {
           activeOpacity={0.85}
         >
           <Ionicons name="add" size={20} color={Colors.white} />
-          <Text style={styles.createBtnText}>新しいノートをつくる</Text>
+          <Text style={styles.createBtnText}>{t.newNotebook}</Text>
           <PawSvg color="rgba(255,255,255,0.7)" size={16} />
         </TouchableOpacity>
       </View>
@@ -250,14 +252,14 @@ export default function HomeScreen() {
             <View style={styles.modalHeaderRow}>
               <View style={styles.modalTitleRow}>
                 <PawSvg color={Colors.primary} size={20} />
-                <Text style={styles.modalTitle}>新しいノート</Text>
+                <Text style={styles.modalTitle}>{t.newNotebookTitle}</Text>
               </View>
               <TouchableOpacity onPress={() => { setShowNewModal(false); setNewTitle(''); }}>
                 <Ionicons name="close-circle" size={24} color={Colors.textLight} />
               </TouchableOpacity>
             </View>
 
-            <Text style={styles.modalLabel}>タイトル</Text>
+            <Text style={styles.modalLabel}>{t.titleLabel}</Text>
             <TextInput
               style={styles.textInput}
               placeholder="春のにっき..."
@@ -268,7 +270,7 @@ export default function HomeScreen() {
               maxLength={40}
             />
 
-            <Text style={styles.modalLabel}>カバーテーマ</Text>
+            <Text style={styles.modalLabel}>{t.themeLabel}</Text>
             {/* 2x2 grid of cover image options */}
             <View style={styles.themeGrid}>
               {COVER_THEMES.map((t) => {
@@ -311,7 +313,7 @@ export default function HomeScreen() {
               ) : (
                 <>
                   <Ionicons name="book-outline" size={18} color={Colors.white} />
-                  <Text style={styles.createModalBtnText}>つくる</Text>
+                  <Text style={styles.createModalBtnText}>{t.createBtn}</Text>
                 </>
               )}
             </TouchableOpacity>
