@@ -159,16 +159,8 @@ export default function CoverScreen() {
           <SakuraSvg color={theme.accent} size={18} />
         </View>
 
-        {/* Title section */}
-        <View style={styles.titleSection}>
-          <Text style={[styles.titleEn, { color: textColor }]}>Neko Notebook</Text>
-          <Text style={[styles.titleJa, { color: theme.accent }]}>ねこノート</Text>
-          {/* Edition badge */}
-          <View style={[styles.editionBadge, { borderColor: theme.accent }]}>
-            <Text style={[styles.editionEn, { color: textColor }]}>SPRING EDITION</Text>
-            <Text style={[styles.editionJa, { color: theme.accent }]}>春の限定版</Text>
-          </View>
-        </View>
+        {/* Spacer where title section was */}
+        <View style={styles.titleSpacer} />
 
         {/* Cat mascot */}
         <View style={styles.catSection}>
@@ -260,41 +252,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
   },
-  titleSection: {
-    alignItems: 'center',
-    gap: 4,
-    marginTop: 16,
+  titleSpacer: {
+    height: 24,
     zIndex: 2,
-  },
-  titleEn: {
-    fontFamily: Fonts.handwrittenBold,
-    fontSize: 34,
-    fontStyle: 'italic',
-    letterSpacing: 0.5,
-  },
-  titleJa: {
-    fontFamily: Fonts.handwrittenBold,
-    fontSize: 22,
-    letterSpacing: 3,
-  },
-  editionBadge: {
-    marginTop: 8,
-    paddingHorizontal: 18,
-    paddingVertical: 6,
-    borderWidth: 1.2,
-    borderRadius: BorderRadius.round,
-    alignItems: 'center',
-    gap: 1,
-  },
-  editionEn: {
-    fontFamily: Fonts.semiBold,
-    fontSize: 10,
-    letterSpacing: 2.5,
-  },
-  editionJa: {
-    fontFamily: Fonts.regular,
-    fontSize: 10,
-    letterSpacing: 1,
   },
   catSection: {
     alignItems: 'center',

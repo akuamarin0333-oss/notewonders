@@ -8,8 +8,15 @@ import {
   useWindowDimensions,
   Animated,
   Alert,
+  ScrollView,
 } from 'react-native';
 import { Image } from 'expo-image';
+import * as ImagePicker from 'expo-image-picker';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
+import Reanimated, {
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -118,6 +125,18 @@ export default function NotebookPageView() {
   const slideAnim = useRef(new Animated.Value(0)).current;
   const { pendingSticker, setPendingSticker } = useStickerStore();
 
+  // Photo state for right page
+  const [photoUri, setPhotoUri] = useState<string | null>(null);
+  const [isTransformMode, setIsTransformMode] = useState(false);
+
+  // Gesture transform values
+  const scale = useSharedValue(1);
+  const savedScale = useSharedValue(1);
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
+  const savedTranslateX = useSharedValue(0);
+  const savedTranslateY = useSharedValue(0);
+
   const currentPage = notebookPages[currentIndex] ?? null;
 
   // Spread dimensions — full width book
@@ -200,6 +219,70 @@ export default function NotebookPageView() {
       setPendingSticker(null);
     }
   }, [pendingSticker, currentPage, handleAddSticker, setPendingSticker]);
+
+  const handlePickPhoto = useCallback(async () => {
+    if (isTransformMode) return;
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('許可が必要です', 'フォトライブラリへのアクセスを許可してください。');
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false,
+        quality: 0.8,
+      });
+      if (!result.canceled && result.assets[0]) {
+        setPhotoUri(result.assets[0].uri);
+        // Reset transform when new photo is picked
+        scale.value = 1;
+        savedScale.value = 1;
+        translateX.value = 0;
+        translateY.value = 0;
+        savedTranslateX.value = 0;
+        savedTranslateY.value = 0;
+      }
+    } catch {
+      Alert.alert('エラー', '写真の選択に失敗しました。');
+    }
+  }, [isTransformMode, scale, savedScale, translateX, translateY, savedTranslateX, savedTranslateY]);
+
+  const handleToggleTransform = useCallback(() => {
+    setIsTransformMode((prev) => !prev);
+  }, []);
+
+  // Pinch gesture for scaling
+  const pinchGesture = Gesture.Pinch()
+    .enabled(isTransformMode)
+    .onUpdate((e) => {
+      scale.value = Math.max(0.5, Math.min(4, savedScale.value * e.scale));
+    })
+    .onEnd(() => {
+      savedScale.value = scale.value;
+    });
+
+  // Pan gesture for dragging
+  const panGesture = Gesture.Pan()
+    .enabled(isTransformMode)
+    .onUpdate((e) => {
+      translateX.value = savedTranslateX.value + e.translationX;
+      translateY.value = savedTranslateY.value + e.translationY;
+    })
+    .onEnd(() => {
+      savedTranslateX.value = translateX.value;
+      savedTranslateY.value = translateY.value;
+    });
+
+  const composedGesture = Gesture.Simultaneous(pinchGesture, panGesture);
+
+  const photoAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+      { scale: scale.value },
+    ],
+  }));
 
   if (!notebook) {
     return (
@@ -303,7 +386,7 @@ export default function NotebookPageView() {
               {/* Page title input */}
               <TextInput
                 style={styles.pageTitle}
-                placeholder="Spring Thoughts / はるのきもち"
+                placeholder=""
                 placeholderTextColor={Colors.textMuted}
                 value={currentPage?.title ?? ''}
                 onChangeText={(t) => currentPage && updatePage(currentPage.id, { title: t })}
@@ -313,16 +396,24 @@ export default function NotebookPageView() {
               {/* Date line */}
               <Text style={styles.pageDate}>{pageDate}</Text>
 
-              {/* Content area */}
-              <TextInput
-                style={[styles.pageContent, { height: spreadH - 90 }]}
-                multiline
-                placeholder={'今日はぽかぽかして、\nおさんぽ日和だったね。\nさくらのはながきれいで、\nこころまであたたかくなったよ。'}
-                placeholderTextColor={Colors.textMuted}
-                value={currentPage?.content ?? ''}
-                onChangeText={(t) => currentPage && updatePage(currentPage.id, { content: t })}
-                textAlignVertical="top"
-              />
+              {/* Scrollable content area */}
+              <ScrollView
+                style={[styles.pageContentScroll, { height: spreadH - 90 }]}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                nestedScrollEnabled
+              >
+                <TextInput
+                  style={styles.pageContent}
+                  multiline
+                  placeholder=""
+                  placeholderTextColor={Colors.textMuted}
+                  value={currentPage?.content ?? ''}
+                  onChangeText={(t) => currentPage && updatePage(currentPage.id, { content: t })}
+                  textAlignVertical="top"
+                  scrollEnabled={false}
+                />
+              </ScrollView>
 
               {/* Decorations */}
               <PawDecor style={{ position: 'absolute', bottom: 12, right: 8 }} />
@@ -336,19 +427,51 @@ export default function NotebookPageView() {
 
             {/* Right page — sticker canvas */}
             <View style={[styles.rightPage, { width: rightW, height: spreadH }]}>
-              {/* Cat photo sticker - decorative */}
+              {/* Photo area with transform toggle */}
               <View style={styles.photoSticker}>
-                <View style={styles.photoFrame}>
-                  <Image
-                    source={require('@/assets/neko_cat_mascot.png')}
-                    style={styles.photoImage}
-                    contentFit="contain"
+                {/* Transform toggle button */}
+                <TouchableOpacity
+                  style={[
+                    styles.transformToggleBtn,
+                    isTransformMode && styles.transformToggleBtnActive,
+                  ]}
+                  onPress={handleToggleTransform}
+                  activeOpacity={0.75}
+                >
+                  <Ionicons
+                    name={isTransformMode ? 'move' : 'expand-outline'}
+                    size={14}
+                    color={isTransformMode ? Colors.white : Colors.textLight}
                   />
-                  <View style={styles.photoTape} />
-                  <View style={styles.photoBubble}>
-                    <Text style={styles.photoBubbleText}>にゃー</Text>
+                </TouchableOpacity>
+
+                {/* Photo frame with gesture support */}
+                <GestureDetector gesture={composedGesture}>
+                  <View style={[styles.photoFrame, isTransformMode && styles.photoFrameActive]}>
+                    <TouchableOpacity
+                      activeOpacity={isTransformMode ? 1 : 0.8}
+                      onPress={handlePickPhoto}
+                      disabled={isTransformMode}
+                    >
+                      <Reanimated.View style={photoAnimatedStyle}>
+                        <Image
+                          source={photoUri ? { uri: photoUri } : require('@/assets/neko_cat_mascot.png')}
+                          style={styles.photoImage}
+                          contentFit={photoUri ? 'cover' : 'contain'}
+                        />
+                      </Reanimated.View>
+                    </TouchableOpacity>
+                    {!photoUri && (
+                      <View style={styles.photoHint}>
+                        <Ionicons name="image-outline" size={12} color={Colors.textMuted} />
+                      </View>
+                    )}
+                    <View style={styles.photoTape} />
+                    <View style={styles.photoBubble}>
+                      <Text style={styles.photoBubbleText}>にゃー</Text>
+                    </View>
                   </View>
-                </View>
+                </GestureDetector>
               </View>
 
               {/* Sticker canvas on top */}
@@ -515,13 +638,17 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     zIndex: 2,
   },
+  pageContentScroll: {
+    zIndex: 2,
+    flexGrow: 0,
+  },
   pageContent: {
     fontFamily: Fonts.handwritten,
     fontSize: 15,
     color: Colors.text,
     lineHeight: 26,
-    zIndex: 2,
     paddingTop: 2,
+    minHeight: 200,
   },
   spine: {
     width: 10,
@@ -544,8 +671,31 @@ const styles = StyleSheet.create({
     left: 8,
     right: 8,
     alignItems: 'center',
-    zIndex: 1,
+    zIndex: 2,
     transform: [{ rotate: '2deg' }],
+  },
+  transformToggleBtn: {
+    position: 'absolute',
+    top: -10,
+    right: -6,
+    zIndex: 10,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: Colors.surface,
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#5C4A4A',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  transformToggleBtnActive: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primaryDark,
   },
   photoFrame: {
     backgroundColor: Colors.surface,
@@ -558,10 +708,23 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     position: 'relative',
+    overflow: 'hidden',
+  },
+  photoFrameActive: {
+    borderWidth: 1.5,
+    borderColor: Colors.primary,
+    borderStyle: 'dashed',
   },
   photoImage: {
     width: 110,
     height: 100,
+  },
+  photoHint: {
+    position: 'absolute',
+    bottom: 4,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
   },
   photoTape: {
     position: 'absolute',
