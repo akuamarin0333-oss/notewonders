@@ -61,7 +61,7 @@ function formatDate(ts: number): string {
 
 export default function AudioMemoScreen() {
   const insets = useSafeAreaInsets();
-  const { audioMemos, addAudioMemo, deleteAudioMemo } = useAppStore();
+  const { audioMemos, addAudioMemo, deleteAudioMemo, updateAudioMemo } = useAppStore();
 
   const [isRecording, setIsRecording] = useState(false);
   const [recordingSeconds, setRecordingSeconds] = useState(0);
@@ -232,6 +232,23 @@ export default function AudioMemoScreen() {
     [deleteAudioMemo]
   );
 
+  const handleRename = useCallback(
+    (id: string, currentTitle: string) => {
+      Alert.prompt(
+        'Rename Memo',
+        'Enter a new name:',
+        (newTitle) => {
+          if (newTitle?.trim()) {
+            updateAudioMemo(id, { title: newTitle.trim() });
+          }
+        },
+        'plain-text',
+        currentTitle
+      );
+    },
+    [updateAudioMemo]
+  );
+
   useEffect(() => {
     return () => stopTimer();
   }, [stopTimer]);
@@ -329,7 +346,9 @@ export default function AudioMemoScreen() {
                   />
                 </TouchableOpacity>
                 <View style={styles.memoInfo}>
-                  <Text style={styles.memoTitle} numberOfLines={1}>{memo.title}</Text>
+                  <TouchableOpacity onLongPress={() => handleRename(memo.id, memo.title)}>
+                    <Text style={styles.memoTitle} numberOfLines={1}>{memo.title}</Text>
+                  </TouchableOpacity>
                   <View style={styles.memoMeta}>
                     <Ionicons name="time-outline" size={12} color={Colors.textLight} />
                     <Text style={styles.memoMetaText}>{formatDuration(memo.duration)}</Text>

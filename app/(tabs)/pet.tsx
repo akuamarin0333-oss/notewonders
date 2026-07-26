@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import Svg, { Path } from 'react-native-svg';
 import { Colors, BorderRadius, Spacing, Shadow } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
@@ -193,7 +194,7 @@ export default function PetACat() {
               ) : p.type === 'star' ? (
                 <StarSvg size={18} />
               ) : (
-                <Text style={styles.sparkleText}>✦</Text>
+                <Ionicons name="sparkles" size={18} color={Colors.accent} />
               )}
             </Animated.View>
           );
@@ -303,10 +304,6 @@ const styles = StyleSheet.create({
   },
   particle: {
     position: 'absolute',
-  },
-  sparkleText: {
-    fontSize: 18,
-    color: Colors.accent,
   },
   statsRow: {
     flexDirection: 'row',

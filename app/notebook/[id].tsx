@@ -7,6 +7,7 @@ import {
   TextInput,
   useWindowDimensions,
   Animated,
+  Alert,
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -46,6 +47,8 @@ export default function NotebookPageView() {
     pages,
     addPage,
     updatePage,
+    deletePage,
+    updateNotebook,
     toggleFavorite,
     addSticker,
     updateSticker,
@@ -103,6 +106,40 @@ export default function NotebookPageView() {
     [currentPage, addSticker, rightPageWidth, pageHeight]
   );
 
+  const handleDeletePage = useCallback(() => {
+    if (!currentPage) return;
+    Alert.alert(
+      'Delete Page',
+      `Delete page ${currentPage.pageNumber}? This cannot be undone.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            deletePage(currentPage.id);
+            setCurrentIndex((prev) => Math.max(0, prev - 1));
+          },
+        },
+      ]
+    );
+  }, [currentPage, deletePage]);
+
+  const handleRenameNotebook = useCallback(() => {
+    if (!notebook) return;
+    Alert.prompt(
+      'Rename Notebook',
+      'Enter a new name:',
+      (newTitle) => {
+        if (newTitle?.trim()) {
+          updateNotebook(notebook.id, { title: newTitle.trim() });
+        }
+      },
+      'plain-text',
+      notebook.title
+    );
+  }, [notebook, updateNotebook]);
+
   // Consume pending sticker from sticker-pack modal
   useEffect(() => {
     if (pendingSticker && currentPage) {
@@ -136,9 +173,11 @@ export default function NotebookPageView() {
         <TouchableOpacity onPress={() => router.back()} style={styles.backIcon}>
           <Ionicons name="chevron-back" size={24} color={Colors.text} />
         </TouchableOpacity>
-        <Text style={styles.notebookTitle} numberOfLines={1}>
-          {notebook.title}
-        </Text>
+        <TouchableOpacity onLongPress={handleRenameNotebook} style={{ flex: 1 }}>
+          <Text style={styles.notebookTitle} numberOfLines={1}>
+            {notebook.title}
+          </Text>
+        </TouchableOpacity>
         {/* Stamp icons */}
         <View style={styles.stampRow}>
           <TouchableOpacity onPress={handleAddPage} style={[styles.stampBtn, { borderColor: accent }]}>
@@ -163,6 +202,15 @@ export default function NotebookPageView() {
             <Ionicons name="home-outline" size={18} color={Colors.textLight} />
             <Text style={[styles.stampLabel, { color: Colors.textLight }]}>home</Text>
           </TouchableOpacity>
+          {currentPage !== null && (
+            <TouchableOpacity
+              onPress={handleDeletePage}
+              style={[styles.stampBtn, { borderColor: Colors.error }]}
+            >
+              <Ionicons name="trash-outline" size={18} color={Colors.error} />
+              <Text style={[styles.stampLabel, { color: Colors.error }]}>delete</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
