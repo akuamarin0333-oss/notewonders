@@ -7,13 +7,13 @@ import {
   Animated,
   useWindowDimensions,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path, Circle, Ellipse, G } from 'react-native-svg';
 import { Colors, Shadow, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
 import SakuraPetal from '@/components/SakuraPetal';
-import NekoEmoji from '@/components/NekoEmoji';
 import { useAppStore } from '@/store/useAppStore';
 import type { CoverTheme } from '@/store/types';
 
@@ -63,9 +63,8 @@ export default function CoverScreen() {
         <SakuraPetal key={i} x={x} size={14 + (i % 3) * 4} delay={i * 700} duration={3500 + i * 400} />
       ))}
 
-      {/* Top text */}
+      {/* Top tap hint */}
       <View style={[styles.topSection, { paddingTop: insets.top + 16 }]}>
-        <Text style={styles.subtitleJa}>春の限定版</Text>
         <Text style={styles.subtitleEn}>TAP TO OPEN</Text>
       </View>
 
@@ -94,23 +93,13 @@ export default function CoverScreen() {
           {/* Stitch border */}
           <View style={[styles.stitchBorder, { borderColor: theme.accent }]} />
 
-          {/* Title area */}
-          <View style={styles.titleArea}>
-            <Text style={[styles.titleEn, { color: selectedTheme === 'leather' ? '#FFF5EB' : Colors.text }]}>
-              Neko Notebook
-            </Text>
-            <Text style={[styles.titleJa, { color: theme.accent }]}>ねこノート</Text>
-            <View style={[styles.editionBadge, { borderColor: theme.accent }]}>
-              <Text style={[styles.editionText, { color: selectedTheme === 'leather' ? '#FFF5EB' : Colors.text }]}>
-                SPRING EDITION
-              </Text>
-              <Text style={[styles.editionTextJa, { color: theme.accent }]}>（春の限定版）</Text>
-            </View>
-          </View>
-
           {/* Cat mascot */}
           <View style={styles.catArea}>
-            <NekoEmoji size={120} mood="happy" />
+            <Image
+              source={require('@/assets/neko_notebook_reference.png')}
+              style={styles.catImage}
+              contentFit="contain"
+            />
           </View>
 
           {/* Bottom decorations */}
@@ -178,12 +167,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
-  subtitleJa: {
-    fontFamily: Fonts.handwritten,
-    fontSize: 18,
-    color: Colors.primary,
-    letterSpacing: 2,
-  },
   subtitleEn: {
     fontFamily: Fonts.regular,
     fontSize: 11,
@@ -228,43 +211,17 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     opacity: 0.4,
   },
-  titleArea: {
-    marginTop: 28,
-    marginLeft: 12,
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
-  titleEn: {
-    fontFamily: Fonts.handwrittenBold,
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  titleJa: {
-    fontFamily: Fonts.handwrittenBold,
-    fontSize: 30,
-    textAlign: 'center',
-    marginTop: 2,
-  },
-  editionBadge: {
-    marginTop: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderWidth: 1,
-    borderRadius: BorderRadius.round,
-    alignItems: 'center',
-  },
-  editionText: {
-    fontFamily: Fonts.regular,
-    fontSize: 9,
-    letterSpacing: 1.5,
-  },
-  editionTextJa: {
-    fontFamily: Fonts.regular,
-    fontSize: 9,
-  },
   catArea: {
-    marginTop: 8,
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 12,
+  },
+  catImage: {
+    width: 200,
+    height: 200,
   },
   bottomDecorations: {
     position: 'absolute',
