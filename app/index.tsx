@@ -17,11 +17,33 @@ import SakuraPetal from '@/components/SakuraPetal';
 import { useAppStore } from '@/store/useAppStore';
 import type { CoverTheme } from '@/store/types';
 
-const THEMES: { key: CoverTheme; label: string; bg: string; accent: string; pawColor: string }[] = [
-  { key: 'fluffy', label: 'Fluffy', bg: '#F5F0EB', accent: '#F9A8C9', pawColor: '#F9A8C9' },
-  { key: 'leather', label: 'Leather', bg: '#8B6340', accent: '#C4956A', pawColor: '#C4956A' },
-  { key: 'spring', label: 'Spring', bg: '#FADADD', accent: '#A8D8EA', pawColor: '#A8D8EA' },
+const THEMES: {
+  key: CoverTheme;
+  label: string;
+  labelJa: string;
+  bg: string;
+  accent: string;
+}[] = [
+  { key: 'leather', label: 'Leather', labelJa: 'レザー', bg: '#8B6340', accent: '#C4956A' },
+  { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ', bg: '#F5F0EB', accent: '#F9A8C9' },
+  { key: 'spring', label: 'Spring', labelJa: 'はる', bg: '#FADADD', accent: '#D45B7A' },
+  { key: 'blue', label: 'Blue', labelJa: 'みずいろ', bg: '#C8E6F5', accent: '#3A8BAD' },
 ];
+
+// Cover background colors for the main cover display
+const COVER_BG: Record<CoverTheme, string> = {
+  leather: '#8B6340',
+  fluffy: '#F5F0EB',
+  spring: '#FADADD',
+  blue: '#C8E6F5',
+};
+
+const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
+  leather: require('@/assets/cover_leather.png'),
+  fluffy: require('@/assets/cover_fluffy.png'),
+  spring: require('@/assets/cover_spring.png'),
+  blue: require('@/assets/cover_blue.png'),
+};
 
 function PawSvg({ color, size = 22 }: { color: string; size?: number }) {
   return (
@@ -49,36 +71,6 @@ function SakuraSvg({ color = '#FFB7C5', size = 14 }: { color?: string; size?: nu
   );
 }
 
-function CloverSvg({ size = 28 }: { size?: number }) {
-  return (
-    <Svg width={size} height={size} viewBox="0 0 40 40">
-      <Circle cx={14} cy={14} r={7} fill="#8BC34A" opacity={0.85} />
-      <Circle cx={26} cy={14} r={7} fill="#8BC34A" opacity={0.85} />
-      <Circle cx={14} cy={26} r={7} fill="#8BC34A" opacity={0.85} />
-      <Circle cx={26} cy={26} r={7} fill="#8BC34A" opacity={0.85} />
-      <Path d="M20 38 L20 20" stroke="#5D8A2A" strokeWidth={2.5} strokeLinecap="round" />
-    </Svg>
-  );
-}
-
-function LadybugSvg({ size = 22 }: { size?: number }) {
-  return (
-    <Svg width={size} height={size} viewBox="0 0 40 40">
-      <Ellipse cx={20} cy={24} rx={13} ry={11} fill="#E53935" />
-      <Path d="M20 13 C13 13 7 18 7 24 Q7 16 20 13Z" fill="#1a1a1a" />
-      <Path d="M20 13 C27 13 33 18 33 24 Q33 16 20 13Z" fill="#1a1a1a" />
-      <Path d="M20 13 L20 35" stroke="#1a1a1a" strokeWidth={2} />
-      <Circle cx={13} cy={24} r={3.5} fill="#1a1a1a" />
-      <Circle cx={27} cy={24} r={3.5} fill="#1a1a1a" />
-      <Circle cx={13} cy={31} r={2.5} fill="#1a1a1a" />
-      <Circle cx={27} cy={31} r={2.5} fill="#1a1a1a" />
-      <Circle cx={20} cy={11} r={4} fill="#1a1a1a" />
-      <Circle cx={18} cy={10} r={1} fill="#E53935" />
-      <Circle cx={22} cy={10} r={1} fill="#E53935" />
-    </Svg>
-  );
-}
-
 export default function CoverScreen() {
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
@@ -87,10 +79,11 @@ export default function CoverScreen() {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
 
-  const theme = THEMES.find((t) => t.key === selectedTheme) ?? THEMES[0];
+  const theme = THEMES.find((t) => t.key === selectedTheme) ?? THEMES[1];
   const isLeather = selectedTheme === 'leather';
   const textColor = isLeather ? '#FFF5EB' : Colors.text;
   const mutedColor = isLeather ? 'rgba(255,245,235,0.6)' : Colors.textLight;
+  const bgColor = COVER_BG[selectedTheme];
 
   const handleTap = useCallback(() => {
     updateSettings({ coverTheme: selectedTheme });
@@ -130,7 +123,7 @@ export default function CoverScreen() {
             paddingTop: insets.top + 10,
             paddingBottom: insets.bottom + 10,
             minHeight: height,
-            backgroundColor: theme.bg,
+            backgroundColor: bgColor,
           },
         ]}
       >
@@ -159,24 +152,16 @@ export default function CoverScreen() {
           <SakuraSvg color={theme.accent} size={18} />
         </View>
 
-        {/* Spacer where title section was */}
+        {/* Spacer */}
         <View style={styles.titleSpacer} />
 
         {/* Cat mascot */}
         <View style={styles.catSection}>
           <Image
-            source={require('@/assets/neko_new_mascot.png')}
+            source={require('@/assets/neko_mascot_final.png')}
             style={styles.catImage}
             contentFit="contain"
           />
-          {/* Clover bottom left */}
-          <View style={styles.cloverDecor} pointerEvents="none">
-            <CloverSvg size={36} />
-          </View>
-          {/* Ladybug bottom right */}
-          <View style={styles.ladybugDecor} pointerEvents="none">
-            <LadybugSvg size={28} />
-          </View>
         </View>
 
         {/* Open Notebook CTA */}
@@ -199,19 +184,27 @@ export default function CoverScreen() {
                 <View
                   style={[
                     styles.themeChip,
-                    { backgroundColor: t.bg },
                     selectedTheme === t.key
                       ? [styles.themeChipSelected, { borderColor: t.accent, shadowColor: t.accent }]
-                      : { borderColor: 'rgba(92,74,74,0.12)' },
+                      : { borderColor: 'rgba(92,74,74,0.2)' },
                   ]}
                 >
-                  {t.key === 'spring' ? (
-                    <SakuraSvg color={t.accent} size={26} />
-                  ) : (
-                    <PawSvg color={t.pawColor} size={26} />
+                  {/* Cover image thumbnail */}
+                  <Image
+                    source={COVER_IMAGES[t.key]}
+                    style={StyleSheet.absoluteFillObject}
+                    contentFit="cover"
+                  />
+                  {selectedTheme === t.key && (
+                    <View style={styles.themeChipCheck}>
+                      <Svg width={14} height={14} viewBox="0 0 24 24">
+                        <Circle cx={12} cy={12} r={12} fill={t.accent} />
+                        <Path d="M7 12 L10 15 L17 8" stroke="white" strokeWidth={2.5} strokeLinecap="round" />
+                      </Svg>
+                    </View>
                   )}
                 </View>
-                <Text style={[styles.themeChipLabel, { color: mutedColor }]}>{t.label}</Text>
+                <Text style={[styles.themeChipLabel, { color: mutedColor }]}>{t.labelJa}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -266,16 +259,6 @@ const styles = StyleSheet.create({
     width: 240,
     height: 240,
   },
-  cloverDecor: {
-    position: 'absolute',
-    bottom: 4,
-    left: 0,
-  },
-  ladybugDecor: {
-    position: 'absolute',
-    bottom: 8,
-    right: 10,
-  },
   openBtnRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -303,30 +286,37 @@ const styles = StyleSheet.create({
   },
   themeRow: {
     flexDirection: 'row',
-    gap: 20,
+    gap: 14,
   },
   themeChipWrap: {
     alignItems: 'center',
     gap: 6,
   },
   themeChip: {
-    width: 60,
-    height: 60,
+    width: 56,
+    height: 56,
     borderRadius: BorderRadius.md,
     borderWidth: 2,
+    overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
     borderCurve: 'continuous',
+    position: 'relative',
   },
   themeChipSelected: {
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 4,
   },
+  themeChipCheck: {
+    position: 'absolute',
+    bottom: 3,
+    right: 3,
+  },
   themeChipLabel: {
     fontFamily: Fonts.regular,
-    fontSize: 11,
+    fontSize: 10,
     letterSpacing: 0.5,
   },
 });

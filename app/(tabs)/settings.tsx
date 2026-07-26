@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Switch,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAppStore } from '@/store/useAppStore';
@@ -16,10 +17,18 @@ import NekoEmoji from '@/components/NekoEmoji';
 import type { CoverTheme, FontStyle, Language } from '@/store/types';
 
 const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string; bg: string; accent: string }[] = [
+  { key: 'leather', label: 'Leather', labelJa: 'レザー', bg: '#8B6340', accent: '#C4956A' },
   { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ', bg: '#F5F0EB', accent: '#F9A8C9' },
-  { key: 'leather', label: 'Leather', labelJa: 'かわ', bg: '#8B6340', accent: '#C4956A' },
-  { key: 'spring', label: 'Spring', labelJa: 'はる', bg: '#FADADD', accent: '#A8D8EA' },
+  { key: 'spring', label: 'Spring', labelJa: 'はる', bg: '#FADADD', accent: '#D45B7A' },
+  { key: 'blue', label: 'Blue', labelJa: 'みずいろ', bg: '#C8E6F5', accent: '#3A8BAD' },
 ];
+
+const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
+  leather: require('@/assets/cover_leather.png'),
+  fluffy: require('@/assets/cover_fluffy.png'),
+  spring: require('@/assets/cover_spring.png'),
+  blue: require('@/assets/cover_blue.png'),
+};
 
 const FONT_STYLES: { key: FontStyle; label: string; labelJa: string; preview: string }[] = [
   { key: 'handwritten', label: 'Handwritten', labelJa: 'てがき', preview: 'Spring notes~' },
@@ -99,29 +108,34 @@ export default function SettingsScreen() {
         {/* Cover Theme */}
         <SectionHeader title="Cover Theme" titleJa="カバーテーマ" />
         <View style={[styles.card, Shadow.small]}>
-          <View style={styles.coverThemeRow}>
-            {COVER_THEMES.map((t) => (
-              <TouchableOpacity
-                key={t.key}
-                onPress={() => handleCoverTheme(t.key)}
-                style={[
-                  styles.coverChip,
-                  { backgroundColor: t.bg, borderColor: t.accent },
-                  settings.coverTheme === t.key && styles.coverChipActive,
-                ]}
-              >
-                {settings.coverTheme === t.key && (
-                  <View style={styles.checkmark}>
-                    <Ionicons name="checkmark-circle" size={14} color={t.accent} />
+          <View style={styles.coverThemeGrid}>
+            {COVER_THEMES.map((t) => {
+              const isSelected = settings.coverTheme === t.key;
+              return (
+                <TouchableOpacity
+                  key={t.key}
+                  onPress={() => handleCoverTheme(t.key)}
+                  style={[
+                    styles.coverChip,
+                    isSelected && [styles.coverChipActive, { borderColor: t.accent }],
+                  ]}
+                >
+                  <Image
+                    source={COVER_IMAGES[t.key]}
+                    style={styles.coverChipImage}
+                    contentFit="cover"
+                  />
+                  {isSelected && (
+                    <View style={styles.checkmark}>
+                      <Ionicons name="checkmark-circle" size={16} color={t.accent} />
+                    </View>
+                  )}
+                  <View style={[styles.coverChipLabelBar, { backgroundColor: isSelected ? t.accent : 'rgba(0,0,0,0.38)' }]}>
+                    <Text style={styles.coverChipLabel}>{t.labelJa}</Text>
                   </View>
-                )}
-                <View style={[styles.coverSpine, { backgroundColor: t.accent }]} />
-                <Text style={[styles.coverChipLabel, { color: t.key === 'leather' ? '#FFF5EB' : Colors.text }]}>
-                  {t.label}
-                </Text>
-                <Text style={[styles.coverChipLabelJa, { color: t.accent }]}>{t.labelJa}</Text>
-              </TouchableOpacity>
-            ))}
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </View>
 
@@ -261,45 +275,48 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     borderWidth: 1,
   },
-  coverThemeRow: {
+  coverThemeGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: Spacing.sm,
   },
   coverChip: {
-    flex: 1,
-    padding: Spacing.sm,
-    paddingLeft: 14,
+    width: '47%',
+    height: 90,
     borderRadius: BorderRadius.md,
     borderWidth: 2,
-    position: 'relative',
-    minHeight: 80,
-    justifyContent: 'center',
-    gap: 2,
+    borderColor: 'transparent',
     overflow: 'hidden',
+    position: 'relative',
   },
   coverChipActive: {
+    borderWidth: 2.5,
     ...Shadow.small,
   },
-  coverSpine: {
+  coverChipImage: {
+    width: '100%',
+    height: '100%',
+  },
+  coverChipLabelBar: {
     position: 'absolute',
-    left: 0,
-    top: 0,
     bottom: 0,
-    width: 6,
-    opacity: 0.8,
+    left: 0,
+    right: 0,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    alignItems: 'center',
   },
   coverChipLabel: {
-    fontFamily: Fonts.handwrittenBold,
-    fontSize: 14,
-  },
-  coverChipLabelJa: {
-    fontFamily: Fonts.regular,
+    fontFamily: Fonts.semiBold,
     fontSize: 10,
+    color: '#FFFFFF',
   },
   checkmark: {
     position: 'absolute',
-    top: 6,
-    right: 6,
+    top: 5,
+    right: 5,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: 10,
   },
   fontRow: {
     flexDirection: 'row',

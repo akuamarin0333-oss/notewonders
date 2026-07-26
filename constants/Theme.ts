@@ -18,6 +18,7 @@ export const Colors = {
   coverFluffy: '#F5F0EB',
   coverLeather: '#8B6340',
   coverSpring: '#FADADD',
+  coverBlue: '#C8E6F5',
   tabBar: '#FFFFFF',
   tabBarBorder: '#F5D0DC',
   favorite: '#FF6B9D',

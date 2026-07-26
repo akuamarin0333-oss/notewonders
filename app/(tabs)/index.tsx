@@ -22,16 +22,26 @@ import { Colors, Shadow, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
 import type { CoverTheme, Notebook } from '@/store/types';
 
-const COVER_THEMES: { key: CoverTheme; label: string }[] = [
-  { key: 'fluffy', label: 'Fluffy' },
-  { key: 'leather', label: 'Leather' },
-  { key: 'spring', label: 'Spring' },
+const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string }[] = [
+  { key: 'leather', label: 'Leather', labelJa: 'レザー' },
+  { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ' },
+  { key: 'spring', label: 'Spring', labelJa: 'はる' },
+  { key: 'blue', label: 'Blue', labelJa: 'みずいろ' },
 ];
+
+// Cover image sources
+const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
+  leather: require('@/assets/cover_leather.png'),
+  fluffy: require('@/assets/cover_fluffy.png'),
+  spring: require('@/assets/cover_spring.png'),
+  blue: require('@/assets/cover_blue.png'),
+};
 
 const COVER_COLORS: Record<CoverTheme, { bg: string; accent: string; spine: string; text: string }> = {
   fluffy: { bg: '#F5F0EB', accent: '#F9A8C9', spine: '#E8C9D5', text: '#5C4A4A' },
   leather: { bg: '#8B6340', accent: '#C4956A', spine: '#6B4D30', text: '#FFF5EB' },
-  spring: { bg: '#FADADD', accent: '#A8D8EA', spine: '#C9E8F0', text: '#5C4A4A' },
+  spring: { bg: '#FADADD', accent: '#D45B7A', spine: '#F5B8CC', text: '#5C4A4A' },
+  blue: { bg: '#D6EEF8', accent: '#3A8BAD', spine: '#A8D8EA', text: '#1A4A5C' },
 };
 
 function PawSvg({ color, size = 18 }: { color: string; size?: number }) {
@@ -70,6 +80,7 @@ function NotebookCard({
   const c = COVER_COLORS[notebook.coverTheme] ?? COVER_COLORS.fluffy;
   const lastEdited = new Date(notebook.lastEdited);
   const dateStr = lastEdited.toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' });
+  const coverImg = COVER_IMAGES[notebook.coverTheme] ?? COVER_IMAGES.fluffy;
 
   return (
     <TouchableOpacity
@@ -79,44 +90,16 @@ function NotebookCard({
       style={[styles.card, Shadow.medium]}
     >
       <View style={[styles.cardCover, { backgroundColor: c.bg }]}>
-        {/* Spine */}
-        <View style={[styles.cardSpine, { backgroundColor: c.spine }]} />
-        {/* Clasp */}
-        <View style={[styles.cardClasp, { backgroundColor: c.accent }]} />
-
-        {/* Decoration inside card */}
-        <View style={styles.cardDecorTop}>
-          {notebook.coverTheme === 'spring' ? (
-            <SakuraSvg color={c.accent} size={22} />
-          ) : notebook.coverTheme === 'leather' ? (
-            <PawSvg color={c.accent} size={22} />
-          ) : (
-            <SakuraSvg color={c.accent} size={22} />
-          )}
-        </View>
-        {/* Ladybug for fluffy, paw for leather, clover for spring */}
-        <View style={styles.cardDecorBottom}>
-          {notebook.coverTheme === 'spring' ? (
-            <Svg width={18} height={18} viewBox="0 0 40 40">
-              <Circle cx={14} cy={14} r={7} fill="#8BC34A" opacity={0.8} />
-              <Circle cx={26} cy={14} r={7} fill="#8BC34A" opacity={0.8} />
-              <Circle cx={14} cy={26} r={7} fill="#8BC34A" opacity={0.8} />
-              <Circle cx={26} cy={26} r={7} fill="#8BC34A" opacity={0.8} />
-            </Svg>
-          ) : (
-            <Svg width={18} height={18} viewBox="0 0 40 40">
-              <Ellipse cx={20} cy={26} rx={13} ry={10} fill="#E53935" />
-              <Path d="M20 16 C13 16 7 21 7 26 Q7 18 20 16Z" fill="#1a1a1a" />
-              <Path d="M20 16 C27 16 33 21 33 26 Q33 18 20 16Z" fill="#1a1a1a" />
-              <Path d="M20 16 L20 36" stroke="#1a1a1a" strokeWidth={2} />
-              <Circle cx={13} cy={26} r={3} fill="#1a1a1a" />
-              <Circle cx={27} cy={26} r={3} fill="#1a1a1a" />
-            </Svg>
-          )}
-        </View>
-
-        {/* Stitch border */}
-        <View style={[styles.cardStitch, { borderColor: notebook.coverTheme === 'leather' ? 'rgba(255,245,235,0.25)' : c.accent }]} />
+        {/* Use cover image */}
+        <Image
+          source={coverImg}
+          style={StyleSheet.absoluteFillObject}
+          contentFit="cover"
+        />
+        {/* Stitch border overlay */}
+        <View style={[styles.cardStitch, {
+          borderColor: notebook.coverTheme === 'leather' ? 'rgba(255,245,235,0.3)' : 'rgba(255,255,255,0.4)',
+        }]} />
       </View>
 
       {/* Card info */}
@@ -212,7 +195,7 @@ export default function HomeScreen() {
         {/* Mascot + greeting */}
         <View style={styles.mascotRow}>
           <Image
-            source={require('@/assets/neko_new_mascot.png')}
+            source={require('@/assets/neko_mascot_final.png')}
             style={styles.mascotImage}
             contentFit="contain"
           />
@@ -289,8 +272,10 @@ export default function HomeScreen() {
             />
 
             <Text style={styles.modalLabel}>カバーテーマ</Text>
-            <View style={styles.themeRow}>
+            {/* 2x2 grid of cover image options */}
+            <View style={styles.themeGrid}>
               {COVER_THEMES.map((t) => {
+                const isSelected = newTheme === t.key;
                 const c = COVER_COLORS[t.key];
                 return (
                   <TouchableOpacity
@@ -298,13 +283,22 @@ export default function HomeScreen() {
                     onPress={() => setNewTheme(t.key)}
                     style={[
                       styles.themeOption,
-                      { backgroundColor: c.bg, borderColor: newTheme === t.key ? c.accent : 'transparent' },
-                      newTheme === t.key && { borderColor: c.accent },
+                      isSelected && [styles.themeOptionSelected, { borderColor: c.accent }],
                     ]}
                   >
-                    <View style={[styles.themeSpine, { backgroundColor: c.spine }]} />
-                    <PawSvg color={c.accent} size={20} />
-                    <Text style={[styles.themeOptionLabel, { color: c.text }]}>{t.label}</Text>
+                    <Image
+                      source={COVER_IMAGES[t.key]}
+                      style={styles.themeOptionImage}
+                      contentFit="cover"
+                    />
+                    {isSelected && (
+                      <View style={styles.themeCheckmark}>
+                        <Ionicons name="checkmark-circle" size={18} color={c.accent} />
+                      </View>
+                    )}
+                    <View style={[styles.themeOptionLabel, { backgroundColor: isSelected ? c.accent : 'rgba(0,0,0,0.35)' }]}>
+                      <Text style={styles.themeOptionLabelText}>{t.labelJa}</Text>
+                    </View>
                   </TouchableOpacity>
                 );
               })}
@@ -423,43 +417,16 @@ const styles = StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
   },
-  cardSpine: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 10,
-  },
-  cardClasp: {
-    position: 'absolute',
-    right: -4,
-    top: '50%',
-    marginTop: -14,
-    width: 8,
-    height: 28,
-    borderRadius: 4,
-    opacity: 0.9,
-  },
-  cardDecorTop: {
-    position: 'absolute',
-    top: 10,
-    right: 18,
-  },
-  cardDecorBottom: {
-    position: 'absolute',
-    bottom: 10,
-    left: 18,
-  },
   cardStitch: {
     position: 'absolute',
-    left: 16,
-    right: 14,
-    top: 7,
-    bottom: 7,
+    left: 10,
+    right: 10,
+    top: 6,
+    bottom: 6,
     borderWidth: 1,
     borderStyle: 'dashed',
     borderRadius: BorderRadius.sm,
-    opacity: 0.35,
+    opacity: 0.5,
   },
   cardInfo: {
     padding: Spacing.sm,
@@ -576,31 +543,49 @@ const styles = StyleSheet.create({
     color: Colors.text,
     backgroundColor: Colors.surfaceAlt,
   },
-  themeRow: {
+  // 2×2 theme grid
+  themeGrid: {
     flexDirection: 'row',
-    gap: 10,
+    flexWrap: 'wrap',
+    gap: 8,
   },
   themeOption: {
-    flex: 1,
-    height: 64,
+    width: '48%',
+    height: 80,
     borderRadius: BorderRadius.md,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 3,
     overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: 'transparent',
     position: 'relative',
   },
-  themeSpine: {
+  themeOptionSelected: {
+    borderWidth: 2.5,
+  },
+  themeOptionImage: {
+    width: '100%',
+    height: '100%',
+  },
+  themeCheckmark: {
     position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 6,
+    top: 6,
+    right: 6,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: 10,
   },
   themeOptionLabel: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    alignItems: 'center',
+  },
+  themeOptionLabelText: {
     fontFamily: Fonts.semiBold,
-    fontSize: 11,
+    fontSize: 10,
+    color: '#FFFFFF',
+    letterSpacing: 0.3,
   },
   createModalBtn: {
     flexDirection: 'row',
