@@ -1,49 +1,33 @@
-module.exports = function (api) {
-  const platform = api.caller((c) => c?.platform);
-  const isDev = api.caller((c) => c?.isDev);
+const _userConfig = require('./.fastshot.babel.user.config.js');
+module.exports = function(api) {
+  // Extract platform info and configure caching BEFORE calling user config,
+  // because user config may call api.cache(true) which locks caching to
+  // .forever() and prevents any subsequent cache configuration changes.
+  const platform = api.caller(c => c?.platform);
+  const isDev = api.caller(c => c?.isDev);
   const sourceMeta = process.env.EXPO_SOURCE_METADATA;
   api.cache.using(() => `${platform}:${isDev}:${sourceMeta}`);
 
-  const plugins = [];
+  // Neutralize api.cache for user config (caching already configured above).
+  // User configs commonly call api.cache(true) which would throw
+  // "Caching has already been configured" if not intercepted.
+  const _savedCache = api.cache;
+  api.cache = Object.assign(() => {}, { forever: () => {}, never: () => {}, using: () => {} });
+  const raw = typeof _userConfig === 'function' ? _userConfig(api) : _userConfig;
+  api.cache = _savedCache;
 
-  // Source metadata for AI agent inspection (web preview + local dev only)
-  // isDev is true during Metro dev server; EXPO_SOURCE_METADATA is set by
-  // build_manager.py so that `expo export` (always production) still injects metadata.
-  if (platform === 'web' && (isDev || process.env.EXPO_SOURCE_METADATA === '1')) {
-    plugins.push('./babel-plugin-source-metadata');
+  // Defensive: if user config returned null/undefined/non-object, use empty config
+  const result = (raw && typeof raw === 'object' && !Array.isArray(raw))
+    ? Object.assign({}, raw)
+    : {};
+  if (platform === 'web' && (isDev || sourceMeta === '1')) {
+    // Normalize plugins to array
+    if (!Array.isArray(result.plugins)) result.plugins = [];
+    const hasIt = result.plugins.some(p =>
+      (typeof p === 'string' && p.includes('source-metadata')) ||
+      (Array.isArray(p) && typeof p[0] === 'string' && p[0].includes('source-metadata'))
+    );
+    if (!hasIt) result.plugins.push('./babel-plugin-source-metadata');
   }
-
-  // react-native-reanimated plugin must be last
-  plugins.push('react-native-reanimated/plugin');
-
-  return {
-    presets: [
-      [
-        'babel-preset-expo',
-        {
-          unstable_transformImportMeta: true,
-        },
-      ],
-    ],
-    plugins,
-    overrides: [
-      {
-        // Include @fastshot/* packages for env var inlining
-        // babel-preset-expo skips node_modules, so we need this override
-        include: /node_modules\/@fastshot\/(ai|auth)/,
-        plugins: [
-          [
-            'transform-inline-environment-variables',
-            {
-              include: [
-                'EXPO_PUBLIC_PROJECT_ID',
-                'EXPO_PUBLIC_NEWELL_API_URL',
-                'EXPO_PUBLIC_AUTH_BROKER_URL',
-              ],
-            },
-          ],
-        ],
-      },
-    ],
-  };
+  return result;
 };
