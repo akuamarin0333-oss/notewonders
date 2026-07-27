@@ -509,7 +509,7 @@ export default function NotebookPageView() {
         }
       }
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: 'images' as ImagePicker.MediaType,
         allowsEditing: false,
         quality: 0.8,
       });

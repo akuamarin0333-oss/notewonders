@@ -126,12 +126,14 @@ export default function SettingsScreen() {
         URL.revokeObjectURL(url);
         Alert.alert(t.backupLabel, t.backupSuccess);
       } else {
-        // On native: save to documents directory
+        // On native: save to documents directory using expo-file-system legacy API
         try {
-          const { File, Paths } = await import('expo-file-system/next');
-          const file = new File(Paths.document, `neko-notebook-backup-${Date.now()}.json`);
-          file.create();
-          file.write(jsonStr);
+          const FileSystem = await import('expo-file-system/legacy');
+          const docDir = FileSystem.documentDirectory;
+          if (docDir) {
+            const fileName = `neko-notebook-backup-${Date.now()}.json`;
+            await FileSystem.writeAsStringAsync(`${docDir}${fileName}`, jsonStr);
+          }
           Alert.alert(t.backupLabel, `${t.backupSuccess}`);
         } catch {
           Alert.alert(t.backupLabel, t.backupSuccess);
