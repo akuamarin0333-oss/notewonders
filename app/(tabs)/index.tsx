@@ -32,9 +32,9 @@ const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string }[] = [
 
 // Cover image sources
 const COVER_IMAGES: Record<CoverTheme, number> = {
-  leather: require('@/assets/cover_leather.png'),
-  fluffy: require('@/assets/cover_fluffy.png'),
-  spring: require('@/assets/cover_spring.png'),
+  leather: require('@/assets/cover_leather_new.png'),
+  fluffy: require('@/assets/cover_fluffy_new.png'),
+  spring: require('@/assets/cover_spring_new.png'),
   blue: require('@/assets/cover_blue_new.png'),
 };
 

@@ -452,20 +452,15 @@ export default function NotebookPageView() {
       deletePage(currentPage.id);
       setCurrentIndex((prev) => Math.max(0, prev - 1));
     };
-    if (Platform.OS === 'web') {
-      // Web-safe confirm dialog
-      const confirmed = window.confirm('このページ（テキスト・写真・ステッカー全て）を削除しますか？');
-      if (confirmed) doDelete();
-    } else {
-      Alert.alert(
-        'ページを削除',
-        'このページ（テキスト・写真・ステッカー全て）を削除しますか？',
-        [
-          { text: 'キャンセル', style: 'cancel' },
-          { text: '削除', style: 'destructive', onPress: doDelete },
-        ]
-      );
-    }
+    // Use Alert.alert for all platforms — window.confirm is blocked in sandboxed contexts (web previews/iframes)
+    Alert.alert(
+      'ページを削除',
+      'このページ（テキスト・写真・ステッカー全て）を削除しますか？',
+      [
+        { text: 'キャンセル', style: 'cancel' },
+        { text: '削除', style: 'destructive', onPress: doDelete },
+      ]
+    );
   }, [currentPage, deletePage]);
 
   const handleRenameNotebook = useCallback(() => {

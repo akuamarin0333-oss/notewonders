@@ -157,6 +157,8 @@ function DraggableSticker({
           top: sticker.y,
           width: size,
           height: size,
+          // Elevate selected sticker so its controls appear above siblings
+          zIndex: isSelected ? 100 : 1,
         },
       ]}
     >
@@ -214,12 +216,18 @@ export default function StickerCanvas({
   height,
 }: StickerCanvasProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Track when a sticker was last selected so the background Pressable
+  // doesn't immediately deselect it on the same tap event
+  const lastSelectTimeRef = useRef(0);
 
   const handleSelect = useCallback((id: string) => {
+    lastSelectTimeRef.current = Date.now();
     setSelectedId((prev) => (prev === id ? null : id));
   }, []);
 
   const handleBackgroundPress = useCallback(() => {
+    // Suppress deselect if a sticker was selected very recently (same touch)
+    if (Date.now() - lastSelectTimeRef.current < 150) return;
     setSelectedId(null);
   }, []);
 
