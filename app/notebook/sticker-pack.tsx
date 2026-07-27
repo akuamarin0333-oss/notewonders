@@ -217,25 +217,29 @@ export default function StickerPack() {
       </TouchableOpacity>
 
       {customStickers.map((cs) => (
-        <TouchableOpacity
-          key={cs.id}
-          onPress={() => handleSelect('custom', cs.uri)}
-          style={[styles.stickerCard, Shadow.small]}
-          activeOpacity={0.72}
-        >
-          <Image
-            source={{ uri: cs.uri }}
-            style={styles.stickerImg}
-            contentFit="contain"
-          />
+        // Use View as container so the remove button is NOT nested inside the
+        // select TouchableOpacity — nested touchables break on web (RN Web).
+        <View key={cs.id} style={[styles.stickerCard, Shadow.small]}>
+          <TouchableOpacity
+            onPress={() => handleSelect('custom', cs.uri)}
+            activeOpacity={0.72}
+            style={styles.stickerSelectArea}
+          >
+            <Image
+              source={{ uri: cs.uri }}
+              style={styles.stickerImg}
+              contentFit="contain"
+            />
+          </TouchableOpacity>
+          {/* Sibling (not child) of the select touchable — absolute overlay */}
           <TouchableOpacity
             style={styles.customRemoveBtn}
             onPress={() => handleRemoveCustomSticker(cs.id)}
-            hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
+            hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}
           >
-            <Ionicons name="close-circle" size={18} color={Colors.primaryDark} />
+            <Ionicons name="close-circle" size={20} color={Colors.primaryDark} />
           </TouchableOpacity>
-        </TouchableOpacity>
+        </View>
       ))}
 
       {customStickers.length === 0 && !addingCustom && (
@@ -425,12 +429,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 100,
   },
+  stickerSelectArea: {
+    width: '100%',
+    alignItems: 'center',
+  },
   customRemoveBtn: {
     position: 'absolute',
     top: 4,
     right: 4,
     backgroundColor: Colors.white,
-    borderRadius: 9,
+    borderRadius: 10,
+    zIndex: 10,
   },
   emptyCustom: {
     flex: 1,

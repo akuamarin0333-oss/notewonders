@@ -11,6 +11,7 @@ import {
   ScrollView,
   PanResponder,
   Platform,
+  Modal,
 } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
@@ -389,6 +390,28 @@ export default function NotebookPageView() {
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [rightPageDims, setRightPageDims] = useState({ width: 180, height: 400 });
 
+  // Custom confirmation dialog state (replaces Alert.alert which is blocked in sandboxed web)
+  const [confirmDialog, setConfirmDialog] = useState<{
+    visible: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({ visible: false, title: '', message: '', onConfirm: () => {} });
+
+  const showConfirm = useCallback(
+    (title: string, message: string, onConfirm: () => void) => {
+      if (Platform.OS !== 'web') {
+        Alert.alert(title, message, [
+          { text: 'キャンセル', style: 'cancel' },
+          { text: '削除', style: 'destructive', onPress: onConfirm },
+        ]);
+      } else {
+        setConfirmDialog({ visible: true, title, message, onConfirm });
+      }
+    },
+    []
+  );
+
   const currentPage = notebookPages[currentIndex] ?? null;
 
   const spreadWidth = width - Spacing.sm * 2;
@@ -429,22 +452,6 @@ export default function NotebookPageView() {
     [currentIndex, notebookPages.length, slideAnim]
   );
 
-  const handleAddSticker = useCallback(
-    (type: Sticker['type'], customUri?: string) => {
-      if (!currentPage) return;
-      const sticker: Sticker = {
-        id: generateId(),
-        type,
-        customUri,
-        x: 16 + Math.random() * (rightPageDims.width - 72),
-        y: 16 + Math.random() * (rightPageDims.height - 72),
-        scale: 1,
-      };
-      addSticker(currentPage.id, sticker);
-    },
-    [currentPage, addSticker, rightPageDims]
-  );
-
   const handleDeletePage = useCallback(() => {
     if (!currentPage) return;
     const doDelete = () => {
@@ -452,16 +459,12 @@ export default function NotebookPageView() {
       deletePage(currentPage.id);
       setCurrentIndex((prev) => Math.max(0, prev - 1));
     };
-    // Use Alert.alert for all platforms — window.confirm is blocked in sandboxed contexts (web previews/iframes)
-    Alert.alert(
+    showConfirm(
       'ページを削除',
       'このページ（テキスト・写真・ステッカー全て）を削除しますか？',
-      [
-        { text: 'キャンセル', style: 'cancel' },
-        { text: '削除', style: 'destructive', onPress: doDelete },
-      ]
+      doDelete
     );
-  }, [currentPage, deletePage]);
+  }, [currentPage, deletePage, showConfirm]);
 
   const handleRenameNotebook = useCallback(() => {
     if (!notebook || Platform.OS !== 'ios') return;
@@ -532,11 +535,22 @@ export default function NotebookPageView() {
   }, []);
 
   useEffect(() => {
-    if (pendingSticker && currentPage) {
-      handleAddSticker(pendingSticker.type, pendingSticker.customUri);
-      setPendingSticker(null);
-    }
-  }, [pendingSticker, currentPage, handleAddSticker, setPendingSticker]);
+    if (!pendingSticker || !currentPage) return;
+    // Clear pendingSticker BEFORE adding to prevent double-fire:
+    // addSticker updates pages → currentPage changes → this effect would re-run
+    // but pendingSticker will already be null so the guard exits early.
+    const sticker = pendingSticker;
+    setPendingSticker(null);
+    const newSticker: Sticker = {
+      id: generateId(),
+      type: sticker.type,
+      customUri: sticker.customUri,
+      x: 16 + Math.random() * (rightPageDims.width - 72),
+      y: 16 + Math.random() * (rightPageDims.height - 72),
+      scale: 1,
+    };
+    addSticker(currentPage.id, newSticker);
+  }, [pendingSticker, currentPage, setPendingSticker, addSticker, rightPageDims]);
 
   // ─── Guard ───────────────────────────────────────────────────────────────────
 
@@ -979,6 +993,38 @@ export default function NotebookPageView() {
           </View>
         </View>
       )}
+
+      {/* Custom web-safe confirmation dialog */}
+      <Modal
+        visible={confirmDialog.visible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setConfirmDialog((d) => ({ ...d, visible: false }))}
+      >
+        <View style={styles.confirmOverlay}>
+          <View style={styles.confirmCard}>
+            <Text style={styles.confirmTitle}>{confirmDialog.title}</Text>
+            <Text style={styles.confirmMessage}>{confirmDialog.message}</Text>
+            <View style={styles.confirmBtns}>
+              <TouchableOpacity
+                style={styles.confirmCancelBtn}
+                onPress={() => setConfirmDialog((d) => ({ ...d, visible: false }))}
+              >
+                <Text style={styles.confirmCancelText}>キャンセル</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.confirmDeleteBtn}
+                onPress={() => {
+                  setConfirmDialog((d) => ({ ...d, visible: false }));
+                  confirmDialog.onConfirm();
+                }}
+              >
+                <Text style={styles.confirmDeleteText}>削除</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -1397,5 +1443,70 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  // ─── Custom confirmation dialog (web-safe) ─────────────────────────────────
+  confirmOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  confirmCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.lg,
+    width: '100%',
+    maxWidth: 340,
+    gap: Spacing.sm,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 12,
+  },
+  confirmTitle: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 20,
+    color: Colors.text,
+    textAlign: 'center',
+  },
+  confirmMessage: {
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+    color: Colors.textLight,
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  confirmBtns: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    marginTop: 4,
+  },
+  confirmCancelBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: BorderRadius.md,
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    alignItems: 'center',
+  },
+  confirmCancelText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: Colors.textLight,
+  },
+  confirmDeleteBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: BorderRadius.md,
+    backgroundColor: Colors.error,
+    alignItems: 'center',
+  },
+  confirmDeleteText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: Colors.white,
   },
 });

@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
@@ -71,12 +72,12 @@ function NotebookCard({
   notebook,
   pageCount,
   onPress,
-  onLongPress,
+  onMenuPress,
 }: {
   notebook: Notebook;
   pageCount: number;
   onPress: () => void;
-  onLongPress?: () => void;
+  onMenuPress: () => void;
 }) {
   const c = COVER_COLORS[notebook.coverTheme] ?? COVER_COLORS.fluffy;
   const lastEdited = new Date(notebook.lastEdited);
@@ -84,41 +85,42 @@ function NotebookCard({
   const coverImg = COVER_IMAGES[notebook.coverTheme] ?? COVER_IMAGES.fluffy;
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      onLongPress={onLongPress}
-      activeOpacity={0.82}
-      style={[styles.card, Shadow.medium]}
-    >
-      <View style={[styles.cardCover, { backgroundColor: c.bg }]}>
-        {/* Use cover image */}
-        <Image
-          source={coverImg}
-          style={StyleSheet.absoluteFillObject}
-          contentFit="cover"
-        />
-        {/* Stitch border overlay */}
-        <View style={[styles.cardStitch, {
-          borderColor: notebook.coverTheme === 'leather' ? 'rgba(255,245,235,0.3)' : 'rgba(255,255,255,0.4)',
-        }]} />
-      </View>
-
-      {/* Card info */}
-      <View style={styles.cardInfo}>
-        <View style={styles.cardTitleRow}>
-          <Text style={styles.cardTitle} numberOfLines={1}>{notebook.title || 'Untitled'}</Text>
-          <TouchableOpacity
-            onPress={onLongPress}
-            style={styles.cardMenuBtn}
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-          >
-            <Ionicons name="ellipsis-vertical" size={14} color={Colors.textLight} />
-          </TouchableOpacity>
+    // Outer View holds visuals; inner Pressable for the open action
+    // The menu button is a sibling (not child) of the card body Pressable
+    <View style={[styles.card, Shadow.medium]}>
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [{ opacity: pressed ? 0.85 : 1 }]}
+      >
+        <View style={[styles.cardCover, { backgroundColor: c.bg }]}>
+          <Image
+            source={coverImg}
+            style={StyleSheet.absoluteFillObject}
+            contentFit="cover"
+          />
+          <View style={[styles.cardStitch, {
+            borderColor: notebook.coverTheme === 'leather' ? 'rgba(255,245,235,0.3)' : 'rgba(255,255,255,0.4)',
+          }]} />
         </View>
-        <Text style={styles.cardMeta}>{pageCount}ページ</Text>
-        <Text style={styles.cardDate}>{dateStr} 更新</Text>
-      </View>
-    </TouchableOpacity>
+
+        <View style={styles.cardInfo}>
+          <View style={styles.cardTitleRow}>
+            <Text style={styles.cardTitle} numberOfLines={1}>{notebook.title || 'Untitled'}</Text>
+          </View>
+          <Text style={styles.cardMeta}>{pageCount}ページ</Text>
+          <Text style={styles.cardDate}>{dateStr} 更新</Text>
+        </View>
+      </Pressable>
+
+      {/* Menu button — sibling of card body, absolutely positioned to avoid touch conflicts */}
+      <TouchableOpacity
+        onPress={onMenuPress}
+        style={styles.cardMenuBtn}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      >
+        <Ionicons name="ellipsis-vertical" size={16} color={Colors.textLight} />
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -131,6 +133,16 @@ export default function HomeScreen() {
   const [newTheme, setNewTheme] = useState<CoverTheme>('fluffy');
   const [isCreating, setIsCreating] = useState(false);
 
+  // Notebook action menu state
+  const [menuTarget, setMenuTarget] = useState<{ id: string; title: string } | null>(null);
+  // Custom confirm dialog state (web-safe replacement for Alert.alert in sandboxed iframes)
+  const [confirmDialog, setConfirmDialog] = useState<{
+    visible: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({ visible: false, title: '', message: '', onConfirm: () => {} });
+
   const getPageCount = useCallback(
     (notebookId: string) => pages.filter((p) => p.notebookId === notebookId).length,
     [pages]
@@ -140,18 +152,30 @@ export default function HomeScreen() {
     router.push(`/notebook/${id}`);
   }, []);
 
+  const showConfirm = useCallback(
+    (title: string, message: string, onConfirm: () => void) => {
+      if (Platform.OS !== 'web') {
+        Alert.alert(title, message, [
+          { text: 'キャンセル', style: 'cancel' },
+          { text: '削除', style: 'destructive', onPress: onConfirm },
+        ]);
+      } else {
+        setConfirmDialog({ visible: true, title, message, onConfirm });
+      }
+    },
+    []
+  );
+
   const handleDeleteNotebook = useCallback(
     (id: string, title: string) => {
-      Alert.alert(
-        'ノートを削除',
-        `「${title}」を削除しますか？元に戻せません。`,
-        [
-          { text: 'キャンセル', style: 'cancel' },
-          { text: '削除', style: 'destructive', onPress: () => deleteNotebook(id) },
-        ]
+      setMenuTarget(null);
+      showConfirm(
+        'この手帳を削除しますか？',
+        `「${title}」とその中の全ページを完全に削除します。この操作は元に戻せません。`,
+        () => deleteNotebook(id)
       );
     },
-    [deleteNotebook]
+    [deleteNotebook, showConfirm]
   );
 
   const handleCreate = useCallback(async () => {
@@ -218,7 +242,7 @@ export default function HomeScreen() {
                 notebook={nb}
                 pageCount={getPageCount(nb.id)}
                 onPress={() => handleOpenNotebook(nb.id)}
-                onLongPress={() => handleDeleteNotebook(nb.id, nb.title)}
+                onMenuPress={() => setMenuTarget({ id: nb.id, title: nb.title })}
               />
             ))}
           </View>
@@ -319,6 +343,71 @@ export default function HomeScreen() {
           </View>
         </KeyboardAvoidingView>
       </Modal>
+
+      {/* Notebook action menu (⋮ button) */}
+      <Modal
+        visible={menuTarget !== null}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setMenuTarget(null)}
+      >
+        <Pressable style={styles.menuOverlay} onPress={() => setMenuTarget(null)}>
+          <View style={[styles.menuCard, Shadow.large]}>
+            <Text style={styles.menuNotebookTitle} numberOfLines={1}>
+              {menuTarget?.title}
+            </Text>
+            <View style={styles.menuDivider} />
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                if (menuTarget) handleDeleteNotebook(menuTarget.id, menuTarget.title);
+              }}
+            >
+              <Ionicons name="trash-outline" size={18} color={Colors.error} />
+              <Text style={styles.menuItemTextDanger}>削除</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.menuItem, styles.menuCancelItem]}
+              onPress={() => setMenuTarget(null)}
+            >
+              <Text style={styles.menuCancelText}>キャンセル</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
+
+      {/* Custom confirm dialog (web-safe) */}
+      <Modal
+        visible={confirmDialog.visible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setConfirmDialog((d) => ({ ...d, visible: false }))}
+      >
+        <View style={styles.confirmOverlay}>
+          <View style={[styles.confirmCard, Shadow.large]}>
+            <Ionicons name="trash-outline" size={28} color={Colors.error} />
+            <Text style={styles.confirmTitle}>{confirmDialog.title}</Text>
+            <Text style={styles.confirmMessage}>{confirmDialog.message}</Text>
+            <View style={styles.confirmBtns}>
+              <TouchableOpacity
+                style={styles.confirmCancelBtn}
+                onPress={() => setConfirmDialog((d) => ({ ...d, visible: false }))}
+              >
+                <Text style={styles.confirmCancelText}>キャンセル</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.confirmDeleteBtn}
+                onPress={() => {
+                  setConfirmDialog((d) => ({ ...d, visible: false }));
+                  confirmDialog.onConfirm();
+                }}
+              >
+                <Text style={styles.confirmDeleteText}>削除する</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -406,14 +495,17 @@ const styles = StyleSheet.create({
   card: {
     width: '47.5%',
     borderRadius: BorderRadius.lg,
-    overflow: 'hidden',
+    overflow: 'visible',
     backgroundColor: Colors.surface,
     borderCurve: 'continuous',
+    position: 'relative',
   },
   cardCover: {
     height: 120,
     position: 'relative',
     overflow: 'hidden',
+    borderTopLeftRadius: BorderRadius.lg,
+    borderTopRightRadius: BorderRadius.lg,
   },
   cardStitch: {
     position: 'absolute',
@@ -444,7 +536,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardMenuBtn: {
-    padding: 2,
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+    elevation: 2,
   },
   cardMeta: {
     fontFamily: Fonts.regular,
@@ -598,6 +704,120 @@ const styles = StyleSheet.create({
   createModalBtnText: {
     fontFamily: Fonts.semiBold,
     fontSize: 16,
+    color: Colors.white,
+  },
+
+  // ─── Notebook action menu ────────────────────────────────────────────────────
+  menuOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 32,
+    paddingHorizontal: Spacing.lg,
+  },
+  menuCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.xl,
+    width: '100%',
+    overflow: 'hidden',
+  },
+  menuNotebookTitle: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 16,
+    color: Colors.textLight,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: 14,
+    textAlign: 'center',
+  },
+  menuDivider: {
+    height: 1,
+    backgroundColor: Colors.border,
+    marginHorizontal: Spacing.md,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: 16,
+  },
+  menuItemTextDanger: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: Colors.error,
+  },
+  menuCancelItem: {
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+    justifyContent: 'center',
+    marginTop: 4,
+  },
+  menuCancelText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 15,
+    color: Colors.textLight,
+  },
+
+  // ─── Custom confirm dialog ────────────────────────────────────────────────────
+  confirmOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  confirmCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.lg,
+    width: '100%',
+    maxWidth: 340,
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  confirmTitle: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 20,
+    color: Colors.text,
+    textAlign: 'center',
+  },
+  confirmMessage: {
+    fontFamily: Fonts.regular,
+    fontSize: 13,
+    color: Colors.textLight,
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  confirmBtns: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    marginTop: 4,
+    width: '100%',
+  },
+  confirmCancelBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: BorderRadius.md,
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    alignItems: 'center',
+  },
+  confirmCancelText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: Colors.textLight,
+  },
+  confirmDeleteBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: BorderRadius.md,
+    backgroundColor: Colors.error,
+    alignItems: 'center',
+  },
+  confirmDeleteText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
     color: Colors.white,
   },
 });
