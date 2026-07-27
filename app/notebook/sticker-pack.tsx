@@ -23,7 +23,7 @@ import { useStickerStore } from '@/store/useStickerStore';
 
 // ─── Tab definitions ──────────────────────────────────────────────────────────
 
-type TabId = 'neko' | 'heart' | 'kimochi' | 'haru' | 'natsu' | 'aki' | 'fuyu' | 'mystickers';
+type TabId = 'heart' | 'haru' | 'natsu' | 'aki' | 'fuyu' | 'mystickers';
 
 interface Tab {
   id: TabId;
@@ -32,9 +32,7 @@ interface Tab {
 }
 
 const TABS: Tab[] = [
-  { id: 'neko',       label: 'ネコ',       icon: 'paw' },
   { id: 'heart',      label: 'ハート',     icon: 'heart' },
-  { id: 'kimochi',    label: 'きもち',     icon: 'happy' },
   { id: 'haru',       label: 'はる',       icon: 'flower-outline' },
   { id: 'natsu',      label: 'なつ',       icon: 'sunny' },
   { id: 'aki',        label: 'あき',       icon: 'leaf' },
@@ -49,84 +47,41 @@ interface StickerItem {
   label: string;
 }
 
-const NEKO_STICKERS: StickerItem[] = [
-  { type: 'sticker_cat_windy',    label: '風の猫' },
-  { type: 'sticker_cat_rainbow',  label: '虹の猫' },
-  { type: 'sticker_cat_sleeping', label: '寝てる猫' },
-  { type: 'sticker_cat_umbrella', label: '傘の猫' },
-  { type: 'sticker_cat_sun',      label: '太陽の猫' },
-  { type: 'sticker_cat_snowman',  label: '雪だるま猫' },
-  { type: 'sticker_cat_cloud',    label: '雲の猫' },
-  { type: 'sticker_cat_thunder',  label: '雷の猫' },
-];
-
 const HEART_STICKERS: StickerItem[] = [
   { type: 'sticker_hearts_double', label: 'ダブルハート' },
   { type: 'sticker_heart_green',   label: '緑のハート' },
   { type: 'sticker_heart_arrow',   label: '矢のハート' },
   { type: 'sticker_heart_sparkle', label: 'キラキラハート' },
-];
-
-const KIMOCHI_STICKERS: StickerItem[] = [
-  { type: 'sticker_angry',       label: '怒り' },
-  { type: 'sticker_love',        label: 'ハート' },
-  { type: 'sticker_sleepy',      label: '眠い' },
-  { type: 'sticker_sad',         label: '悲しい' },
-  { type: 'sticker_surprised',   label: 'びっくり' },
-  { type: 'sticker_sigh',        label: 'ため息' },
-  { type: 'sticker_furious',     label: '激怒' },
-  { type: 'sticker_crying',      label: '泣く' },
-  { type: 'sticker_neutral',     label: '無表情' },
-  { type: 'sticker_playful',     label: 'あそぶ' },
-  { type: 'sticker_waving',      label: 'バイバイ' },
-  { type: 'sticker_skating',     label: 'スケート' },
-  { type: 'sticker_running',     label: '走る' },
-  { type: 'sticker_swing',       label: 'ブランコ' },
-  { type: 'sticker_surfing',     label: 'サーフィン' },
-  { type: 'sticker_singing',     label: '歌う' },
-  { type: 'sticker_smiley_green', label: 'スマイル' },
-  { type: 'sticker_music_notes', label: '音符' },
-  { type: 'sticker_moon_stars',  label: '月と星' },
-  { type: 'sticker_zzz_bunny',   label: 'ねむうさぎ' },
-  { type: 'sticker_gift_box',    label: 'プレゼント' },
-  { type: 'sticker_bath_duck',   label: 'アヒル' },
-  { type: 'sticker_boba_tea',    label: 'タピオカ' },
+  { type: 'sticker_smiley_green',  label: 'スマイル' },
+  { type: 'sticker_music_notes',   label: '音符' },
+  { type: 'sticker_moon_stars',    label: '月と星' },
+  { type: 'sticker_zzz_bunny',     label: 'ねむうさぎ' },
+  { type: 'sticker_gift_box',      label: 'プレゼント' },
+  { type: 'sticker_bath_duck',     label: 'アヒル' },
+  { type: 'sticker_boba_tea',      label: 'タピオカ' },
 ];
 
 const HARU_STICKERS: StickerItem[] = [
-  { type: 'sticker_sakura_cat',    label: '桜と猫' },
-  { type: 'sticker_flower_garden', label: '花畑' },
+  { type: 'sticker_flower_garden',  label: '花畑' },
   { type: 'sticker_cherry_blossom', label: '桜の木' },
-  { type: 'sticker_koinobori',     label: 'こいのぼり' },
-  { type: 'sticker_sakura',        label: 'さくら' },
-  { type: 'sticker_easter',        label: 'イースター' },
-  { type: 'sticker_gardening',     label: 'ガーデン' },
+  { type: 'sticker_sakura',         label: 'さくら' },
 ];
 
 const NATSU_STICKERS: StickerItem[] = [
-  { type: 'sticker_fireworks',  label: '花火' },
-  { type: 'sticker_watermelon', label: 'スイカ' },
-  { type: 'sticker_hydrangea',  label: '紫陽花' },
-  { type: 'sticker_beach',      label: 'ビーチ' },
-  { type: 'sticker_sunflower',  label: 'ひまわり' },
-  { type: 'sticker_bubbles',    label: 'シャボン玉' },
+  { type: 'sticker_fireworks', label: '花火' },
+  { type: 'sticker_beach',     label: 'ビーチ' },
+  { type: 'sticker_sunflower', label: 'ひまわり' },
 ];
 
 const AKI_STICKERS: StickerItem[] = [
   { type: 'sticker_autumn_leaves',    label: '紅葉' },
-  { type: 'sticker_art_cat',          label: '芸術の秋' },
   { type: 'sticker_halloween_pumpkin', label: 'かぼちゃ' },
-  { type: 'sticker_halloween_witch',  label: '魔女猫' },
 ];
 
 const FUYU_STICKERS: StickerItem[] = [
-  { type: 'sticker_snowball',       label: '雪遊び' },
-  { type: 'sticker_kotatsu',        label: 'こたつ' },
-  { type: 'sticker_cozy_fireplace', label: '暖炉' },
-  { type: 'sticker_christmas_elf',  label: 'エルフ' },
+  { type: 'sticker_cat_snowman',   label: '雪だるま猫' },
+  { type: 'sticker_kotatsu',       label: 'こたつ' },
   { type: 'sticker_christmas_tree', label: 'クリスマス' },
-  { type: 'sticker_newyear',        label: 'お正月' },
-  { type: 'sticker_rainy_cat',      label: '雨の日' },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -136,7 +91,7 @@ export default function StickerPack() {
   const { setPendingSticker, customStickers, loadCustomStickers, addCustomSticker, removeCustomSticker } =
     useStickerStore();
 
-  const [activeTab, setActiveTab] = useState<TabId>('neko');
+  const [activeTab, setActiveTab] = useState<TabId>('heart');
   const [addingCustom, setAddingCustom] = useState(false);
   // ID of the custom sticker pending deletion confirmation
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -293,9 +248,7 @@ export default function StickerPack() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'neko':       return renderStickerGrid(NEKO_STICKERS);
       case 'heart':      return renderStickerGrid(HEART_STICKERS);
-      case 'kimochi':    return renderStickerGrid(KIMOCHI_STICKERS);
       case 'haru':       return renderStickerGrid(HARU_STICKERS);
       case 'natsu':      return renderStickerGrid(NATSU_STICKERS);
       case 'aki':        return renderStickerGrid(AKI_STICKERS);

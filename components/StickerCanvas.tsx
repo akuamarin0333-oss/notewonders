@@ -15,22 +15,6 @@ import { Colors } from '@/constants/Theme';
 
 export const STICKER_IMAGES: Record<string, number> = {
   // きもち + アクション
-  sticker_angry: require('@/assets/sticker_angry.png'),
-  sticker_love: require('@/assets/sticker_love.png'),
-  sticker_sleepy: require('@/assets/sticker_sleepy.png'),
-  sticker_sad: require('@/assets/sticker_sad.png'),
-  sticker_surprised: require('@/assets/sticker_surprised.png'),
-  sticker_sigh: require('@/assets/sticker_sigh.png'),
-  sticker_furious: require('@/assets/sticker_furious.png'),
-  sticker_crying: require('@/assets/sticker_crying.png'),
-  sticker_neutral: require('@/assets/sticker_neutral.png'),
-  sticker_playful: require('@/assets/sticker_playful.png'),
-  sticker_waving: require('@/assets/sticker_waving.png'),
-  sticker_skating: require('@/assets/sticker_skating.png'),
-  sticker_running: require('@/assets/sticker_running.png'),
-  sticker_swing: require('@/assets/sticker_swing.png'),
-  sticker_surfing: require('@/assets/sticker_surfing.png'),
-  sticker_singing: require('@/assets/sticker_singing.png'),
   sticker_smiley_green: require('@/assets/sticker_smiley_green.png'),
   sticker_music_notes: require('@/assets/sticker_music_notes.png'),
   sticker_moon_stars: require('@/assets/sticker_moon_stars.png'),
@@ -44,49 +28,28 @@ export const STICKER_IMAGES: Record<string, number> = {
   sticker_heart_arrow: require('@/assets/sticker_heart_arrow.png'),
   sticker_heart_sparkle: require('@/assets/sticker_heart_sparkle.png'),
   // ネコ
-  sticker_cat_windy: require('@/assets/sticker_cat_windy.png'),
-  sticker_cat_rainbow: require('@/assets/sticker_cat_rainbow.png'),
-  sticker_cat_sleeping: require('@/assets/sticker_cat_sleeping.png'),
-  sticker_cat_umbrella: require('@/assets/sticker_cat_umbrella.png'),
-  sticker_cat_sun: require('@/assets/sticker_cat_sun.png'),
   sticker_cat_snowman: require('@/assets/sticker_cat_snowman.png'),
-  sticker_cat_cloud: require('@/assets/sticker_cat_cloud.png'),
-  sticker_cat_thunder: require('@/assets/sticker_cat_thunder.png'),
   // はる
-  sticker_sakura_cat: require('@/assets/sticker_sakura_cat.png'),
   sticker_flower_garden: require('@/assets/sticker_flower_garden.png'),
   sticker_cherry_blossom: require('@/assets/sticker_cherry_blossom.png'),
-  sticker_koinobori: require('@/assets/sticker_koinobori.png'),
   sticker_sakura: require('@/assets/sticker_sakura.png'),
-  sticker_easter: require('@/assets/sticker_easter.png'),
-  sticker_gardening: require('@/assets/sticker_gardening.png'),
   // なつ
   sticker_fireworks: require('@/assets/sticker_fireworks.png'),
-  sticker_watermelon: require('@/assets/sticker_watermelon.png'),
-  sticker_hydrangea: require('@/assets/sticker_hydrangea.png'),
   sticker_beach: require('@/assets/sticker_beach.png'),
   sticker_sunflower: require('@/assets/sticker_sunflower.png'),
-  sticker_bubbles: require('@/assets/sticker_bubbles.png'),
   // あき
   sticker_autumn_leaves: require('@/assets/sticker_autumn_leaves.png'),
-  sticker_art_cat: require('@/assets/sticker_art_cat.png'),
   sticker_halloween_pumpkin: require('@/assets/sticker_halloween_pumpkin.png'),
-  sticker_halloween_witch: require('@/assets/sticker_halloween_witch.png'),
   // ふゆ
-  sticker_snowball: require('@/assets/sticker_snowball.png'),
   sticker_kotatsu: require('@/assets/sticker_kotatsu.png'),
-  sticker_cozy_fireplace: require('@/assets/sticker_cozy_fireplace.png'),
-  sticker_christmas_elf: require('@/assets/sticker_christmas_elf.png'),
   sticker_christmas_tree: require('@/assets/sticker_christmas_tree.png'),
-  sticker_newyear: require('@/assets/sticker_newyear.png'),
-  sticker_rainy_cat: require('@/assets/sticker_rainy_cat.png'),
 };
 
 export function getStickerSource(type: StickerType, customUri?: string) {
   if (type === 'custom' && customUri) {
     return { uri: customUri };
   }
-  return STICKER_IMAGES[type] ?? STICKER_IMAGES['sticker_angry'];
+  return STICKER_IMAGES[type] ?? STICKER_IMAGES['sticker_smiley_green'];
 }
 
 // ─── StickerCanvas props ─────────────────────────────────────────────────────
