@@ -48,3 +48,8 @@ app-example
 .fastshot-logs/
 examples/
 CLAUDE.md
+
+# Build artifacts and uploads (not needed for source build)
+user_uploads/
+designs/
+style-map.json
