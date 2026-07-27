@@ -430,13 +430,14 @@ export default function NotebookPageView() {
   );
 
   const handleAddSticker = useCallback(
-    (type: Sticker['type']) => {
+    (type: Sticker['type'], customUri?: string) => {
       if (!currentPage) return;
       const sticker: Sticker = {
         id: generateId(),
         type,
-        x: 16 + Math.random() * (rightPageDims.width - 60),
-        y: 16 + Math.random() * (rightPageDims.height - 60),
+        customUri,
+        x: 16 + Math.random() * (rightPageDims.width - 72),
+        y: 16 + Math.random() * (rightPageDims.height - 72),
         scale: 1,
       };
       addSticker(currentPage.id, sticker);
@@ -537,7 +538,7 @@ export default function NotebookPageView() {
 
   useEffect(() => {
     if (pendingSticker && currentPage) {
-      handleAddSticker(pendingSticker);
+      handleAddSticker(pendingSticker.type, pendingSticker.customUri);
       setPendingSticker(null);
     }
   }, [pendingSticker, currentPage, handleAddSticker, setPendingSticker]);

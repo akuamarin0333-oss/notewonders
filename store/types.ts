@@ -2,20 +2,33 @@ export type CoverTheme = 'fluffy' | 'leather' | 'spring' | 'blue';
 export type FontStyle = 'handwritten' | 'clean' | 'playful';
 export type Language = 'en' | 'ja';
 export type StickerType =
-  | 'cat'
-  | 'sakura'
-  | 'ladybug'
-  | 'easter-egg'
-  | 'clover'
-  | 'paw'
-  | 'heart'
-  | 'butterfly'
-  | 'star'
-  | 'mushroom';
+  | 'sticker_angry'
+  | 'sticker_love'
+  | 'sticker_sleepy'
+  | 'sticker_sad'
+  | 'sticker_surprised'
+  | 'sticker_sigh'
+  | 'sticker_furious'
+  | 'sticker_crying'
+  | 'sticker_neutral'
+  | 'sticker_playful'
+  | 'sticker_waving'
+  | 'sticker_skating'
+  | 'sticker_running'
+  | 'sticker_swing'
+  | 'sticker_surfing'
+  | 'sticker_singing'
+  | 'sticker_sakura'
+  | 'sticker_easter'
+  | 'sticker_gardening'
+  | 'sticker_bubbles'
+  | 'custom';
 
 export interface Sticker {
   id: string;
   type: StickerType;
+  /** For type='custom', holds the image URI from the user's gallery */
+  customUri?: string;
   x: number;
   y: number;
   scale: number;
