@@ -446,23 +446,25 @@ export default function NotebookPageView() {
 
   const handleDeletePage = useCallback(() => {
     if (!currentPage) return;
-    Alert.alert(
-      'ページを削除',
-      `このページ（テキスト・写真・ステッカー全て）を削除しますか？`,
-      [
-        { text: 'キャンセル', style: 'cancel' },
-        {
-          text: '削除',
-          style: 'destructive',
-          onPress: () => {
-            // Clear photos for this page
-            setPhotos([]);
-            deletePage(currentPage.id);
-            setCurrentIndex((prev) => Math.max(0, prev - 1));
-          },
-        },
-      ]
-    );
+    const doDelete = () => {
+      setPhotos([]);
+      deletePage(currentPage.id);
+      setCurrentIndex((prev) => Math.max(0, prev - 1));
+    };
+    if (Platform.OS === 'web') {
+      // Web-safe confirm dialog
+      const confirmed = window.confirm('このページ（テキスト・写真・ステッカー全て）を削除しますか？');
+      if (confirmed) doDelete();
+    } else {
+      Alert.alert(
+        'ページを削除',
+        'このページ（テキスト・写真・ステッカー全て）を削除しますか？',
+        [
+          { text: 'キャンセル', style: 'cancel' },
+          { text: '削除', style: 'destructive', onPress: doDelete },
+        ]
+      );
+    }
   }, [currentPage, deletePage]);
 
   const handleRenameNotebook = useCallback(() => {
@@ -498,10 +500,12 @@ export default function NotebookPageView() {
 
   const handlePickPhotoForItem = useCallback(async (photoId: string) => {
     try {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('許可が必要です', 'フォトライブラリへのアクセスを許可してください。');
-        return;
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert('許可が必要です', 'フォトライブラリへのアクセスを許可してください。');
+          return;
+        }
       }
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -807,6 +811,9 @@ export default function NotebookPageView() {
                       value={currentPage?.title ?? ''}
                       onChangeText={(t) => currentPage && updatePage(currentPage.id, { title: t })}
                       maxLength={60}
+                      multiline
+                      numberOfLines={2}
+                      scrollEnabled={false}
                     />
                     <Text style={[styles.pageDate, { color: pageTheme.dateColor }]}>{pageDate}</Text>
 
@@ -1130,6 +1137,8 @@ const styles = StyleSheet.create({
     outlineWidth: 0,
     outlineStyle: 'none',
     outline: 'none',
+    flexShrink: 1,
+    flexWrap: 'wrap',
   } as object,
   pageDate: {
     fontFamily: Fonts.handwritten,

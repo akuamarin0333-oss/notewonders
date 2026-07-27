@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAppStore } from '@/store/useAppStore';
 import { Colors, Shadow, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
-import NekoEmoji from '@/components/NekoEmoji';
 import Svg, { Path, Circle } from 'react-native-svg';
 
 function SakuraBadge() {
@@ -59,7 +59,11 @@ export default function FavoritesScreen() {
 
         {favoritePages.length === 0 ? (
           <View style={styles.emptyState}>
-            <NekoEmoji size={90} mood="sleeping" />
+            <Image
+              source={require('@/assets/neko_mascot_latest.png')}
+              style={styles.nekoImage}
+              contentFit="contain"
+            />
             <Text style={styles.emptyTitle}>No favorites yet</Text>
             <Text style={styles.emptySubtitle}>
               Tap the bookmark icon while reading a page to save it here!
@@ -205,6 +209,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: Colors.textLight,
     marginBottom: Spacing.sm,
+  },
+  nekoImage: {
+    width: 140,
+    height: 140,
   },
   emptyState: {
     alignItems: 'center',

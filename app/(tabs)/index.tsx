@@ -184,7 +184,6 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <View style={styles.headerLeft}>
             <Text style={styles.headerTitle}>Neko Notebook</Text>
-            <Text style={styles.headerJa}>ねこノート</Text>
           </View>
           <TouchableOpacity style={styles.settingsBtn} onPress={() => router.push('/(tabs)/settings')}>
             <Ionicons name="settings-outline" size={22} color={Colors.textLight} />
@@ -194,7 +193,7 @@ export default function HomeScreen() {
         {/* Mascot + greeting */}
         <View style={styles.mascotRow}>
           <Image
-            source={require('@/assets/neko_mascot_v2.png')}
+            source={require('@/assets/neko_mascot_latest.png')}
             style={styles.mascotImage}
             contentFit="contain"
           />

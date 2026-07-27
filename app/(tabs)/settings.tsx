@@ -16,7 +16,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAppStore } from '@/store/useAppStore';
 import { Colors, Shadow, BorderRadius, Spacing } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
-import NekoEmoji from '@/components/NekoEmoji';
 import { useTranslation } from '@/constants/i18n';
 import type { CoverTheme, FontStyle, Language } from '@/store/types';
 
@@ -249,9 +248,12 @@ export default function SettingsScreen() {
         <View style={styles.header}>
           <View>
             <Text style={styles.title}>{t.settingsTitleEn}</Text>
-            <Text style={styles.titleJa}>{t.settingsTitle}</Text>
           </View>
-          <NekoEmoji size={56} mood="happy" />
+          <Image
+            source={require('@/assets/neko_mascot_latest.png')}
+            style={styles.headerNeko}
+            contentFit="contain"
+          />
         </View>
 
         {/* Cover Theme */}
@@ -438,10 +440,13 @@ export default function SettingsScreen() {
         <SectionHeader title="About" titleJa={t.aboutLabel} />
         <View style={[styles.card, Shadow.small]}>
           <View style={styles.aboutRow}>
-            <NekoEmoji size={40} mood="love" />
+            <Image
+              source={require('@/assets/neko_mascot_latest.png')}
+              style={styles.aboutNeko}
+              contentFit="contain"
+            />
             <View style={styles.aboutInfo}>
               <Text style={styles.appName}>Neko Notebook</Text>
-              <Text style={styles.appNameJa}>ねこノート</Text>
               <Text style={styles.appVersion}>Spring Edition v1.0</Text>
             </View>
           </View>
@@ -470,10 +475,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: Colors.text,
   },
-  titleJa: {
-    fontFamily: Fonts.handwritten,
-    fontSize: 16,
-    color: Colors.primary,
+  headerNeko: {
+    width: 72,
+    height: 72,
   },
   card: {
     backgroundColor: Colors.surface,
@@ -654,16 +658,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: Spacing.md,
   },
+  aboutNeko: {
+    width: 56,
+    height: 56,
+  },
   aboutInfo: { gap: 2 },
   appName: {
     fontFamily: Fonts.handwrittenBold,
     fontSize: 20,
     color: Colors.text,
-  },
-  appNameJa: {
-    fontFamily: Fonts.handwritten,
-    fontSize: 16,
-    color: Colors.primary,
   },
   appVersion: {
     fontFamily: Fonts.regular,
