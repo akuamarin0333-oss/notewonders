@@ -1,0 +1,11 @@
+user_uploads/
+dist/
+build/
+designs/
+examples/
+__tests__/
+bun.lock
+*.md
+.git/
+node_modules/
+style-map.json

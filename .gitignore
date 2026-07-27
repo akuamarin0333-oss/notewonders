@@ -53,3 +53,6 @@ CLAUDE.md
 user_uploads/
 designs/
 style-map.json
+bun.lock
+__tests__/
+build/
