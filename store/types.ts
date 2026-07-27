@@ -2,6 +2,7 @@ export type CoverTheme = 'fluffy' | 'leather' | 'spring' | 'blue';
 export type FontStyle = 'handwritten' | 'clean' | 'playful';
 export type Language = 'en' | 'ja';
 export type StickerType =
+  // きもち (emotions)
   | 'sticker_angry'
   | 'sticker_love'
   | 'sticker_sleepy'
@@ -11,6 +12,7 @@ export type StickerType =
   | 'sticker_furious'
   | 'sticker_crying'
   | 'sticker_neutral'
+  // アクション (actions)
   | 'sticker_playful'
   | 'sticker_waving'
   | 'sticker_skating'
@@ -18,10 +20,35 @@ export type StickerType =
   | 'sticker_swing'
   | 'sticker_surfing'
   | 'sticker_singing'
+  // はる (spring)
+  | 'sticker_sakura_cat'
+  | 'sticker_flower_garden'
+  | 'sticker_cherry_blossom'
+  | 'sticker_koinobori'
   | 'sticker_sakura'
   | 'sticker_easter'
   | 'sticker_gardening'
+  // なつ (summer)
+  | 'sticker_fireworks'
+  | 'sticker_watermelon'
+  | 'sticker_hydrangea'
+  | 'sticker_beach'
+  | 'sticker_sunflower'
   | 'sticker_bubbles'
+  // あき (autumn)
+  | 'sticker_autumn_leaves'
+  | 'sticker_art_cat'
+  | 'sticker_halloween_pumpkin'
+  | 'sticker_halloween_witch'
+  // ふゆ (winter)
+  | 'sticker_snowball'
+  | 'sticker_kotatsu'
+  | 'sticker_cozy_fireplace'
+  | 'sticker_christmas_elf'
+  | 'sticker_christmas_tree'
+  | 'sticker_newyear'
+  | 'sticker_rainy_cat'
+  // custom (user gallery)
   | 'custom';
 
 export interface Sticker {

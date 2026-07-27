@@ -1,12 +1,20 @@
-import React, { useRef, useCallback } from 'react';
-import { View, StyleSheet, PanResponder, TouchableOpacity, Text } from 'react-native';
+import React, { useRef, useCallback, useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  PanResponder,
+  TouchableOpacity,
+  Text,
+  Pressable,
+} from 'react-native';
 import { Image } from 'expo-image';
 import type { Sticker, StickerType } from '@/store/types';
 import { Colors } from '@/constants/Theme';
 
-// ─── Static image map ───────────────────────────────────────────────────────
+// ─── Static image map ────────────────────────────────────────────────────────
 
 export const STICKER_IMAGES: Record<string, ReturnType<typeof require>> = {
+  // きもち
   sticker_angry: require('@/assets/sticker_angry.png'),
   sticker_love: require('@/assets/sticker_love.png'),
   sticker_sleepy: require('@/assets/sticker_sleepy.png'),
@@ -16,6 +24,7 @@ export const STICKER_IMAGES: Record<string, ReturnType<typeof require>> = {
   sticker_furious: require('@/assets/sticker_furious.png'),
   sticker_crying: require('@/assets/sticker_crying.png'),
   sticker_neutral: require('@/assets/sticker_neutral.png'),
+  // アクション
   sticker_playful: require('@/assets/sticker_playful.png'),
   sticker_waving: require('@/assets/sticker_waving.png'),
   sticker_skating: require('@/assets/sticker_skating.png'),
@@ -23,10 +32,34 @@ export const STICKER_IMAGES: Record<string, ReturnType<typeof require>> = {
   sticker_swing: require('@/assets/sticker_swing.png'),
   sticker_surfing: require('@/assets/sticker_surfing.png'),
   sticker_singing: require('@/assets/sticker_singing.png'),
+  // はる
+  sticker_sakura_cat: require('@/assets/sticker_sakura_cat.png'),
+  sticker_flower_garden: require('@/assets/sticker_flower_garden.png'),
+  sticker_cherry_blossom: require('@/assets/sticker_cherry_blossom.png'),
+  sticker_koinobori: require('@/assets/sticker_koinobori.png'),
   sticker_sakura: require('@/assets/sticker_sakura.png'),
   sticker_easter: require('@/assets/sticker_easter.png'),
   sticker_gardening: require('@/assets/sticker_gardening.png'),
+  // なつ
+  sticker_fireworks: require('@/assets/sticker_fireworks.png'),
+  sticker_watermelon: require('@/assets/sticker_watermelon.png'),
+  sticker_hydrangea: require('@/assets/sticker_hydrangea.png'),
+  sticker_beach: require('@/assets/sticker_beach.png'),
+  sticker_sunflower: require('@/assets/sticker_sunflower.png'),
   sticker_bubbles: require('@/assets/sticker_bubbles.png'),
+  // あき
+  sticker_autumn_leaves: require('@/assets/sticker_autumn_leaves.png'),
+  sticker_art_cat: require('@/assets/sticker_art_cat.png'),
+  sticker_halloween_pumpkin: require('@/assets/sticker_halloween_pumpkin.png'),
+  sticker_halloween_witch: require('@/assets/sticker_halloween_witch.png'),
+  // ふゆ
+  sticker_snowball: require('@/assets/sticker_snowball.png'),
+  sticker_kotatsu: require('@/assets/sticker_kotatsu.png'),
+  sticker_cozy_fireplace: require('@/assets/sticker_cozy_fireplace.png'),
+  sticker_christmas_elf: require('@/assets/sticker_christmas_elf.png'),
+  sticker_christmas_tree: require('@/assets/sticker_christmas_tree.png'),
+  sticker_newyear: require('@/assets/sticker_newyear.png'),
+  sticker_rainy_cat: require('@/assets/sticker_rainy_cat.png'),
 };
 
 export function getStickerSource(type: StickerType, customUri?: string) {
@@ -50,72 +83,73 @@ interface StickerCanvasProps {
 
 interface DraggableStickerProps {
   sticker: Sticker;
+  isSelected: boolean;
+  onSelect: () => void;
   onUpdate: (updates: Partial<Sticker>) => void;
   onRemove: () => void;
 }
 
-function DraggableSticker({ sticker, onUpdate, onRemove }: DraggableStickerProps) {
-  const BASE_SIZE = 72;
+const BASE_SIZE = 72;
+const SCALE_STEP = 0.2;
+const MIN_SCALE = 0.4;
+const MAX_SCALE = 4.0;
+
+function DraggableSticker({
+  sticker,
+  isSelected,
+  onSelect,
+  onUpdate,
+  onRemove,
+}: DraggableStickerProps) {
   const size = BASE_SIZE * sticker.scale;
   const lastPos = useRef({ x: sticker.x, y: sticker.y });
-  const lastScale = useRef(sticker.scale);
-  // Track pinch: distances between touches
-  const pinchStart = useRef<{ dist: number; scale: number } | null>(null);
-
-  const getDistance = (touches: { pageX: number; pageY: number }[]) => {
-    if (touches.length < 2) return null;
-    const dx = touches[0].pageX - touches[1].pageX;
-    const dy = touches[0].pageY - touches[1].pageY;
-    return Math.sqrt(dx * dx + dy * dy);
-  };
+  // Track whether this was a tap (small movement) vs drag
+  const didMove = useRef(false);
 
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: (e) => {
-        const touches = Array.from(e.nativeEvent.touches);
-        if (touches.length === 2) {
-          const dist = getDistance(touches as { pageX: number; pageY: number }[]);
-          if (dist !== null) {
-            pinchStart.current = { dist, scale: lastScale.current };
-          }
-        }
+      onMoveShouldSetPanResponder: (_, gs) =>
+        Math.abs(gs.dx) > 3 || Math.abs(gs.dy) > 3,
+      onPanResponderGrant: () => {
+        didMove.current = false;
       },
-      onPanResponderMove: (e, gs) => {
-        const touches = Array.from(e.nativeEvent.touches);
-        if (touches.length === 2 && pinchStart.current) {
-          // Pinch to scale
-          const dist = getDistance(touches as { pageX: number; pageY: number }[]);
-          if (dist !== null) {
-            const ratio = dist / pinchStart.current.dist;
-            const newScale = Math.min(4, Math.max(0.3, pinchStart.current.scale * ratio));
-            lastScale.current = newScale;
-            onUpdate({ scale: newScale });
-          }
-        } else {
-          // Drag
-          onUpdate({
-            x: lastPos.current.x + gs.dx,
-            y: lastPos.current.y + gs.dy,
-          });
-        }
-      },
-      onPanResponderRelease: (_, gs) => {
-        pinchStart.current = null;
-        lastPos.current = {
+      onPanResponderMove: (_, gs) => {
+        didMove.current = true;
+        onUpdate({
           x: lastPos.current.x + gs.dx,
           y: lastPos.current.y + gs.dy,
-        };
+        });
+      },
+      onPanResponderRelease: (_, gs) => {
+        if (!didMove.current) {
+          // Tap: toggle select
+          onSelect();
+        } else {
+          lastPos.current = {
+            x: lastPos.current.x + gs.dx,
+            y: lastPos.current.y + gs.dy,
+          };
+        }
+        didMove.current = false;
       },
     })
   ).current;
+
+  const handleScaleUp = useCallback(() => {
+    const next = Math.min(MAX_SCALE, sticker.scale + SCALE_STEP);
+    onUpdate({ scale: next });
+  }, [sticker.scale, onUpdate]);
+
+  const handleScaleDown = useCallback(() => {
+    const next = Math.max(MIN_SCALE, sticker.scale - SCALE_STEP);
+    onUpdate({ scale: next });
+  }, [sticker.scale, onUpdate]);
 
   const source = getStickerSource(sticker.type, sticker.customUri);
 
   return (
     <View
-      {...panResponder.panHandlers}
       style={[
         styles.stickerWrapper,
         {
@@ -126,18 +160,46 @@ function DraggableSticker({ sticker, onUpdate, onRemove }: DraggableStickerProps
         },
       ]}
     >
-      <Image
-        source={source}
-        style={{ width: size, height: size }}
-        contentFit="contain"
-      />
-      <TouchableOpacity
-        style={styles.removeBtn}
-        onPress={onRemove}
-        hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
-      >
-        <Text style={styles.removeBtnText}>×</Text>
-      </TouchableOpacity>
+      {/* Drag handle covers the sticker image */}
+      <View {...panResponder.panHandlers} style={StyleSheet.absoluteFillObject}>
+        <Image
+          source={source}
+          style={{ width: size, height: size }}
+          contentFit="contain"
+        />
+      </View>
+
+      {/* Controls — only visible when selected */}
+      {isSelected && (
+        <>
+          {/* Delete button — top right */}
+          <TouchableOpacity
+            style={styles.deleteBtn}
+            onPress={onRemove}
+            hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
+          >
+            <Text style={styles.deleteBtnText}>×</Text>
+          </TouchableOpacity>
+
+          {/* Scale buttons — left side, vertically centred */}
+          <View style={[styles.scaleButtons, { top: size / 2 - 36 }]}>
+            <TouchableOpacity
+              style={styles.scaleBtn}
+              onPress={handleScaleUp}
+              hitSlop={{ top: 4, right: 4, bottom: 4, left: 4 }}
+            >
+              <Text style={styles.scaleBtnText}>＋</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.scaleBtn}
+              onPress={handleScaleDown}
+              hitSlop={{ top: 4, right: 4, bottom: 4, left: 4 }}
+            >
+              <Text style={styles.scaleBtnText}>－</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </View>
   );
 }
@@ -151,44 +213,81 @@ export default function StickerCanvas({
   width,
   height,
 }: StickerCanvasProps) {
-  const handleUpdate = useCallback(
-    (id: string, updates: Partial<Sticker>) => onUpdateSticker(id, updates),
-    [onUpdateSticker]
-  );
-  const handleRemove = useCallback(
-    (id: string) => onRemoveSticker(id),
-    [onRemoveSticker]
-  );
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const handleSelect = useCallback((id: string) => {
+    setSelectedId((prev) => (prev === id ? id : id));
+  }, []);
+
+  const handleBackgroundPress = useCallback(() => {
+    setSelectedId(null);
+  }, []);
 
   return (
-    <View style={[styles.canvas, { width, height }]}>
+    // Outer Pressable catches taps on empty space to deselect
+    <Pressable
+      style={[styles.canvas, { width, height }]}
+      onPress={handleBackgroundPress}
+    >
       {stickers.map((sticker) => (
         <DraggableSticker
           key={sticker.id}
           sticker={sticker}
-          onUpdate={(updates) => handleUpdate(sticker.id, updates)}
-          onRemove={() => handleRemove(sticker.id)}
+          isSelected={selectedId === sticker.id}
+          onSelect={() => handleSelect(sticker.id)}
+          onUpdate={(updates) => onUpdateSticker(sticker.id, updates)}
+          onRemove={() => {
+            setSelectedId(null);
+            onRemoveSticker(sticker.id);
+          }}
         />
       ))}
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   canvas: {
     position: 'relative',
-    overflow: 'hidden',
+    overflow: 'visible',
   },
   stickerWrapper: {
     position: 'absolute',
   },
-  removeBtn: {
+  deleteBtn: {
     position: 'absolute',
-    top: -7,
-    right: -7,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    top: -9,
+    right: -9,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: Colors.primaryDark,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 4,
+    zIndex: 10,
+  },
+  deleteBtnText: {
+    color: Colors.white,
+    fontSize: 14,
+    lineHeight: 16,
+    fontWeight: 'bold',
+  },
+  scaleButtons: {
+    position: 'absolute',
+    left: -30,
+    gap: 6,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  scaleBtn: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
     backgroundColor: Colors.primaryDark,
     alignItems: 'center',
     justifyContent: 'center',
@@ -198,10 +297,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 3,
   },
-  removeBtnText: {
+  scaleBtnText: {
     color: Colors.white,
-    fontSize: 13,
-    lineHeight: 15,
+    fontSize: 14,
+    lineHeight: 16,
     fontWeight: 'bold',
   },
 });

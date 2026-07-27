@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": 1785114990348,
+  "generatedAt": 1785115951386,
   "entries": {
     "AudioMemoScreen@app/(tabs)/audio.tsx:257": {
       "element": {
@@ -2653,778 +2653,6 @@
               "col": 31,
               "endCol": 33,
               "raw": "32"
-            }
-          }
-        }
-      ]
-    },
-    "renderStickerGrid@app/notebook/sticker-pack.tsx:151": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 151
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.stickerCard",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 363,
-          "properties": {
-            "width": {
-              "line": 366,
-              "col": 11,
-              "endCol": 13,
-              "raw": "90"
-            },
-            "alignItems": {
-              "line": 367,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "paddingVertical": {
-              "line": 368,
-              "col": 21,
-              "endCol": 23,
-              "raw": "12"
-            },
-            "paddingHorizontal": {
-              "line": 369,
-              "col": 23,
-              "endCol": 24,
-              "raw": "8"
-            },
-            "gap": {
-              "line": 370,
-              "col": 9,
-              "endCol": 10,
-              "raw": "5"
-            },
-            "borderWidth": {
-              "line": 371,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "renderStickerGrid@app/notebook/sticker-pack.tsx:157": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 157
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.stickerImg",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 374,
-          "properties": {
-            "width": {
-              "line": 375,
-              "col": 11,
-              "endCol": 13,
-              "raw": "64"
-            },
-            "height": {
-              "line": 376,
-              "col": 12,
-              "endCol": 14,
-              "raw": "64"
-            }
-          }
-        }
-      ]
-    },
-    "renderStickerGrid@app/notebook/sticker-pack.tsx:162": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 162
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.stickerLabel",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 378,
-          "properties": {
-            "fontSize": {
-              "line": 380,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "textAlign": {
-              "line": 382,
-              "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "renderMyStickers@app/notebook/sticker-pack.tsx:174": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 174
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.stickerCard",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 363,
-          "properties": {
-            "width": {
-              "line": 366,
-              "col": 11,
-              "endCol": 13,
-              "raw": "90"
-            },
-            "alignItems": {
-              "line": 367,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "paddingVertical": {
-              "line": 368,
-              "col": 21,
-              "endCol": 23,
-              "raw": "12"
-            },
-            "paddingHorizontal": {
-              "line": 369,
-              "col": 23,
-              "endCol": 24,
-              "raw": "8"
-            },
-            "gap": {
-              "line": 370,
-              "col": 9,
-              "endCol": 10,
-              "raw": "5"
-            },
-            "borderWidth": {
-              "line": 371,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "stylesheet",
-          "ref": "styles.addCard",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 384,
-          "properties": {
-            "borderStyle": {
-              "line": 385,
-              "col": 17,
-              "endCol": 25,
-              "raw": "'dashed'"
-            },
-            "borderWidth": {
-              "line": 387,
-              "col": 17,
-              "endCol": 18,
-              "raw": "2"
-            },
-            "justifyContent": {
-              "line": 389,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            },
-            "minHeight": {
-              "line": 390,
-              "col": 15,
-              "endCol": 18,
-              "raw": "100"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "renderMyStickers@app/notebook/sticker-pack.tsx:184": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 184
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.stickerLabel",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 378,
-          "properties": {
-            "fontSize": {
-              "line": 380,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "textAlign": {
-              "line": 382,
-              "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "renderMyStickers@app/notebook/sticker-pack.tsx:188": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 188
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.stickerCard",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 363,
-          "properties": {
-            "width": {
-              "line": 366,
-              "col": 11,
-              "endCol": 13,
-              "raw": "90"
-            },
-            "alignItems": {
-              "line": 367,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "paddingVertical": {
-              "line": 368,
-              "col": 21,
-              "endCol": 23,
-              "raw": "12"
-            },
-            "paddingHorizontal": {
-              "line": 369,
-              "col": 23,
-              "endCol": 24,
-              "raw": "8"
-            },
-            "gap": {
-              "line": 370,
-              "col": 9,
-              "endCol": 10,
-              "raw": "5"
-            },
-            "borderWidth": {
-              "line": 371,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "renderMyStickers@app/notebook/sticker-pack.tsx:194": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 194
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.stickerImg",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 374,
-          "properties": {
-            "width": {
-              "line": 375,
-              "col": 11,
-              "endCol": 13,
-              "raw": "64"
-            },
-            "height": {
-              "line": 376,
-              "col": 12,
-              "endCol": 14,
-              "raw": "64"
-            }
-          }
-        }
-      ]
-    },
-    "renderMyStickers@app/notebook/sticker-pack.tsx:200": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 200
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.customRemoveBtn",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 392,
-          "properties": {
-            "position": {
-              "line": 393,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'absolute'"
-            },
-            "top": {
-              "line": 394,
-              "col": 9,
-              "endCol": 10,
-              "raw": "4"
-            },
-            "right": {
-              "line": 395,
-              "col": 11,
-              "endCol": 12,
-              "raw": "4"
-            },
-            "borderRadius": {
-              "line": 397,
-              "col": 18,
-              "endCol": 19,
-              "raw": "9"
-            }
-          }
-        }
-      ]
-    },
-    "renderMyStickers@app/notebook/sticker-pack.tsx:211": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 211
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.emptyCustom",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 399,
-          "properties": {
-            "flex": {
-              "line": 400,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "width": {
-              "line": 401,
-              "col": 11,
-              "endCol": 17,
-              "raw": "'100%'"
-            },
-            "alignItems": {
-              "line": 402,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "paddingTop": {
-              "line": 403,
-              "col": 16,
-              "endCol": 18,
-              "raw": "40"
-            },
-            "gap": {
-              "line": 404,
-              "col": 9,
-              "endCol": 11,
-              "raw": "12"
-            }
-          }
-        }
-      ]
-    },
-    "renderMyStickers@app/notebook/sticker-pack.tsx:213": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 213
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.emptyCustomText",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 406,
-          "properties": {
-            "fontSize": {
-              "line": 408,
-              "col": 14,
-              "endCol": 16,
-              "raw": "13"
-            },
-            "textAlign": {
-              "line": 410,
-              "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
-            },
-            "lineHeight": {
-              "line": 411,
-              "col": 16,
-              "endCol": 18,
-              "raw": "20"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:233": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 233
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.root",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 284,
-          "properties": {
-            "flex": {
-              "line": 285,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "borderTopLeftRadius": {
-              "line": 286,
-              "col": 25,
-              "endCol": 27,
-              "raw": "24"
-            },
-            "borderTopRightRadius": {
-              "line": 287,
-              "col": 26,
-              "endCol": 28,
-              "raw": "24"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:235": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 235
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.grabBar",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 289,
-          "properties": {
-            "width": {
-              "line": 290,
-              "col": 11,
-              "endCol": 13,
-              "raw": "40"
-            },
-            "height": {
-              "line": 291,
-              "col": 12,
-              "endCol": 13,
-              "raw": "4"
-            },
-            "borderRadius": {
-              "line": 292,
-              "col": 18,
-              "endCol": 19,
-              "raw": "2"
-            },
-            "alignSelf": {
-              "line": 294,
-              "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
-            },
-            "marginTop": {
-              "line": 295,
-              "col": 15,
-              "endCol": 17,
-              "raw": "12"
-            },
-            "marginBottom": {
-              "line": 296,
-              "col": 18,
-              "endCol": 19,
-              "raw": "8"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:238": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 238
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.header",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 298,
-          "properties": {
-            "flexDirection": {
-              "line": 299,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "justifyContent": {
-              "line": 300,
-              "col": 20,
-              "endCol": 35,
-              "raw": "'space-between'"
-            },
-            "alignItems": {
-              "line": 301,
-              "col": 16,
-              "endCol": 28,
-              "raw": "'flex-start'"
-            },
-            "paddingTop": {
-              "line": 304,
-              "col": 16,
-              "endCol": 17,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:240": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 240
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.title",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 306,
-          "properties": {
-            "fontSize": {
-              "line": 308,
-              "col": 14,
-              "endCol": 16,
-              "raw": "26"
-            },
-            "lineHeight": {
-              "line": 310,
-              "col": 16,
-              "endCol": 18,
-              "raw": "30"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:241": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 241
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.subtitle",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 312,
-          "properties": {
-            "fontSize": {
-              "line": 314,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            },
-            "marginTop": {
-              "line": 316,
-              "col": 15,
-              "endCol": 16,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:243": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 243
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.closeBtn",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 318,
-          "properties": {
-            "padding": {
-              "line": 319,
-              "col": 13,
-              "endCol": 14,
-              "raw": "4"
-            },
-            "marginTop": {
-              "line": 320,
-              "col": 15,
-              "endCol": 16,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:249": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 249
-      },
-      "styles": [
-        {
-          "origin": "inline",
-          "file": "app/notebook/sticker-pack.tsx",
-          "properties": {
-            "flexGrow": {
-              "line": 252,
-              "col": 27,
-              "endCol": 28,
-              "raw": "0"
-            }
-          }
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:258": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 258
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.tab",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 328,
-          "properties": {
-            "flexDirection": {
-              "line": 329,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 330,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 331,
-              "col": 9,
-              "endCol": 10,
-              "raw": "5"
-            },
-            "paddingHorizontal": {
-              "line": 332,
-              "col": 23,
-              "endCol": 25,
-              "raw": "14"
-            },
-            "paddingVertical": {
-              "line": 333,
-              "col": 21,
-              "endCol": 22,
-              "raw": "7"
-            },
-            "borderWidth": {
-              "line": 336,
-              "col": 17,
-              "endCol": 20,
-              "raw": "1.5"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:269": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 269
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.tabLabel",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 343,
-          "properties": {
-            "fontSize": {
-              "line": 345,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "StickerPack@app/notebook/sticker-pack.tsx:278": {
-      "element": {
-        "file": "app/notebook/sticker-pack.tsx",
-        "line": 278
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.contentArea",
-          "file": "app/notebook/sticker-pack.tsx",
-          "defLine": 351,
-          "properties": {
-            "flex": {
-              "line": 352,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "marginTop": {
-              "line": 353,
-              "col": 15,
-              "endCol": 16,
-              "raw": "4"
             }
           }
         }
@@ -11278,20 +10506,792 @@
         }
       ]
     },
-    "DraggableSticker@components/StickerCanvas.tsx:117": {
+    "renderStickerGrid@app/notebook/sticker-pack.tsx:183": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 183
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.stickerCard",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 399,
+          "properties": {
+            "width": {
+              "line": 402,
+              "col": 11,
+              "endCol": 13,
+              "raw": "90"
+            },
+            "alignItems": {
+              "line": 403,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "paddingVertical": {
+              "line": 404,
+              "col": 21,
+              "endCol": 23,
+              "raw": "12"
+            },
+            "paddingHorizontal": {
+              "line": 405,
+              "col": 23,
+              "endCol": 24,
+              "raw": "8"
+            },
+            "gap": {
+              "line": 406,
+              "col": 9,
+              "endCol": 10,
+              "raw": "5"
+            },
+            "borderWidth": {
+              "line": 407,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "renderStickerGrid@app/notebook/sticker-pack.tsx:189": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 189
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.stickerImg",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 410,
+          "properties": {
+            "width": {
+              "line": 411,
+              "col": 11,
+              "endCol": 13,
+              "raw": "64"
+            },
+            "height": {
+              "line": 412,
+              "col": 12,
+              "endCol": 14,
+              "raw": "64"
+            }
+          }
+        }
+      ]
+    },
+    "renderStickerGrid@app/notebook/sticker-pack.tsx:194": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 194
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.stickerLabel",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 414,
+          "properties": {
+            "fontSize": {
+              "line": 416,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "textAlign": {
+              "line": 418,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "renderMyStickers@app/notebook/sticker-pack.tsx:206": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 206
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.stickerCard",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 399,
+          "properties": {
+            "width": {
+              "line": 402,
+              "col": 11,
+              "endCol": 13,
+              "raw": "90"
+            },
+            "alignItems": {
+              "line": 403,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "paddingVertical": {
+              "line": 404,
+              "col": 21,
+              "endCol": 23,
+              "raw": "12"
+            },
+            "paddingHorizontal": {
+              "line": 405,
+              "col": 23,
+              "endCol": 24,
+              "raw": "8"
+            },
+            "gap": {
+              "line": 406,
+              "col": 9,
+              "endCol": 10,
+              "raw": "5"
+            },
+            "borderWidth": {
+              "line": 407,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "stylesheet",
+          "ref": "styles.addCard",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 420,
+          "properties": {
+            "borderStyle": {
+              "line": 421,
+              "col": 17,
+              "endCol": 25,
+              "raw": "'dashed'"
+            },
+            "borderWidth": {
+              "line": 423,
+              "col": 17,
+              "endCol": 18,
+              "raw": "2"
+            },
+            "justifyContent": {
+              "line": 425,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "minHeight": {
+              "line": 426,
+              "col": 15,
+              "endCol": 18,
+              "raw": "100"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "renderMyStickers@app/notebook/sticker-pack.tsx:216": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 216
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.stickerLabel",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 414,
+          "properties": {
+            "fontSize": {
+              "line": 416,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "textAlign": {
+              "line": 418,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "renderMyStickers@app/notebook/sticker-pack.tsx:220": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 220
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.stickerCard",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 399,
+          "properties": {
+            "width": {
+              "line": 402,
+              "col": 11,
+              "endCol": 13,
+              "raw": "90"
+            },
+            "alignItems": {
+              "line": 403,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "paddingVertical": {
+              "line": 404,
+              "col": 21,
+              "endCol": 23,
+              "raw": "12"
+            },
+            "paddingHorizontal": {
+              "line": 405,
+              "col": 23,
+              "endCol": 24,
+              "raw": "8"
+            },
+            "gap": {
+              "line": 406,
+              "col": 9,
+              "endCol": 10,
+              "raw": "5"
+            },
+            "borderWidth": {
+              "line": 407,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "renderMyStickers@app/notebook/sticker-pack.tsx:226": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 226
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.stickerImg",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 410,
+          "properties": {
+            "width": {
+              "line": 411,
+              "col": 11,
+              "endCol": 13,
+              "raw": "64"
+            },
+            "height": {
+              "line": 412,
+              "col": 12,
+              "endCol": 14,
+              "raw": "64"
+            }
+          }
+        }
+      ]
+    },
+    "renderMyStickers@app/notebook/sticker-pack.tsx:231": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 231
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.customRemoveBtn",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 428,
+          "properties": {
+            "position": {
+              "line": 429,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'absolute'"
+            },
+            "top": {
+              "line": 430,
+              "col": 9,
+              "endCol": 10,
+              "raw": "4"
+            },
+            "right": {
+              "line": 431,
+              "col": 11,
+              "endCol": 12,
+              "raw": "4"
+            },
+            "borderRadius": {
+              "line": 433,
+              "col": 18,
+              "endCol": 19,
+              "raw": "9"
+            }
+          }
+        }
+      ]
+    },
+    "renderMyStickers@app/notebook/sticker-pack.tsx:242": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 242
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.emptyCustom",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 435,
+          "properties": {
+            "flex": {
+              "line": 436,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "width": {
+              "line": 437,
+              "col": 11,
+              "endCol": 17,
+              "raw": "'100%'"
+            },
+            "alignItems": {
+              "line": 438,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "paddingTop": {
+              "line": 439,
+              "col": 16,
+              "endCol": 18,
+              "raw": "40"
+            },
+            "gap": {
+              "line": 440,
+              "col": 9,
+              "endCol": 11,
+              "raw": "12"
+            }
+          }
+        }
+      ]
+    },
+    "renderMyStickers@app/notebook/sticker-pack.tsx:244": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 244
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.emptyCustomText",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 442,
+          "properties": {
+            "fontSize": {
+              "line": 444,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            },
+            "textAlign": {
+              "line": 446,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            },
+            "lineHeight": {
+              "line": 447,
+              "col": 16,
+              "endCol": 18,
+              "raw": "20"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:265": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 265
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.root",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 320,
+          "properties": {
+            "flex": {
+              "line": 321,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "borderTopLeftRadius": {
+              "line": 322,
+              "col": 25,
+              "endCol": 27,
+              "raw": "24"
+            },
+            "borderTopRightRadius": {
+              "line": 323,
+              "col": 26,
+              "endCol": 28,
+              "raw": "24"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:267": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 267
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.grabBar",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 325,
+          "properties": {
+            "width": {
+              "line": 326,
+              "col": 11,
+              "endCol": 13,
+              "raw": "40"
+            },
+            "height": {
+              "line": 327,
+              "col": 12,
+              "endCol": 13,
+              "raw": "4"
+            },
+            "borderRadius": {
+              "line": 328,
+              "col": 18,
+              "endCol": 19,
+              "raw": "2"
+            },
+            "alignSelf": {
+              "line": 330,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            },
+            "marginTop": {
+              "line": 331,
+              "col": 15,
+              "endCol": 17,
+              "raw": "12"
+            },
+            "marginBottom": {
+              "line": 332,
+              "col": 18,
+              "endCol": 19,
+              "raw": "8"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:270": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 270
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.header",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 334,
+          "properties": {
+            "flexDirection": {
+              "line": 335,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "justifyContent": {
+              "line": 336,
+              "col": 20,
+              "endCol": 35,
+              "raw": "'space-between'"
+            },
+            "alignItems": {
+              "line": 337,
+              "col": 16,
+              "endCol": 28,
+              "raw": "'flex-start'"
+            },
+            "paddingTop": {
+              "line": 340,
+              "col": 16,
+              "endCol": 17,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:272": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 272
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.title",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 342,
+          "properties": {
+            "fontSize": {
+              "line": 344,
+              "col": 14,
+              "endCol": 16,
+              "raw": "26"
+            },
+            "lineHeight": {
+              "line": 346,
+              "col": 16,
+              "endCol": 18,
+              "raw": "30"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:273": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 273
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.subtitle",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 348,
+          "properties": {
+            "fontSize": {
+              "line": 350,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            },
+            "marginTop": {
+              "line": 352,
+              "col": 15,
+              "endCol": 16,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:275": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 275
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.closeBtn",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 354,
+          "properties": {
+            "padding": {
+              "line": 355,
+              "col": 13,
+              "endCol": 14,
+              "raw": "4"
+            },
+            "marginTop": {
+              "line": 356,
+              "col": 15,
+              "endCol": 16,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:285": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 285
+      },
+      "styles": [
+        {
+          "origin": "inline",
+          "file": "app/notebook/sticker-pack.tsx",
+          "properties": {
+            "flexGrow": {
+              "line": 288,
+              "col": 27,
+              "endCol": 28,
+              "raw": "0"
+            }
+          }
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:294": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 294
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.tab",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 364,
+          "properties": {
+            "flexDirection": {
+              "line": 365,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 366,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 367,
+              "col": 9,
+              "endCol": 10,
+              "raw": "4"
+            },
+            "paddingHorizontal": {
+              "line": 368,
+              "col": 23,
+              "endCol": 25,
+              "raw": "12"
+            },
+            "paddingVertical": {
+              "line": 369,
+              "col": 21,
+              "endCol": 22,
+              "raw": "6"
+            },
+            "borderWidth": {
+              "line": 372,
+              "col": 17,
+              "endCol": 20,
+              "raw": "1.5"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:305": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 305
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.tabLabel",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 379,
+          "properties": {
+            "fontSize": {
+              "line": 381,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "StickerPack@app/notebook/sticker-pack.tsx:314": {
+      "element": {
+        "file": "app/notebook/sticker-pack.tsx",
+        "line": 314
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.contentArea",
+          "file": "app/notebook/sticker-pack.tsx",
+          "defLine": 387,
+          "properties": {
+            "flex": {
+              "line": 388,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "marginTop": {
+              "line": 389,
+              "col": 15,
+              "endCol": 16,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "DraggableSticker@components/StickerCanvas.tsx:152": {
       "element": {
         "file": "components/StickerCanvas.tsx",
-        "line": 117
+        "line": 152
       },
       "styles": [
         {
           "origin": "stylesheet",
           "ref": "styles.stickerWrapper",
           "file": "components/StickerCanvas.tsx",
-          "defLine": 182,
+          "defLine": 254,
           "properties": {
             "position": {
-              "line": 183,
+              "line": 255,
               "col": 14,
               "endCol": 24,
               "raw": "'absolute'"
@@ -11300,120 +11300,138 @@
         }
       ]
     },
-    "DraggableSticker@components/StickerCanvas.tsx:134": {
+    "DraggableSticker@components/StickerCanvas.tsx:164": {
       "element": {
         "file": "components/StickerCanvas.tsx",
-        "line": 134
+        "line": 164
+      },
+      "styles": [
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "DraggableSticker@components/StickerCanvas.tsx:176": {
+      "element": {
+        "file": "components/StickerCanvas.tsx",
+        "line": 176
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.removeBtn",
+          "ref": "styles.deleteBtn",
           "file": "components/StickerCanvas.tsx",
-          "defLine": 185,
+          "defLine": 257,
           "properties": {
             "position": {
-              "line": 186,
+              "line": 258,
               "col": 14,
               "endCol": 24,
               "raw": "'absolute'"
             },
             "top": {
-              "line": 187,
+              "line": 259,
               "col": 9,
               "endCol": 11,
-              "raw": "-7"
+              "raw": "-9"
             },
             "right": {
-              "line": 188,
+              "line": 260,
               "col": 11,
               "endCol": 13,
-              "raw": "-7"
+              "raw": "-9"
             },
             "width": {
-              "line": 189,
+              "line": 261,
               "col": 11,
               "endCol": 13,
-              "raw": "20"
+              "raw": "22"
             },
             "height": {
-              "line": 190,
+              "line": 262,
               "col": 12,
               "endCol": 14,
-              "raw": "20"
+              "raw": "22"
             },
             "borderRadius": {
-              "line": 191,
+              "line": 263,
               "col": 18,
               "endCol": 20,
-              "raw": "10"
+              "raw": "11"
             },
             "alignItems": {
-              "line": 193,
+              "line": 265,
               "col": 16,
               "endCol": 24,
               "raw": "'center'"
             },
             "justifyContent": {
-              "line": 194,
+              "line": 266,
               "col": 20,
               "endCol": 28,
               "raw": "'center'"
             },
             "shadowColor": {
-              "line": 195,
+              "line": 267,
               "col": 17,
               "endCol": 23,
               "raw": "'#000'"
             },
             "shadowOpacity": {
-              "line": 197,
+              "line": 269,
               "col": 19,
-              "endCol": 22,
-              "raw": "0.2"
+              "endCol": 23,
+              "raw": "0.25"
             },
             "shadowRadius": {
-              "line": 198,
+              "line": 270,
               "col": 18,
               "endCol": 19,
               "raw": "2"
             },
             "elevation": {
-              "line": 199,
+              "line": 271,
               "col": 15,
               "endCol": 16,
-              "raw": "3"
+              "raw": "4"
+            },
+            "zIndex": {
+              "line": 272,
+              "col": 12,
+              "endCol": 14,
+              "raw": "10"
             }
           }
         }
       ]
     },
-    "DraggableSticker@components/StickerCanvas.tsx:139": {
+    "DraggableSticker@components/StickerCanvas.tsx:181": {
       "element": {
         "file": "components/StickerCanvas.tsx",
-        "line": 139
+        "line": 181
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.removeBtnText",
+          "ref": "styles.deleteBtnText",
           "file": "components/StickerCanvas.tsx",
-          "defLine": 201,
+          "defLine": 274,
           "properties": {
             "fontSize": {
-              "line": 203,
+              "line": 276,
               "col": 14,
               "endCol": 16,
-              "raw": "13"
+              "raw": "14"
             },
             "lineHeight": {
-              "line": 204,
+              "line": 277,
               "col": 16,
               "endCol": 18,
-              "raw": "15"
+              "raw": "16"
             },
             "fontWeight": {
-              "line": 205,
+              "line": 278,
               "col": 16,
               "endCol": 22,
               "raw": "'bold'"
@@ -11422,29 +11440,283 @@
         }
       ]
     },
-    "StickerCanvas@components/StickerCanvas.tsx:164": {
+    "DraggableSticker@components/StickerCanvas.tsx:185": {
       "element": {
         "file": "components/StickerCanvas.tsx",
-        "line": 164
+        "line": 185
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.scaleButtons",
+          "file": "components/StickerCanvas.tsx",
+          "defLine": 280,
+          "properties": {
+            "position": {
+              "line": 281,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'absolute'"
+            },
+            "left": {
+              "line": 282,
+              "col": 10,
+              "endCol": 13,
+              "raw": "-30"
+            },
+            "gap": {
+              "line": 283,
+              "col": 9,
+              "endCol": 10,
+              "raw": "6"
+            },
+            "alignItems": {
+              "line": 284,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "zIndex": {
+              "line": 285,
+              "col": 12,
+              "endCol": 14,
+              "raw": "10"
+            }
+          }
+        }
+      ]
+    },
+    "DraggableSticker@components/StickerCanvas.tsx:186": {
+      "element": {
+        "file": "components/StickerCanvas.tsx",
+        "line": 186
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.scaleBtn",
+          "file": "components/StickerCanvas.tsx",
+          "defLine": 287,
+          "properties": {
+            "width": {
+              "line": 288,
+              "col": 11,
+              "endCol": 13,
+              "raw": "26"
+            },
+            "height": {
+              "line": 289,
+              "col": 12,
+              "endCol": 14,
+              "raw": "26"
+            },
+            "borderRadius": {
+              "line": 290,
+              "col": 18,
+              "endCol": 20,
+              "raw": "13"
+            },
+            "alignItems": {
+              "line": 292,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 293,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "shadowColor": {
+              "line": 294,
+              "col": 17,
+              "endCol": 23,
+              "raw": "'#000'"
+            },
+            "shadowOpacity": {
+              "line": 296,
+              "col": 19,
+              "endCol": 22,
+              "raw": "0.2"
+            },
+            "shadowRadius": {
+              "line": 297,
+              "col": 18,
+              "endCol": 19,
+              "raw": "2"
+            },
+            "elevation": {
+              "line": 298,
+              "col": 15,
+              "endCol": 16,
+              "raw": "3"
+            }
+          }
+        }
+      ]
+    },
+    "DraggableSticker@components/StickerCanvas.tsx:191": {
+      "element": {
+        "file": "components/StickerCanvas.tsx",
+        "line": 191
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.scaleBtnText",
+          "file": "components/StickerCanvas.tsx",
+          "defLine": 300,
+          "properties": {
+            "fontSize": {
+              "line": 302,
+              "col": 14,
+              "endCol": 16,
+              "raw": "14"
+            },
+            "lineHeight": {
+              "line": 303,
+              "col": 16,
+              "endCol": 18,
+              "raw": "16"
+            },
+            "fontWeight": {
+              "line": 304,
+              "col": 16,
+              "endCol": 22,
+              "raw": "'bold'"
+            }
+          }
+        }
+      ]
+    },
+    "DraggableSticker@components/StickerCanvas.tsx:193": {
+      "element": {
+        "file": "components/StickerCanvas.tsx",
+        "line": 193
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.scaleBtn",
+          "file": "components/StickerCanvas.tsx",
+          "defLine": 287,
+          "properties": {
+            "width": {
+              "line": 288,
+              "col": 11,
+              "endCol": 13,
+              "raw": "26"
+            },
+            "height": {
+              "line": 289,
+              "col": 12,
+              "endCol": 14,
+              "raw": "26"
+            },
+            "borderRadius": {
+              "line": 290,
+              "col": 18,
+              "endCol": 20,
+              "raw": "13"
+            },
+            "alignItems": {
+              "line": 292,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 293,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "shadowColor": {
+              "line": 294,
+              "col": 17,
+              "endCol": 23,
+              "raw": "'#000'"
+            },
+            "shadowOpacity": {
+              "line": 296,
+              "col": 19,
+              "endCol": 22,
+              "raw": "0.2"
+            },
+            "shadowRadius": {
+              "line": 297,
+              "col": 18,
+              "endCol": 19,
+              "raw": "2"
+            },
+            "elevation": {
+              "line": 298,
+              "col": 15,
+              "endCol": 16,
+              "raw": "3"
+            }
+          }
+        }
+      ]
+    },
+    "DraggableSticker@components/StickerCanvas.tsx:198": {
+      "element": {
+        "file": "components/StickerCanvas.tsx",
+        "line": 198
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.scaleBtnText",
+          "file": "components/StickerCanvas.tsx",
+          "defLine": 300,
+          "properties": {
+            "fontSize": {
+              "line": 302,
+              "col": 14,
+              "endCol": 16,
+              "raw": "14"
+            },
+            "lineHeight": {
+              "line": 303,
+              "col": 16,
+              "endCol": 18,
+              "raw": "16"
+            },
+            "fontWeight": {
+              "line": 304,
+              "col": 16,
+              "endCol": 22,
+              "raw": "'bold'"
+            }
+          }
+        }
+      ]
+    },
+    "StickerCanvas@components/StickerCanvas.tsx:228": {
+      "element": {
+        "file": "components/StickerCanvas.tsx",
+        "line": 228
       },
       "styles": [
         {
           "origin": "stylesheet",
           "ref": "styles.canvas",
           "file": "components/StickerCanvas.tsx",
-          "defLine": 178,
+          "defLine": 250,
           "properties": {
             "position": {
-              "line": 179,
+              "line": 251,
               "col": 14,
               "endCol": 24,
               "raw": "'relative'"
             },
             "overflow": {
-              "line": 180,
+              "line": 252,
               "col": 14,
-              "endCol": 22,
-              "raw": "'hidden'"
+              "endCol": 23,
+              "raw": "'visible'"
             }
           }
         }

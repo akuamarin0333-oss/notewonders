@@ -22,7 +22,7 @@ import { useStickerStore } from '@/store/useStickerStore';
 
 // ─── Tab definitions ─────────────────────────────────────────────────────────
 
-type TabId = 'kimochi' | 'action' | 'season' | 'mystickers';
+type TabId = 'kimochi' | 'action' | 'haru' | 'natsu' | 'aki' | 'fuyu' | 'mystickers';
 
 interface Tab {
   id: TabId;
@@ -33,7 +33,10 @@ interface Tab {
 const TABS: Tab[] = [
   { id: 'kimochi', label: 'きもち', icon: 'heart' },
   { id: 'action', label: 'アクション', icon: 'flash' },
-  { id: 'season', label: 'シーズン', icon: 'leaf' },
+  { id: 'haru', label: 'はる', icon: 'flower-outline' },
+  { id: 'natsu', label: 'なつ', icon: 'sunny' },
+  { id: 'aki', label: 'あき', icon: 'leaf' },
+  { id: 'fuyu', label: 'ふゆ', icon: 'snow' },
   { id: 'mystickers', label: 'マイスタンプ', icon: 'person' },
 ];
 
@@ -66,11 +69,40 @@ const ACTION_STICKERS: StickerItem[] = [
   { type: 'sticker_singing', label: '歌う' },
 ];
 
-const SEASON_STICKERS: StickerItem[] = [
+const HARU_STICKERS: StickerItem[] = [
+  { type: 'sticker_sakura_cat', label: '桜と猫' },
+  { type: 'sticker_flower_garden', label: '花畑' },
+  { type: 'sticker_cherry_blossom', label: '桜の木' },
+  { type: 'sticker_koinobori', label: 'こいのぼり' },
   { type: 'sticker_sakura', label: 'さくら' },
   { type: 'sticker_easter', label: 'イースター' },
   { type: 'sticker_gardening', label: 'ガーデン' },
+];
+
+const NATSU_STICKERS: StickerItem[] = [
+  { type: 'sticker_fireworks', label: '花火' },
+  { type: 'sticker_watermelon', label: 'スイカ' },
+  { type: 'sticker_hydrangea', label: '紫陽花' },
+  { type: 'sticker_beach', label: 'ビーチ' },
+  { type: 'sticker_sunflower', label: 'ひまわり' },
   { type: 'sticker_bubbles', label: 'シャボン玉' },
+];
+
+const AKI_STICKERS: StickerItem[] = [
+  { type: 'sticker_autumn_leaves', label: '紅葉' },
+  { type: 'sticker_art_cat', label: '芸術の秋' },
+  { type: 'sticker_halloween_pumpkin', label: 'かぼちゃ' },
+  { type: 'sticker_halloween_witch', label: '魔女猫' },
+];
+
+const FUYU_STICKERS: StickerItem[] = [
+  { type: 'sticker_snowball', label: '雪遊び' },
+  { type: 'sticker_kotatsu', label: 'こたつ' },
+  { type: 'sticker_cozy_fireplace', label: '暖炉' },
+  { type: 'sticker_christmas_elf', label: 'エルフ' },
+  { type: 'sticker_christmas_tree', label: 'クリスマス' },
+  { type: 'sticker_newyear', label: 'お正月' },
+  { type: 'sticker_rainy_cat', label: '雨の日' },
 ];
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -196,7 +228,6 @@ export default function StickerPack() {
             style={styles.stickerImg}
             contentFit="contain"
           />
-          {/* Remove button */}
           <TouchableOpacity
             style={styles.customRemoveBtn}
             onPress={() => handleRemoveCustomSticker(cs.id)}
@@ -210,7 +241,9 @@ export default function StickerPack() {
       {customStickers.length === 0 && !addingCustom && (
         <View style={styles.emptyCustom}>
           <Ionicons name="images-outline" size={36} color={Colors.border} />
-          <Text style={styles.emptyCustomText}>「＋追加」を押してギャラリーから{'\n'}マイスタンプを登録しよう！</Text>
+          <Text style={styles.emptyCustomText}>
+            {'「＋追加」を押してギャラリーから\nマイスタンプを登録しよう！'}
+          </Text>
         </View>
       )}
     </ScrollView>
@@ -218,14 +251,13 @@ export default function StickerPack() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'kimochi':
-        return renderStickerGrid(KIMOCHI_STICKERS);
-      case 'action':
-        return renderStickerGrid(ACTION_STICKERS);
-      case 'season':
-        return renderStickerGrid(SEASON_STICKERS);
-      case 'mystickers':
-        return renderMyStickers();
+      case 'kimochi':    return renderStickerGrid(KIMOCHI_STICKERS);
+      case 'action':     return renderStickerGrid(ACTION_STICKERS);
+      case 'haru':       return renderStickerGrid(HARU_STICKERS);
+      case 'natsu':      return renderStickerGrid(NATSU_STICKERS);
+      case 'aki':        return renderStickerGrid(AKI_STICKERS);
+      case 'fuyu':       return renderStickerGrid(FUYU_STICKERS);
+      case 'mystickers': return renderMyStickers();
     }
   };
 
@@ -240,12 +272,16 @@ export default function StickerPack() {
           <Text style={styles.title}>スタンプ</Text>
           <Text style={styles.subtitle}>ページにスタンプを貼ろう！</Text>
         </View>
-        <TouchableOpacity onPress={handleClose} style={styles.closeBtn} hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}>
+        <TouchableOpacity
+          onPress={handleClose}
+          style={styles.closeBtn}
+          hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}
+        >
           <Ionicons name="close-circle" size={28} color={Colors.textLight} />
         </TouchableOpacity>
       </View>
 
-      {/* Tab bar */}
+      {/* Tab bar — horizontal scroll */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -263,7 +299,7 @@ export default function StickerPack() {
             >
               <Ionicons
                 name={tab.icon as 'heart'}
-                size={15}
+                size={14}
                 color={isActive ? Colors.white : Colors.textLight}
               />
               <Text style={[styles.tabLabel, isActive && styles.tabLabelActive]}>
@@ -322,15 +358,15 @@ const styles = StyleSheet.create({
   tabBar: {
     paddingHorizontal: Spacing.md,
     paddingVertical: 6,
-    gap: 8,
+    gap: 7,
     flexDirection: 'row',
   },
   tab: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 5,
-    paddingHorizontal: 14,
-    paddingVertical: 7,
+    gap: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
     borderRadius: BorderRadius.round,
     backgroundColor: Colors.surface,
     borderWidth: 1.5,
