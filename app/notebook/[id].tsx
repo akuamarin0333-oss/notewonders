@@ -304,7 +304,7 @@ function PolaroidItem({ photo, onPickPhoto, onRemove, onUpdatePhoto, onToggleTra
           disabled={photo.isTransformMode}
         >
           <Image
-            source={photo.uri ? { uri: photo.uri } : require('@/assets/neko_mascot_v2.png')}
+            source={photo.uri ? { uri: photo.uri } : require('@/assets/neko_mascot_latest.png')}
             style={styles.polaroidImage}
             contentFit={photo.uri ? 'cover' : 'contain'}
           />
@@ -735,7 +735,7 @@ export default function NotebookPageView() {
       {notebookPages.length === 0 ? (
         <View style={styles.emptyNotebook}>
           <Image
-            source={require('@/assets/neko_mascot_v2.png')}
+            source={require('@/assets/neko_mascot_latest.png')}
             style={{ width: 100, height: 100 }}
             contentFit="contain"
           />
