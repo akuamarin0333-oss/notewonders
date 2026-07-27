@@ -14,7 +14,7 @@ import { Colors } from '@/constants/Theme';
 // ─── Static image map ────────────────────────────────────────────────────────
 
 export const STICKER_IMAGES: Record<string, number> = {
-  // きもち
+  // きもち + アクション
   sticker_angry: require('@/assets/sticker_angry.png'),
   sticker_love: require('@/assets/sticker_love.png'),
   sticker_sleepy: require('@/assets/sticker_sleepy.png'),
@@ -24,7 +24,6 @@ export const STICKER_IMAGES: Record<string, number> = {
   sticker_furious: require('@/assets/sticker_furious.png'),
   sticker_crying: require('@/assets/sticker_crying.png'),
   sticker_neutral: require('@/assets/sticker_neutral.png'),
-  // アクション
   sticker_playful: require('@/assets/sticker_playful.png'),
   sticker_waving: require('@/assets/sticker_waving.png'),
   sticker_skating: require('@/assets/sticker_skating.png'),
@@ -32,6 +31,27 @@ export const STICKER_IMAGES: Record<string, number> = {
   sticker_swing: require('@/assets/sticker_swing.png'),
   sticker_surfing: require('@/assets/sticker_surfing.png'),
   sticker_singing: require('@/assets/sticker_singing.png'),
+  sticker_smiley_green: require('@/assets/sticker_smiley_green.png'),
+  sticker_music_notes: require('@/assets/sticker_music_notes.png'),
+  sticker_moon_stars: require('@/assets/sticker_moon_stars.png'),
+  sticker_zzz_bunny: require('@/assets/sticker_zzz_bunny.png'),
+  sticker_gift_box: require('@/assets/sticker_gift_box.png'),
+  sticker_bath_duck: require('@/assets/sticker_bath_duck.png'),
+  sticker_boba_tea: require('@/assets/sticker_boba_tea.png'),
+  // ハート
+  sticker_hearts_double: require('@/assets/sticker_hearts_double.png'),
+  sticker_heart_green: require('@/assets/sticker_heart_green.png'),
+  sticker_heart_arrow: require('@/assets/sticker_heart_arrow.png'),
+  sticker_heart_sparkle: require('@/assets/sticker_heart_sparkle.png'),
+  // ネコ
+  sticker_cat_windy: require('@/assets/sticker_cat_windy.png'),
+  sticker_cat_rainbow: require('@/assets/sticker_cat_rainbow.png'),
+  sticker_cat_sleeping: require('@/assets/sticker_cat_sleeping.png'),
+  sticker_cat_umbrella: require('@/assets/sticker_cat_umbrella.png'),
+  sticker_cat_sun: require('@/assets/sticker_cat_sun.png'),
+  sticker_cat_snowman: require('@/assets/sticker_cat_snowman.png'),
+  sticker_cat_cloud: require('@/assets/sticker_cat_cloud.png'),
+  sticker_cat_thunder: require('@/assets/sticker_cat_thunder.png'),
   // はる
   sticker_sakura_cat: require('@/assets/sticker_sakura_cat.png'),
   sticker_flower_garden: require('@/assets/sticker_flower_garden.png'),

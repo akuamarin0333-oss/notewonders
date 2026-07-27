@@ -2,7 +2,7 @@ export type CoverTheme = 'fluffy' | 'leather' | 'spring' | 'blue';
 export type FontStyle = 'handwritten' | 'clean' | 'playful';
 export type Language = 'en' | 'ja';
 export type StickerType =
-  // きもち (emotions)
+  // きもち (emotions) + アクション (actions)
   | 'sticker_angry'
   | 'sticker_love'
   | 'sticker_sleepy'
@@ -12,7 +12,6 @@ export type StickerType =
   | 'sticker_furious'
   | 'sticker_crying'
   | 'sticker_neutral'
-  // アクション (actions)
   | 'sticker_playful'
   | 'sticker_waving'
   | 'sticker_skating'
@@ -20,6 +19,27 @@ export type StickerType =
   | 'sticker_swing'
   | 'sticker_surfing'
   | 'sticker_singing'
+  | 'sticker_smiley_green'
+  | 'sticker_music_notes'
+  | 'sticker_moon_stars'
+  | 'sticker_zzz_bunny'
+  | 'sticker_gift_box'
+  | 'sticker_bath_duck'
+  | 'sticker_boba_tea'
+  // ハート (hearts)
+  | 'sticker_hearts_double'
+  | 'sticker_heart_green'
+  | 'sticker_heart_arrow'
+  | 'sticker_heart_sparkle'
+  // ネコ (cats)
+  | 'sticker_cat_windy'
+  | 'sticker_cat_rainbow'
+  | 'sticker_cat_sleeping'
+  | 'sticker_cat_umbrella'
+  | 'sticker_cat_sun'
+  | 'sticker_cat_snowman'
+  | 'sticker_cat_cloud'
+  | 'sticker_cat_thunder'
   // はる (spring)
   | 'sticker_sakura_cat'
   | 'sticker_flower_garden'

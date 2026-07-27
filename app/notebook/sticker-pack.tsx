@@ -8,6 +8,7 @@ import {
   Alert,
   Platform,
   ActivityIndicator,
+  Modal,
 } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
@@ -20,23 +21,24 @@ import { STICKER_IMAGES } from '@/components/StickerCanvas';
 import type { StickerType } from '@/store/types';
 import { useStickerStore } from '@/store/useStickerStore';
 
-// ─── Tab definitions ─────────────────────────────────────────────────────────
+// ─── Tab definitions ──────────────────────────────────────────────────────────
 
-type TabId = 'kimochi' | 'action' | 'haru' | 'natsu' | 'aki' | 'fuyu' | 'mystickers';
+type TabId = 'neko' | 'heart' | 'kimochi' | 'haru' | 'natsu' | 'aki' | 'fuyu' | 'mystickers';
 
 interface Tab {
   id: TabId;
   label: string;
-  icon: string;
+  icon: keyof typeof Ionicons.glyphMap;
 }
 
 const TABS: Tab[] = [
-  { id: 'kimochi', label: 'きもち', icon: 'heart' },
-  { id: 'action', label: 'アクション', icon: 'flash' },
-  { id: 'haru', label: 'はる', icon: 'flower-outline' },
-  { id: 'natsu', label: 'なつ', icon: 'sunny' },
-  { id: 'aki', label: 'あき', icon: 'leaf' },
-  { id: 'fuyu', label: 'ふゆ', icon: 'snow' },
+  { id: 'neko',       label: 'ネコ',       icon: 'paw' },
+  { id: 'heart',      label: 'ハート',     icon: 'heart' },
+  { id: 'kimochi',    label: 'きもち',     icon: 'happy' },
+  { id: 'haru',       label: 'はる',       icon: 'flower-outline' },
+  { id: 'natsu',      label: 'なつ',       icon: 'sunny' },
+  { id: 'aki',        label: 'あき',       icon: 'leaf' },
+  { id: 'fuyu',       label: 'ふゆ',       icon: 'snow' },
   { id: 'mystickers', label: 'マイスタンプ', icon: 'person' },
 ];
 
@@ -47,73 +49,97 @@ interface StickerItem {
   label: string;
 }
 
-const KIMOCHI_STICKERS: StickerItem[] = [
-  { type: 'sticker_angry', label: '怒り' },
-  { type: 'sticker_love', label: 'ハート' },
-  { type: 'sticker_sleepy', label: '眠い' },
-  { type: 'sticker_sad', label: '悲しい' },
-  { type: 'sticker_surprised', label: 'びっくり' },
-  { type: 'sticker_sigh', label: 'ため息' },
-  { type: 'sticker_furious', label: '激怒' },
-  { type: 'sticker_crying', label: '泣く' },
-  { type: 'sticker_neutral', label: '無表情' },
+const NEKO_STICKERS: StickerItem[] = [
+  { type: 'sticker_cat_windy',    label: '風の猫' },
+  { type: 'sticker_cat_rainbow',  label: '虹の猫' },
+  { type: 'sticker_cat_sleeping', label: '寝てる猫' },
+  { type: 'sticker_cat_umbrella', label: '傘の猫' },
+  { type: 'sticker_cat_sun',      label: '太陽の猫' },
+  { type: 'sticker_cat_snowman',  label: '雪だるま猫' },
+  { type: 'sticker_cat_cloud',    label: '雲の猫' },
+  { type: 'sticker_cat_thunder',  label: '雷の猫' },
 ];
 
-const ACTION_STICKERS: StickerItem[] = [
-  { type: 'sticker_playful', label: 'あそぶ' },
-  { type: 'sticker_waving', label: 'バイバイ' },
-  { type: 'sticker_skating', label: 'スケート' },
-  { type: 'sticker_running', label: '走る' },
-  { type: 'sticker_swing', label: 'ブランコ' },
-  { type: 'sticker_surfing', label: 'サーフィン' },
-  { type: 'sticker_singing', label: '歌う' },
+const HEART_STICKERS: StickerItem[] = [
+  { type: 'sticker_hearts_double', label: 'ダブルハート' },
+  { type: 'sticker_heart_green',   label: '緑のハート' },
+  { type: 'sticker_heart_arrow',   label: '矢のハート' },
+  { type: 'sticker_heart_sparkle', label: 'キラキラハート' },
+];
+
+const KIMOCHI_STICKERS: StickerItem[] = [
+  { type: 'sticker_angry',       label: '怒り' },
+  { type: 'sticker_love',        label: 'ハート' },
+  { type: 'sticker_sleepy',      label: '眠い' },
+  { type: 'sticker_sad',         label: '悲しい' },
+  { type: 'sticker_surprised',   label: 'びっくり' },
+  { type: 'sticker_sigh',        label: 'ため息' },
+  { type: 'sticker_furious',     label: '激怒' },
+  { type: 'sticker_crying',      label: '泣く' },
+  { type: 'sticker_neutral',     label: '無表情' },
+  { type: 'sticker_playful',     label: 'あそぶ' },
+  { type: 'sticker_waving',      label: 'バイバイ' },
+  { type: 'sticker_skating',     label: 'スケート' },
+  { type: 'sticker_running',     label: '走る' },
+  { type: 'sticker_swing',       label: 'ブランコ' },
+  { type: 'sticker_surfing',     label: 'サーフィン' },
+  { type: 'sticker_singing',     label: '歌う' },
+  { type: 'sticker_smiley_green', label: 'スマイル' },
+  { type: 'sticker_music_notes', label: '音符' },
+  { type: 'sticker_moon_stars',  label: '月と星' },
+  { type: 'sticker_zzz_bunny',   label: 'ねむうさぎ' },
+  { type: 'sticker_gift_box',    label: 'プレゼント' },
+  { type: 'sticker_bath_duck',   label: 'アヒル' },
+  { type: 'sticker_boba_tea',    label: 'タピオカ' },
 ];
 
 const HARU_STICKERS: StickerItem[] = [
-  { type: 'sticker_sakura_cat', label: '桜と猫' },
+  { type: 'sticker_sakura_cat',    label: '桜と猫' },
   { type: 'sticker_flower_garden', label: '花畑' },
   { type: 'sticker_cherry_blossom', label: '桜の木' },
-  { type: 'sticker_koinobori', label: 'こいのぼり' },
-  { type: 'sticker_sakura', label: 'さくら' },
-  { type: 'sticker_easter', label: 'イースター' },
-  { type: 'sticker_gardening', label: 'ガーデン' },
+  { type: 'sticker_koinobori',     label: 'こいのぼり' },
+  { type: 'sticker_sakura',        label: 'さくら' },
+  { type: 'sticker_easter',        label: 'イースター' },
+  { type: 'sticker_gardening',     label: 'ガーデン' },
 ];
 
 const NATSU_STICKERS: StickerItem[] = [
-  { type: 'sticker_fireworks', label: '花火' },
+  { type: 'sticker_fireworks',  label: '花火' },
   { type: 'sticker_watermelon', label: 'スイカ' },
-  { type: 'sticker_hydrangea', label: '紫陽花' },
-  { type: 'sticker_beach', label: 'ビーチ' },
-  { type: 'sticker_sunflower', label: 'ひまわり' },
-  { type: 'sticker_bubbles', label: 'シャボン玉' },
+  { type: 'sticker_hydrangea',  label: '紫陽花' },
+  { type: 'sticker_beach',      label: 'ビーチ' },
+  { type: 'sticker_sunflower',  label: 'ひまわり' },
+  { type: 'sticker_bubbles',    label: 'シャボン玉' },
 ];
 
 const AKI_STICKERS: StickerItem[] = [
-  { type: 'sticker_autumn_leaves', label: '紅葉' },
-  { type: 'sticker_art_cat', label: '芸術の秋' },
+  { type: 'sticker_autumn_leaves',    label: '紅葉' },
+  { type: 'sticker_art_cat',          label: '芸術の秋' },
   { type: 'sticker_halloween_pumpkin', label: 'かぼちゃ' },
-  { type: 'sticker_halloween_witch', label: '魔女猫' },
+  { type: 'sticker_halloween_witch',  label: '魔女猫' },
 ];
 
 const FUYU_STICKERS: StickerItem[] = [
-  { type: 'sticker_snowball', label: '雪遊び' },
-  { type: 'sticker_kotatsu', label: 'こたつ' },
+  { type: 'sticker_snowball',       label: '雪遊び' },
+  { type: 'sticker_kotatsu',        label: 'こたつ' },
   { type: 'sticker_cozy_fireplace', label: '暖炉' },
-  { type: 'sticker_christmas_elf', label: 'エルフ' },
+  { type: 'sticker_christmas_elf',  label: 'エルフ' },
   { type: 'sticker_christmas_tree', label: 'クリスマス' },
-  { type: 'sticker_newyear', label: 'お正月' },
-  { type: 'sticker_rainy_cat', label: '雨の日' },
+  { type: 'sticker_newyear',        label: 'お正月' },
+  { type: 'sticker_rainy_cat',      label: '雨の日' },
 ];
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StickerPack() {
   const insets = useSafeAreaInsets();
   const { setPendingSticker, customStickers, loadCustomStickers, addCustomSticker, removeCustomSticker } =
     useStickerStore();
 
-  const [activeTab, setActiveTab] = useState<TabId>('kimochi');
+  const [activeTab, setActiveTab] = useState<TabId>('neko');
   const [addingCustom, setAddingCustom] = useState(false);
+  // ID of the custom sticker pending deletion confirmation
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     loadCustomStickers();
@@ -158,21 +184,22 @@ export default function StickerPack() {
     }
   }, [addingCustom, addCustomSticker]);
 
-  const handleRemoveCustomSticker = useCallback(
-    (id: string) => {
-      const doRemove = () => removeCustomSticker(id);
-      if (Platform.OS === 'web') {
-        const ok = window.confirm('このスタンプを削除しますか？');
-        if (ok) doRemove();
-      } else {
-        Alert.alert('スタンプを削除', 'このスタンプを削除しますか？', [
-          { text: 'キャンセル', style: 'cancel' },
-          { text: '削除', style: 'destructive', onPress: doRemove },
-        ]);
-      }
-    },
-    [removeCustomSticker]
-  );
+  // Called when user taps × on a custom sticker — sets ID for confirm modal
+  const handleRequestDelete = useCallback((id: string) => {
+    setDeletingId(id);
+  }, []);
+
+  // Called when user confirms deletion inside the modal
+  const handleConfirmDelete = useCallback(() => {
+    if (!deletingId) return;
+    const idToDelete = deletingId;
+    setDeletingId(null);
+    removeCustomSticker(idToDelete);
+  }, [deletingId, removeCustomSticker]);
+
+  const handleCancelDelete = useCallback(() => {
+    setDeletingId(null);
+  }, []);
 
   const renderStickerGrid = (items: StickerItem[]) => (
     <ScrollView
@@ -217,13 +244,17 @@ export default function StickerPack() {
       </TouchableOpacity>
 
       {customStickers.map((cs) => (
-        // Use View as container so the remove button is NOT nested inside the
-        // select TouchableOpacity — nested touchables break on web (RN Web).
-        <View key={cs.id} style={[styles.stickerCard, Shadow.small]}>
+        /*
+         * Key approach: render the card as a plain View, NOT a Pressable/Touchable.
+         * The image tap and the × button are each independent Touchables — siblings
+         * inside the View. No nesting = no event swallowing on RN Web.
+         */
+        <View key={cs.id} style={[styles.stickerCard, styles.customCard, Shadow.small]}>
+          {/* Tap the image to select the sticker */}
           <TouchableOpacity
             onPress={() => handleSelect('custom', cs.uri)}
             activeOpacity={0.72}
-            style={styles.stickerSelectArea}
+            style={styles.customImgTouchable}
           >
             <Image
               source={{ uri: cs.uri }}
@@ -231,14 +262,21 @@ export default function StickerPack() {
               contentFit="contain"
             />
           </TouchableOpacity>
-          {/* Sibling (not child) of the select touchable — absolute overlay */}
-          <TouchableOpacity
-            style={styles.customRemoveBtn}
-            onPress={() => handleRemoveCustomSticker(cs.id)}
-            hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}
+
+          {/*
+           * × delete button — completely outside the image Touchable.
+           * High zIndex, generous hitSlop, and stopPropagation via
+           * onStartShouldSetResponder so the card cannot steal the event.
+           */}
+          <View
+            style={styles.customRemoveBtnWrap}
+            // Intercept the touch at the responder level so the parent View
+            // cannot capture it first
+            onStartShouldSetResponder={() => true}
+            onResponderGrant={() => handleRequestDelete(cs.id)}
           >
-            <Ionicons name="close-circle" size={20} color={Colors.primaryDark} />
-          </TouchableOpacity>
+            <Ionicons name="close-circle" size={22} color={Colors.primaryDark} />
+          </View>
         </View>
       ))}
 
@@ -255,8 +293,9 @@ export default function StickerPack() {
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'neko':       return renderStickerGrid(NEKO_STICKERS);
+      case 'heart':      return renderStickerGrid(HEART_STICKERS);
       case 'kimochi':    return renderStickerGrid(KIMOCHI_STICKERS);
-      case 'action':     return renderStickerGrid(ACTION_STICKERS);
       case 'haru':       return renderStickerGrid(HARU_STICKERS);
       case 'natsu':      return renderStickerGrid(NATSU_STICKERS);
       case 'aki':        return renderStickerGrid(AKI_STICKERS);
@@ -302,7 +341,7 @@ export default function StickerPack() {
               activeOpacity={0.75}
             >
               <Ionicons
-                name={tab.icon as 'heart'}
+                name={tab.icon}
                 size={14}
                 color={isActive ? Colors.white : Colors.textLight}
               />
@@ -316,6 +355,36 @@ export default function StickerPack() {
 
       {/* Tab content */}
       <View style={styles.contentArea}>{renderTabContent()}</View>
+
+      {/* Delete confirmation modal (web-safe — no Alert.alert) */}
+      <Modal
+        visible={deletingId !== null}
+        transparent
+        animationType="fade"
+        onRequestClose={handleCancelDelete}
+      >
+        <View style={styles.confirmOverlay}>
+          <View style={[styles.confirmCard, Shadow.large]}>
+            <Ionicons name="trash-outline" size={28} color={Colors.error} />
+            <Text style={styles.confirmTitle}>スタンプを削除</Text>
+            <Text style={styles.confirmMessage}>このスタンプを削除しますか？</Text>
+            <View style={styles.confirmBtns}>
+              <TouchableOpacity
+                style={styles.confirmCancelBtn}
+                onPress={handleCancelDelete}
+              >
+                <Text style={styles.confirmCancelText}>キャンセル</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.confirmDeleteBtn}
+                onPress={handleConfirmDelete}
+              >
+                <Text style={styles.confirmDeleteText}>削除</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -429,18 +498,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 100,
   },
-  stickerSelectArea: {
+
+  // Custom sticker card — View wrapper (no padding because children handle it)
+  customCard: {
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    overflow: 'visible',
+    position: 'relative',
+  },
+  // The touchable area for selecting the sticker image
+  customImgTouchable: {
     width: '100%',
     alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 8,
   },
-  customRemoveBtn: {
+
+  // × button wrapper — absolute, high zIndex, uses RN responder system directly
+  customRemoveBtnWrap: {
     position: 'absolute',
-    top: 4,
-    right: 4,
+    top: -8,
+    right: -8,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     backgroundColor: Colors.white,
-    borderRadius: 10,
-    zIndex: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 999,
+    // Shadow so the button stands out clearly on any background
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.18,
+    shadowRadius: 3,
+    elevation: 5,
   },
+
   emptyCustom: {
     flex: 1,
     width: '100%',
@@ -454,5 +547,65 @@ const styles = StyleSheet.create({
     color: Colors.textLight,
     textAlign: 'center',
     lineHeight: 20,
+  },
+
+  // ─── Delete confirm modal ──────────────────────────────────────────────────
+  confirmOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  confirmCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.lg,
+    width: '100%',
+    maxWidth: 320,
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  confirmTitle: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 20,
+    color: Colors.text,
+  },
+  confirmMessage: {
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+    color: Colors.textLight,
+    textAlign: 'center',
+  },
+  confirmBtns: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    marginTop: 4,
+    width: '100%',
+  },
+  confirmCancelBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: BorderRadius.md,
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    alignItems: 'center',
+  },
+  confirmCancelText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: Colors.textLight,
+  },
+  confirmDeleteBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: BorderRadius.md,
+    backgroundColor: Colors.error,
+    alignItems: 'center',
+  },
+  confirmDeleteText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: Colors.white,
   },
 });
