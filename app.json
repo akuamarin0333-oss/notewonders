@@ -9,7 +9,8 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.fastshot.notewonders"
     },
     "android": {
       "package": "com.fastshot.notewonders",
@@ -17,7 +18,13 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#10192b"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -54,6 +61,13 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "owner": "shironyandiary",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ec15aab5-5a69-4615-a09e-ede61ee32717"
+      }
     }
   }
 }
