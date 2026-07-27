@@ -26,7 +26,7 @@ const COVER_THEMES: { key: CoverTheme; label: string; labelJa: string; bg: strin
   { key: 'blue', label: 'Blue', labelJa: 'ブルー', bg: '#A8D8EA', accent: '#4A90C4' },
 ];
 
-const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
+const COVER_IMAGES: Record<CoverTheme, number> = {
   leather: require('@/assets/cover_leather.png'),
   fluffy: require('@/assets/cover_fluffy.png'),
   spring: require('@/assets/cover_spring.png'),

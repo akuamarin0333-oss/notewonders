@@ -13,7 +13,7 @@ import { Colors } from '@/constants/Theme';
 
 // ─── Static image map ────────────────────────────────────────────────────────
 
-export const STICKER_IMAGES: Record<string, ReturnType<typeof require>> = {
+export const STICKER_IMAGES: Record<string, number> = {
   // きもち
   sticker_angry: require('@/assets/sticker_angry.png'),
   sticker_love: require('@/assets/sticker_love.png'),

@@ -38,7 +38,7 @@ const COVER_BG: Record<CoverTheme, string> = {
   blue: '#A8D8EA',
 };
 
-const COVER_IMAGES: Record<CoverTheme, ReturnType<typeof require>> = {
+const COVER_IMAGES: Record<CoverTheme, number> = {
   leather: require('@/assets/cover_leather.png'),
   fluffy: require('@/assets/cover_fluffy.png'),
   spring: require('@/assets/cover_spring.png'),
