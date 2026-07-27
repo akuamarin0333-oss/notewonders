@@ -216,7 +216,7 @@ export default function StickerCanvas({
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleSelect = useCallback((id: string) => {
-    setSelectedId((prev) => (prev === id ? id : id));
+    setSelectedId((prev) => (prev === id ? null : id));
   }, []);
 
   const handleBackgroundPress = useCallback(() => {

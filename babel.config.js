@@ -13,6 +13,9 @@ module.exports = function (api) {
     plugins.push('./babel-plugin-source-metadata');
   }
 
+  // react-native-reanimated plugin must be last
+  plugins.push('react-native-reanimated/plugin');
+
   return {
     presets: [
       [

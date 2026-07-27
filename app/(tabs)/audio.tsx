@@ -8,6 +8,9 @@ import {
   Alert,
   Platform,
   ActivityIndicator,
+  TextInput,
+  Modal,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -59,6 +62,58 @@ function formatDate(ts: number): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+interface RenameModalProps {
+  visible: boolean;
+  currentTitle: string;
+  onConfirm: (title: string) => void;
+  onCancel: () => void;
+}
+
+function RenameModal({ visible, currentTitle, onConfirm, onCancel }: RenameModalProps) {
+  const [value, setValue] = useState(currentTitle);
+
+  useEffect(() => {
+    if (visible) setValue(currentTitle);
+  }, [visible, currentTitle]);
+
+  return (
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
+      <KeyboardAvoidingView
+        style={styles.modalOverlay}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <View style={styles.modalCard}>
+          <Text style={styles.modalTitle}>Rename Memo</Text>
+          <TextInput
+            style={styles.modalInput}
+            value={value}
+            onChangeText={setValue}
+            autoFocus
+            selectTextOnFocus
+            returnKeyType="done"
+            onSubmitEditing={() => {
+              if (value.trim()) onConfirm(value.trim());
+            }}
+          />
+          <View style={styles.modalActions}>
+            <TouchableOpacity style={styles.modalBtn} onPress={onCancel}>
+              <Text style={styles.modalBtnTextCancel}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.modalBtn, styles.modalBtnPrimary]}
+              onPress={() => {
+                if (value.trim()) onConfirm(value.trim());
+              }}
+            >
+              <Text style={styles.modalBtnTextConfirm}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </Modal>
+  );
+}
+
 export default function AudioMemoScreen() {
   const insets = useSafeAreaInsets();
   const { audioMemos, addAudioMemo, deleteAudioMemo, updateAudioMemo } = useAppStore();
@@ -70,11 +125,14 @@ export default function AudioMemoScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Rename modal state
+  const [renameModal, setRenameModal] = useState<{ id: string; title: string } | null>(null);
+
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const waveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Native recorder ref (any to avoid import complications)
-  const recorderRef = useRef<unknown>(null);
+  // Native recorder ref — holds AudioRecorder instance from expo-audio
+  const recorderRef = useRef<{ stop: () => Promise<void>; uri: string | null } | null>(null);
   const playerRef = useRef<{ stop: () => void } | null>(null);
 
   // Web MediaRecorder
@@ -109,19 +167,23 @@ export default function AudioMemoScreen() {
         mr.start();
         mediaRecorderRef.current = mr;
       } else {
-        // Native recording using expo-audio hooks approach
+        // Use expo-audio proper API
         const expoAudio = await import('expo-audio');
-        await expoAudio.setAudioModeAsync({ allowsRecording: true });
-        await expoAudio.requestRecordingPermissionsAsync();
-        const { AudioModule } = expoAudio as unknown as { AudioModule: { createRecorder: (opts: object) => { prepareToRecordAsync: () => Promise<void>; record: () => void; stop: () => Promise<void>; uri: string | null } } };
-        if (AudioModule?.createRecorder) {
-          const rec = AudioModule.createRecorder(expoAudio.RecordingPresets.HIGH_QUALITY);
-          await rec.prepareToRecordAsync();
-          rec.record();
-          recorderRef.current = rec;
-        } else {
-          throw new Error('Native recording not available');
+        const permResult = await expoAudio.requestRecordingPermissionsAsync();
+        if (permResult.status !== 'granted') {
+          throw new Error('Microphone permission not granted');
         }
+        await expoAudio.setAudioModeAsync({ allowsRecording: true });
+
+        // Create recorder using the AudioModule directly (works in both managed and bare)
+        const AudioModuleNative = (expoAudio as unknown as { AudioModule: { AudioRecorder: new (opts: object) => { prepareToRecordAsync: () => Promise<void>; record: () => void; stop: () => Promise<void>; uri: string | null } } }).AudioModule;
+        if (!AudioModuleNative?.AudioRecorder) {
+          throw new Error('Native recording not available on this device');
+        }
+        const rec = new AudioModuleNative.AudioRecorder(expoAudio.RecordingPresets.HIGH_QUALITY);
+        await rec.prepareToRecordAsync();
+        rec.record();
+        recorderRef.current = rec;
       }
       setIsRecording(true);
       setRecordingSeconds(0);
@@ -152,9 +214,8 @@ export default function AudioMemoScreen() {
         uri = URL.createObjectURL(blob);
         mediaRecorderRef.current = null;
       } else if (recorderRef.current) {
-        const rec = recorderRef.current as { stop: () => Promise<void>; uri: string | null };
-        await rec.stop();
-        uri = rec.uri ?? '';
+        await recorderRef.current.stop();
+        uri = recorderRef.current.uri ?? '';
         recorderRef.current = null;
       }
 
@@ -234,20 +295,39 @@ export default function AudioMemoScreen() {
 
   const handleRename = useCallback(
     (id: string, currentTitle: string) => {
-      Alert.prompt(
-        'Rename Memo',
-        'Enter a new name:',
-        (newTitle) => {
-          if (newTitle?.trim()) {
-            updateAudioMemo(id, { title: newTitle.trim() });
-          }
-        },
-        'plain-text',
-        currentTitle
-      );
+      if (Platform.OS === 'ios') {
+        Alert.prompt(
+          'Rename Memo',
+          'Enter a new name:',
+          (newTitle) => {
+            if (newTitle?.trim()) {
+              updateAudioMemo(id, { title: newTitle.trim() });
+            }
+          },
+          'plain-text',
+          currentTitle
+        );
+      } else {
+        // Android & web: use custom modal dialog
+        setRenameModal({ id, title: currentTitle });
+      }
     },
     [updateAudioMemo]
   );
+
+  const handleRenameConfirm = useCallback(
+    (newTitle: string) => {
+      if (renameModal) {
+        updateAudioMemo(renameModal.id, { title: newTitle });
+        setRenameModal(null);
+      }
+    },
+    [renameModal, updateAudioMemo]
+  );
+
+  const handleRenameCancel = useCallback(() => {
+    setRenameModal(null);
+  }, []);
 
   useEffect(() => {
     return () => stopTimer();
@@ -371,6 +451,14 @@ export default function AudioMemoScreen() {
 
         <View style={{ height: 32 }} />
       </ScrollView>
+
+      {/* Rename modal for Android / web */}
+      <RenameModal
+        visible={renameModal !== null}
+        currentTitle={renameModal?.title ?? ''}
+        onConfirm={handleRenameConfirm}
+        onCancel={handleRenameCancel}
+      />
     </View>
   );
 }
@@ -523,5 +611,62 @@ const styles = StyleSheet.create({
   },
   deleteBtn: {
     padding: 8,
+  },
+  // Rename modal
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 32,
+  },
+  modalCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.lg,
+    width: '100%',
+    gap: Spacing.sm,
+    ...Shadow.medium,
+  },
+  modalTitle: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 20,
+    color: Colors.text,
+    marginBottom: 4,
+  },
+  modalInput: {
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    borderRadius: BorderRadius.md,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 10,
+    fontFamily: Fonts.regular,
+    fontSize: 15,
+    color: Colors.text,
+    backgroundColor: Colors.background,
+  },
+  modalActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: Spacing.sm,
+    marginTop: 4,
+  },
+  modalBtn: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 9,
+    borderRadius: BorderRadius.md,
+  },
+  modalBtnPrimary: {
+    backgroundColor: Colors.primary,
+  },
+  modalBtnTextCancel: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: Colors.textLight,
+  },
+  modalBtnTextConfirm: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 14,
+    color: Colors.white,
   },
 });

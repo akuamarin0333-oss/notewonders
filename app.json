@@ -33,11 +33,23 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "このアプリはフォトライブラリへのアクセスを使用してスタンプ画像を追加します。",
+          "cameraPermission": "このアプリはカメラへのアクセスを使用して写真を撮影します。"
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "このアプリはマイクへのアクセスを使用して音声メモを録音します。"
+        }
       ]
     ],
     "experiments": {
-      "typedRoutes": true,
-      "baseUrl": "/648fde09-4c16-4b16-9cb0-5901ae12c80f/dev-preview/"
+      "typedRoutes": true
     }
   }
 }

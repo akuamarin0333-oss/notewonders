@@ -1,7 +1,1861 @@
 {
   "version": 1,
-  "generatedAt": 1785117960375,
+  "generatedAt": 1785160445477,
   "entries": {
+    "SpringCalendar@app/(tabs)/calendar.tsx:99": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 99
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.root",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 235,
+          "properties": {
+            "flex": {
+              "line": 235,
+              "col": 16,
+              "endCol": 17,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:105": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 105
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.header",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 240,
+          "properties": {
+            "flexDirection": {
+              "line": 241,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "justifyContent": {
+              "line": 242,
+              "col": 20,
+              "endCol": 35,
+              "raw": "'space-between'"
+            },
+            "alignItems": {
+              "line": 243,
+              "col": 16,
+              "endCol": 28,
+              "raw": "'flex-start'"
+            },
+            "gap": {
+              "line": 245,
+              "col": 9,
+              "endCol": 10,
+              "raw": "8"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:107": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 107
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.title",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 247,
+          "properties": {
+            "fontSize": {
+              "line": 249,
+              "col": 14,
+              "endCol": 16,
+              "raw": "30"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:108": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 108
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.titleJa",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 252,
+          "properties": {
+            "fontSize": {
+              "line": 254,
+              "col": 14,
+              "endCol": 16,
+              "raw": "16"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:114": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 114
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.calCard",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 257,
+          "properties": {
+            "borderWidth": {
+              "line": 263,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:116": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 116
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.monthNav",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 265,
+          "properties": {
+            "flexDirection": {
+              "line": 266,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 267,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 268,
+              "col": 20,
+              "endCol": 35,
+              "raw": "'space-between'"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:117": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 117
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navBtn",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 271,
+          "properties": {
+            "padding": {
+              "line": 271,
+              "col": 21,
+              "endCol": 22,
+              "raw": "6"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:120": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 120
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.monthCenter",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 272,
+          "properties": {
+            "alignItems": {
+              "line": 272,
+              "col": 29,
+              "endCol": 37,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:121": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 121
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.monthText",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 273,
+          "properties": {
+            "fontSize": {
+              "line": 275,
+              "col": 14,
+              "endCol": 16,
+              "raw": "22"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:122": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 122
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.monthJa",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 278,
+          "properties": {
+            "fontSize": {
+              "line": 280,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:124": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 124
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navBtn",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 271,
+          "properties": {
+            "padding": {
+              "line": 271,
+              "col": 21,
+              "endCol": 22,
+              "raw": "6"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:130": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 130
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.dayHeaders",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 283,
+          "properties": {
+            "flexDirection": {
+              "line": 284,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "marginBottom": {
+              "line": 285,
+              "col": 18,
+              "endCol": 19,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:132": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 132
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.dayHeaderCell",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 287,
+          "properties": {
+            "flex": {
+              "line": 288,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "alignItems": {
+              "line": 289,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "paddingVertical": {
+              "line": 290,
+              "col": 21,
+              "endCol": 22,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:133": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 133
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.dayHeaderText",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 292,
+          "properties": {
+            "fontSize": {
+              "line": 294,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:141": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 141
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.grid",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 300,
+          "properties": {
+            "flexDirection": {
+              "line": 301,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "flexWrap": {
+              "line": 302,
+              "col": 14,
+              "endCol": 20,
+              "raw": "'wrap'"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:144": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 144
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.dayCell",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 304,
+          "properties": {
+            "aspectRatio": {
+              "line": 306,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            },
+            "alignItems": {
+              "line": 307,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 308,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "position": {
+              "line": 309,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'relative'"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:154": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 154
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.dayCell",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 304,
+          "properties": {
+            "aspectRatio": {
+              "line": 306,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            },
+            "alignItems": {
+              "line": 307,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 308,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "position": {
+              "line": 309,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'relative'"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:164": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 164
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.dayNumber",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 320,
+          "properties": {
+            "fontSize": {
+              "line": 322,
+              "col": 14,
+              "endCol": 16,
+              "raw": "14"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:174": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 174
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.dayDecor",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 333,
+          "properties": {
+            "position": {
+              "line": 334,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'absolute'"
+            },
+            "bottom": {
+              "line": 335,
+              "col": 12,
+              "endCol": 13,
+              "raw": "2"
+            },
+            "right": {
+              "line": 336,
+              "col": 11,
+              "endCol": 12,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:179": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 179
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.entryDot",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 338,
+          "properties": {
+            "position": {
+              "line": 339,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'absolute'"
+            },
+            "bottom": {
+              "line": 340,
+              "col": 12,
+              "endCol": 13,
+              "raw": "3"
+            },
+            "width": {
+              "line": 341,
+              "col": 11,
+              "endCol": 12,
+              "raw": "5"
+            },
+            "height": {
+              "line": 342,
+              "col": 12,
+              "endCol": 13,
+              "raw": "5"
+            },
+            "borderRadius": {
+              "line": 343,
+              "col": 18,
+              "endCol": 21,
+              "raw": "2.5"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:189": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 189
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.selectedPanel",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 346,
+          "properties": {
+            "borderWidth": {
+              "line": 351,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:190": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 190
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.selectedHeader",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 354,
+          "properties": {
+            "flexDirection": {
+              "line": 355,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 356,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 357,
+              "col": 9,
+              "endCol": 10,
+              "raw": "8"
+            },
+            "paddingBottom": {
+              "line": 358,
+              "col": 19,
+              "endCol": 20,
+              "raw": "4"
+            },
+            "borderBottomWidth": {
+              "line": 360,
+              "col": 23,
+              "endCol": 24,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:191": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 191
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.selectedDate",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 362,
+          "properties": {
+            "fontSize": {
+              "line": 364,
+              "col": 14,
+              "endCol": 16,
+              "raw": "20"
+            },
+            "flex": {
+              "line": 366,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:196": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 196
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.noEntries",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 368,
+          "properties": {
+            "alignItems": {
+              "line": 369,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 371,
+              "col": 9,
+              "endCol": 10,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:197": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 197
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.noEntriesText",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 373,
+          "properties": {
+            "fontSize": {
+              "line": 375,
+              "col": 14,
+              "endCol": 16,
+              "raw": "14"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:198": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 198
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.noEntriesHint",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 378,
+          "properties": {
+            "fontSize": {
+              "line": 380,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            },
+            "textAlign": {
+              "line": 382,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:204": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 204
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.entryCard",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 384,
+          "properties": {
+            "flexDirection": {
+              "line": 385,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 386,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 390,
+              "col": 9,
+              "endCol": 10,
+              "raw": "8"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:209": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 209
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.entryCardContent",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 392,
+          "properties": {
+            "flex": {
+              "line": 392,
+              "col": 28,
+              "endCol": 29,
+              "raw": "1"
+            },
+            "gap": {
+              "line": 392,
+              "col": 36,
+              "endCol": 37,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:210": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 210
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.entryTitle",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 393,
+          "properties": {
+            "fontSize": {
+              "line": 395,
+              "col": 14,
+              "endCol": 16,
+              "raw": "14"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:213": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 213
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.entryPreview",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 398,
+          "properties": {
+            "fontSize": {
+              "line": 400,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:217": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 217
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.entryMeta",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 403,
+          "properties": {
+            "flexDirection": {
+              "line": 404,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 405,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 406,
+              "col": 9,
+              "endCol": 10,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:218": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 218
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.entryNotebook",
+          "file": "app/(tabs)/calendar.tsx",
+          "defLine": 408,
+          "properties": {
+            "fontSize": {
+              "line": 410,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "maxWidth": {
+              "line": 412,
+              "col": 14,
+              "endCol": 16,
+              "raw": "80"
+            }
+          }
+        }
+      ]
+    },
+    "SpringCalendar@app/(tabs)/calendar.tsx:228": {
+      "element": {
+        "file": "app/(tabs)/calendar.tsx",
+        "line": 228
+      },
+      "styles": [
+        {
+          "origin": "inline",
+          "file": "app/(tabs)/calendar.tsx",
+          "properties": {
+            "height": {
+              "line": 228,
+              "col": 31,
+              "endCol": 33,
+              "raw": "32"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:257": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 257
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.root",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 379,
+          "properties": {
+            "flex": {
+              "line": 379,
+              "col": 16,
+              "endCol": 17,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:263": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 263
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.header",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 384,
+          "properties": {
+            "flexDirection": {
+              "line": 385,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "justifyContent": {
+              "line": 386,
+              "col": 20,
+              "endCol": 35,
+              "raw": "'space-between'"
+            },
+            "alignItems": {
+              "line": 387,
+              "col": 16,
+              "endCol": 28,
+              "raw": "'flex-start'"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:265": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 265
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.title",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 390,
+          "properties": {
+            "fontSize": {
+              "line": 392,
+              "col": 14,
+              "endCol": 16,
+              "raw": "30"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:266": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 266
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.titleJa",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 395,
+          "properties": {
+            "fontSize": {
+              "line": 397,
+              "col": 14,
+              "endCol": 16,
+              "raw": "16"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:272": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 272
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.recorderCard",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 400,
+          "properties": {
+            "alignItems": {
+              "line": 404,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "borderWidth": {
+              "line": 407,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:274": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 274
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.catDecor",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 410,
+          "properties": {
+            "alignItems": {
+              "line": 411,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "position": {
+              "line": 412,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'relative'"
+            },
+            "height": {
+              "line": 413,
+              "col": 12,
+              "endCol": 14,
+              "raw": "48"
+            },
+            "width": {
+              "line": 414,
+              "col": 11,
+              "endCol": 13,
+              "raw": "60"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:275": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 275
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.catEar",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 416,
+          "properties": {
+            "position": {
+              "line": 417,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'absolute'"
+            },
+            "width": {
+              "line": 418,
+              "col": 11,
+              "endCol": 13,
+              "raw": "14"
+            },
+            "height": {
+              "line": 419,
+              "col": 12,
+              "endCol": 14,
+              "raw": "16"
+            },
+            "borderTopLeftRadius": {
+              "line": 421,
+              "col": 25,
+              "endCol": 26,
+              "raw": "8"
+            },
+            "borderTopRightRadius": {
+              "line": 422,
+              "col": 26,
+              "endCol": 27,
+              "raw": "8"
+            },
+            "top": {
+              "line": 423,
+              "col": 9,
+              "endCol": 10,
+              "raw": "0"
+            }
+          }
+        },
+        {
+          "origin": "stylesheet",
+          "ref": "styles.catEarLeft",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 425,
+          "properties": {
+            "left": {
+              "line": 425,
+              "col": 22,
+              "endCol": 23,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:276": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 276
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.catEar",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 416,
+          "properties": {
+            "position": {
+              "line": 417,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'absolute'"
+            },
+            "width": {
+              "line": 418,
+              "col": 11,
+              "endCol": 13,
+              "raw": "14"
+            },
+            "height": {
+              "line": 419,
+              "col": 12,
+              "endCol": 14,
+              "raw": "16"
+            },
+            "borderTopLeftRadius": {
+              "line": 421,
+              "col": 25,
+              "endCol": 26,
+              "raw": "8"
+            },
+            "borderTopRightRadius": {
+              "line": 422,
+              "col": 26,
+              "endCol": 27,
+              "raw": "8"
+            },
+            "top": {
+              "line": 423,
+              "col": 9,
+              "endCol": 10,
+              "raw": "0"
+            }
+          }
+        },
+        {
+          "origin": "stylesheet",
+          "ref": "styles.catEarRight",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 426,
+          "properties": {
+            "right": {
+              "line": 426,
+              "col": 24,
+              "endCol": 25,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:277": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 277
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.catHead",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 427,
+          "properties": {
+            "position": {
+              "line": 428,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'absolute'"
+            },
+            "bottom": {
+              "line": 429,
+              "col": 12,
+              "endCol": 13,
+              "raw": "0"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:283": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 283
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.waveform",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 431,
+          "properties": {
+            "marginVertical": {
+              "line": 432,
+              "col": 20,
+              "endCol": 21,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:288": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 288
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.timer",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 434,
+          "properties": {
+            "fontSize": {
+              "line": 436,
+              "col": 14,
+              "endCol": 16,
+              "raw": "40"
+            },
+            "letterSpacing": {
+              "line": 438,
+              "col": 19,
+              "endCol": 20,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:293": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 293
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.recordBtn",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 440,
+          "properties": {
+            "width": {
+              "line": 441,
+              "col": 11,
+              "endCol": 13,
+              "raw": "72"
+            },
+            "height": {
+              "line": 442,
+              "col": 12,
+              "endCol": 14,
+              "raw": "72"
+            },
+            "borderRadius": {
+              "line": 443,
+              "col": 18,
+              "endCol": 20,
+              "raw": "36"
+            },
+            "alignItems": {
+              "line": 445,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 446,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:311": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 311
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.recordHint",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 452,
+          "properties": {
+            "fontSize": {
+              "line": 454,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:314": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 314
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.recordHintJa",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 457,
+          "properties": {
+            "fontSize": {
+              "line": 459,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:318": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 318
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.errorText",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 462,
+          "properties": {
+            "fontSize": {
+              "line": 464,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            },
+            "textAlign": {
+              "line": 466,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:322": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 322
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.sectionTitle",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 468,
+          "properties": {
+            "fontSize": {
+              "line": 470,
+              "col": 14,
+              "endCol": 16,
+              "raw": "20"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:327": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 327
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.emptyState",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 474,
+          "properties": {
+            "alignItems": {
+              "line": 475,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "paddingVertical": {
+              "line": 476,
+              "col": 21,
+              "endCol": 23,
+              "raw": "32"
+            },
+            "gap": {
+              "line": 477,
+              "col": 9,
+              "endCol": 10,
+              "raw": "8"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:329": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 329
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.emptyText",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 479,
+          "properties": {
+            "fontSize": {
+              "line": 481,
+              "col": 14,
+              "endCol": 16,
+              "raw": "18"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:330": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 330
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.emptySubtext",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 484,
+          "properties": {
+            "fontSize": {
+              "line": 486,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            },
+            "textAlign": {
+              "line": 488,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:337": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 337
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.memoCard",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 490,
+          "properties": {
+            "flexDirection": {
+              "line": 491,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 492,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "borderWidth": {
+              "line": 499,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:338": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 338
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.playBtn",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 501,
+          "properties": {
+            "padding": {
+              "line": 501,
+              "col": 22,
+              "endCol": 23,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:348": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 348
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.memoInfo",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 502,
+          "properties": {
+            "flex": {
+              "line": 502,
+              "col": 20,
+              "endCol": 21,
+              "raw": "1"
+            },
+            "gap": {
+              "line": 502,
+              "col": 28,
+              "endCol": 29,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:350": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 350
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.memoTitle",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 503,
+          "properties": {
+            "fontSize": {
+              "line": 505,
+              "col": 14,
+              "endCol": 16,
+              "raw": "14"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:352": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 352
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.memoMeta",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 508,
+          "properties": {
+            "flexDirection": {
+              "line": 509,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 510,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 511,
+              "col": 9,
+              "endCol": 10,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:354": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 354
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.memoMetaText",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 513,
+          "properties": {
+            "fontSize": {
+              "line": 515,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "marginRight": {
+              "line": 517,
+              "col": 17,
+              "endCol": 18,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:356": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 356
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.memoMetaText",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 513,
+          "properties": {
+            "fontSize": {
+              "line": 515,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "marginRight": {
+              "line": 517,
+              "col": 17,
+              "endCol": 18,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:359": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 359
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.playingLabel",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 519,
+          "properties": {
+            "fontSize": {
+              "line": 521,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:362": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 362
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.deleteBtn",
+          "file": "app/(tabs)/audio.tsx",
+          "defLine": 524,
+          "properties": {
+            "padding": {
+              "line": 525,
+              "col": 13,
+              "endCol": 14,
+              "raw": "8"
+            }
+          }
+        }
+      ]
+    },
+    "AudioMemoScreen@app/(tabs)/audio.tsx:372": {
+      "element": {
+        "file": "app/(tabs)/audio.tsx",
+        "line": 372
+      },
+      "styles": [
+        {
+          "origin": "inline",
+          "file": "app/(tabs)/audio.tsx",
+          "properties": {
+            "height": {
+              "line": 372,
+              "col": 31,
+              "endCol": 33,
+              "raw": "32"
+            }
+          }
+        }
+      ]
+    },
+    "RootLayout@app/_layout.tsx:34": {
+      "element": {
+        "file": "app/_layout.tsx",
+        "line": 34
+      },
+      "styles": [
+        {
+          "origin": "inline",
+          "file": "app/_layout.tsx",
+          "properties": {
+            "flex": {
+              "line": 34,
+              "col": 43,
+              "endCol": 44,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
     "TabIcon@app/(tabs)/_layout.tsx:17": {
       "element": {
         "file": "app/(tabs)/_layout.tsx",
@@ -81,1533 +1935,6 @@
         {
           "origin": "dynamic",
           "resolvable": false
-        }
-      ]
-    },
-    "RootLayout@app/_layout.tsx:34": {
-      "element": {
-        "file": "app/_layout.tsx",
-        "line": 34
-      },
-      "styles": [
-        {
-          "origin": "inline",
-          "file": "app/_layout.tsx",
-          "properties": {
-            "flex": {
-              "line": 34,
-              "col": 43,
-              "endCol": 44,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SectionHeader@app/(tabs)/settings.tsx:49": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 49
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "sStyles.sectionHeader",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 57,
-          "properties": {}
-        }
-      ]
-    },
-    "SectionHeader@app/(tabs)/settings.tsx:50": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 50
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "sStyles.sectionTitle",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 58,
-          "properties": {
-            "fontSize": {
-              "line": 60,
-              "col": 14,
-              "endCol": 16,
-              "raw": "13"
-            },
-            "textTransform": {
-              "line": 62,
-              "col": 19,
-              "endCol": 30,
-              "raw": "'uppercase'"
-            },
-            "letterSpacing": {
-              "line": 63,
-              "col": 19,
-              "endCol": 20,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SectionHeader@app/(tabs)/settings.tsx:51": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 51
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "sStyles.sectionTitleJa",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 65,
-          "properties": {
-            "fontSize": {
-              "line": 67,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:242": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 242
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.root",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 462,
-          "properties": {
-            "flex": {
-              "line": 462,
-              "col": 16,
-              "endCol": 17,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:248": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 248
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.header",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 467,
-          "properties": {
-            "flexDirection": {
-              "line": 468,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "justifyContent": {
-              "line": 469,
-              "col": 20,
-              "endCol": 35,
-              "raw": "'space-between'"
-            },
-            "alignItems": {
-              "line": 470,
-              "col": 16,
-              "endCol": 28,
-              "raw": "'flex-start'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:250": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 250
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.title",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 473,
-          "properties": {
-            "fontSize": {
-              "line": 475,
-              "col": 14,
-              "endCol": 16,
-              "raw": "30"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:252": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 252
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.headerNeko",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 478,
-          "properties": {
-            "width": {
-              "line": 479,
-              "col": 11,
-              "endCol": 13,
-              "raw": "72"
-            },
-            "height": {
-              "line": 480,
-              "col": 12,
-              "endCol": 14,
-              "raw": "72"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:261": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 261
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.card",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 482,
-          "properties": {
-            "borderWidth": {
-              "line": 487,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:262": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 262
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.coverThemeGrid",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 489,
-          "properties": {
-            "flexDirection": {
-              "line": 490,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "flexWrap": {
-              "line": 491,
-              "col": 14,
-              "endCol": 20,
-              "raw": "'wrap'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:266": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 266
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.coverChip",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 494,
-          "properties": {
-            "width": {
-              "line": 495,
-              "col": 11,
-              "endCol": 16,
-              "raw": "'47%'"
-            },
-            "height": {
-              "line": 496,
-              "col": 12,
-              "endCol": 14,
-              "raw": "90"
-            },
-            "borderWidth": {
-              "line": 498,
-              "col": 17,
-              "endCol": 18,
-              "raw": "2"
-            },
-            "borderColor": {
-              "line": 499,
-              "col": 17,
-              "endCol": 30,
-              "raw": "'transparent'"
-            },
-            "overflow": {
-              "line": 500,
-              "col": 14,
-              "endCol": 22,
-              "raw": "'hidden'"
-            },
-            "position": {
-              "line": 501,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'relative'"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:274": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 274
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.coverChipImage",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 507,
-          "properties": {
-            "width": {
-              "line": 508,
-              "col": 11,
-              "endCol": 17,
-              "raw": "'100%'"
-            },
-            "height": {
-              "line": 509,
-              "col": 12,
-              "endCol": 18,
-              "raw": "'100%'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:280": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 280
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.checkmark",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 525,
-          "properties": {
-            "position": {
-              "line": 526,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'absolute'"
-            },
-            "top": {
-              "line": 527,
-              "col": 9,
-              "endCol": 10,
-              "raw": "5"
-            },
-            "right": {
-              "line": 528,
-              "col": 11,
-              "endCol": 12,
-              "raw": "5"
-            },
-            "backgroundColor": {
-              "line": 529,
-              "col": 21,
-              "endCol": 44,
-              "raw": "'rgba(255,255,255,0.9)'"
-            },
-            "borderRadius": {
-              "line": 530,
-              "col": 18,
-              "endCol": 20,
-              "raw": "10"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:284": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 284
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.coverChipLabelBar",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 511,
-          "properties": {
-            "position": {
-              "line": 512,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'absolute'"
-            },
-            "bottom": {
-              "line": 513,
-              "col": 12,
-              "endCol": 13,
-              "raw": "0"
-            },
-            "left": {
-              "line": 514,
-              "col": 10,
-              "endCol": 11,
-              "raw": "0"
-            },
-            "right": {
-              "line": 515,
-              "col": 11,
-              "endCol": 12,
-              "raw": "0"
-            },
-            "paddingVertical": {
-              "line": 516,
-              "col": 21,
-              "endCol": 22,
-              "raw": "3"
-            },
-            "paddingHorizontal": {
-              "line": 517,
-              "col": 23,
-              "endCol": 24,
-              "raw": "6"
-            },
-            "alignItems": {
-              "line": 518,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:285": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 285
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.coverChipLabel",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 520,
-          "properties": {
-            "fontSize": {
-              "line": 522,
-              "col": 14,
-              "endCol": 16,
-              "raw": "10"
-            },
-            "color": {
-              "line": 523,
-              "col": 11,
-              "endCol": 20,
-              "raw": "'#FFFFFF'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:295": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 295
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.card",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 482,
-          "properties": {
-            "borderWidth": {
-              "line": 487,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:297": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 297
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.fontRow",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 532,
-          "properties": {
-            "flexDirection": {
-              "line": 533,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 534,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:306": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 306
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.fontInfo",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 548,
-          "properties": {
-            "gap": {
-              "line": 548,
-              "col": 19,
-              "endCol": 20,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:307": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 307
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.fontLabel",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 549,
-          "properties": {
-            "fontSize": {
-              "line": 550,
-              "col": 14,
-              "endCol": 16,
-              "raw": "15"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:310": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 310
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.fontLabelJa",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 553,
-          "properties": {
-            "fontSize": {
-              "line": 555,
-              "col": 14,
-              "endCol": 16,
-              "raw": "10"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:312": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 312
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.fontPreview",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 558,
-          "properties": {
-            "flex": {
-              "line": 559,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "fontSize": {
-              "line": 560,
-              "col": 14,
-              "endCol": 16,
-              "raw": "14"
-            },
-            "textAlign": {
-              "line": 562,
-              "col": 15,
-              "endCol": 22,
-              "raw": "'right'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:329": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 329
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.card",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 482,
-          "properties": {
-            "borderWidth": {
-              "line": 487,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:330": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 330
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.toggleRow",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 564,
-          "properties": {
-            "flexDirection": {
-              "line": 565,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 566,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 567,
-              "col": 20,
-              "endCol": 35,
-              "raw": "'space-between'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:331": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 331
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.toggleInfo",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 570,
-          "properties": {
-            "flexDirection": {
-              "line": 571,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 572,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "flex": {
-              "line": 574,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:334": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 334
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.toggleLabel",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 576,
-          "properties": {
-            "fontSize": {
-              "line": 578,
-              "col": 14,
-              "endCol": 16,
-              "raw": "15"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:335": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 335
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.toggleLabelJa",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 581,
-          "properties": {
-            "fontSize": {
-              "line": 583,
-              "col": 14,
-              "endCol": 16,
-              "raw": "10"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:349": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 349
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.card",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 482,
-          "properties": {
-            "borderWidth": {
-              "line": 487,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:350": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 350
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.langRow",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 586,
-          "properties": {
-            "flexDirection": {
-              "line": 587,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:352": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 352
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.langChip",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 590,
-          "properties": {
-            "flex": {
-              "line": 591,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "flexDirection": {
-              "line": 592,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 593,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 594,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 595,
-              "col": 9,
-              "endCol": 10,
-              "raw": "6"
-            },
-            "paddingVertical": {
-              "line": 596,
-              "col": 21,
-              "endCol": 23,
-              "raw": "10"
-            },
-            "borderWidth": {
-              "line": 598,
-              "col": 17,
-              "endCol": 20,
-              "raw": "1.5"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:360": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 360
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.langFlag",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 606,
-          "properties": {
-            "fontSize": {
-              "line": 608,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:368": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 368
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.langLabel",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 610,
-          "properties": {
-            "fontSize": {
-              "line": 612,
-              "col": 14,
-              "endCol": 16,
-              "raw": "14"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:383": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 383
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.card",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 482,
-          "properties": {
-            "borderWidth": {
-              "line": 487,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:385": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 385
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupSection",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 614,
-          "properties": {}
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:386": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 386
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupInfo",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 617,
-          "properties": {
-            "flexDirection": {
-              "line": 618,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 619,
-              "col": 16,
-              "endCol": 28,
-              "raw": "'flex-start'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:388": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 388
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupTextWrap",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 622,
-          "properties": {
-            "flex": {
-              "line": 623,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "gap": {
-              "line": 624,
-              "col": 9,
-              "endCol": 10,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:389": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 389
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupLabel",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 626,
-          "properties": {
-            "fontSize": {
-              "line": 628,
-              "col": 14,
-              "endCol": 16,
-              "raw": "15"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:390": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 390
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupHint",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 631,
-          "properties": {
-            "fontSize": {
-              "line": 633,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "lineHeight": {
-              "line": 635,
-              "col": 16,
-              "endCol": 18,
-              "raw": "16"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:393": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 393
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupBtn",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 637,
-          "properties": {
-            "flexDirection": {
-              "line": 638,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 639,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 640,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 641,
-              "col": 9,
-              "endCol": 10,
-              "raw": "6"
-            },
-            "paddingVertical": {
-              "line": 642,
-              "col": 21,
-              "endCol": 23,
-              "raw": "10"
-            },
-            "paddingHorizontal": {
-              "line": 643,
-              "col": 23,
-              "endCol": 25,
-              "raw": "14"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:404": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 404
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupBtnText",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 646,
-          "properties": {
-            "fontSize": {
-              "line": 648,
-              "col": 14,
-              "endCol": 16,
-              "raw": "13"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:410": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 410
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.divider",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 651,
-          "properties": {
-            "height": {
-              "line": 652,
-              "col": 12,
-              "endCol": 13,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:413": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 413
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupSection",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 614,
-          "properties": {}
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:414": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 414
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupInfo",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 617,
-          "properties": {
-            "flexDirection": {
-              "line": 618,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 619,
-              "col": 16,
-              "endCol": 28,
-              "raw": "'flex-start'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:416": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 416
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupTextWrap",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 622,
-          "properties": {
-            "flex": {
-              "line": 623,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "gap": {
-              "line": 624,
-              "col": 9,
-              "endCol": 10,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:417": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 417
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupLabel",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 626,
-          "properties": {
-            "fontSize": {
-              "line": 628,
-              "col": 14,
-              "endCol": 16,
-              "raw": "15"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:418": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 418
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupHint",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 631,
-          "properties": {
-            "fontSize": {
-              "line": 633,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "lineHeight": {
-              "line": 635,
-              "col": 16,
-              "endCol": 18,
-              "raw": "16"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:421": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 421
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupBtn",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 637,
-          "properties": {
-            "flexDirection": {
-              "line": 638,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 639,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 640,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 641,
-              "col": 9,
-              "endCol": 10,
-              "raw": "6"
-            },
-            "paddingVertical": {
-              "line": 642,
-              "col": 21,
-              "endCol": 23,
-              "raw": "10"
-            },
-            "paddingHorizontal": {
-              "line": 643,
-              "col": 23,
-              "endCol": 25,
-              "raw": "14"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:432": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 432
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.backupBtnText",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 646,
-          "properties": {
-            "fontSize": {
-              "line": 648,
-              "col": 14,
-              "endCol": 16,
-              "raw": "13"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:441": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 441
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.card",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 482,
-          "properties": {
-            "borderWidth": {
-              "line": 487,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:442": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 442
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.aboutRow",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 656,
-          "properties": {
-            "flexDirection": {
-              "line": 657,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 658,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:443": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 443
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.aboutNeko",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 661,
-          "properties": {
-            "width": {
-              "line": 662,
-              "col": 11,
-              "endCol": 13,
-              "raw": "56"
-            },
-            "height": {
-              "line": 663,
-              "col": 12,
-              "endCol": 14,
-              "raw": "56"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:448": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 448
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.aboutInfo",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 665,
-          "properties": {
-            "gap": {
-              "line": 665,
-              "col": 20,
-              "endCol": 21,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:449": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 449
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.appName",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 666,
-          "properties": {
-            "fontSize": {
-              "line": 668,
-              "col": 14,
-              "endCol": 16,
-              "raw": "20"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:450": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 450
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.appVersion",
-          "file": "app/(tabs)/settings.tsx",
-          "defLine": 671,
-          "properties": {
-            "fontSize": {
-              "line": 673,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            }
-          }
-        }
-      ]
-    },
-    "SettingsScreen@app/(tabs)/settings.tsx:455": {
-      "element": {
-        "file": "app/(tabs)/settings.tsx",
-        "line": 455
-      },
-      "styles": [
-        {
-          "origin": "inline",
-          "file": "app/(tabs)/settings.tsx",
-          "properties": {
-            "height": {
-              "line": 455,
-              "col": 31,
-              "endCol": 33,
-              "raw": "40"
-            }
-          }
         }
       ]
     },
@@ -7038,962 +7365,6 @@
         }
       ]
     },
-    "SpringCalendar@app/(tabs)/calendar.tsx:99": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 99
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.root",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 235,
-          "properties": {
-            "flex": {
-              "line": 235,
-              "col": 16,
-              "endCol": 17,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:105": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 105
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.header",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 240,
-          "properties": {
-            "flexDirection": {
-              "line": 241,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "justifyContent": {
-              "line": 242,
-              "col": 20,
-              "endCol": 35,
-              "raw": "'space-between'"
-            },
-            "alignItems": {
-              "line": 243,
-              "col": 16,
-              "endCol": 28,
-              "raw": "'flex-start'"
-            },
-            "gap": {
-              "line": 245,
-              "col": 9,
-              "endCol": 10,
-              "raw": "8"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:107": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 107
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.title",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 247,
-          "properties": {
-            "fontSize": {
-              "line": 249,
-              "col": 14,
-              "endCol": 16,
-              "raw": "30"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:108": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 108
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.titleJa",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 252,
-          "properties": {
-            "fontSize": {
-              "line": 254,
-              "col": 14,
-              "endCol": 16,
-              "raw": "16"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:114": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 114
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.calCard",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 257,
-          "properties": {
-            "borderWidth": {
-              "line": 263,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:116": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 116
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.monthNav",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 265,
-          "properties": {
-            "flexDirection": {
-              "line": 266,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 267,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 268,
-              "col": 20,
-              "endCol": 35,
-              "raw": "'space-between'"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:117": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 117
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navBtn",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 271,
-          "properties": {
-            "padding": {
-              "line": 271,
-              "col": 21,
-              "endCol": 22,
-              "raw": "6"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:120": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 120
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.monthCenter",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 272,
-          "properties": {
-            "alignItems": {
-              "line": 272,
-              "col": 29,
-              "endCol": 37,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:121": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 121
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.monthText",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 273,
-          "properties": {
-            "fontSize": {
-              "line": 275,
-              "col": 14,
-              "endCol": 16,
-              "raw": "22"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:122": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 122
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.monthJa",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 278,
-          "properties": {
-            "fontSize": {
-              "line": 280,
-              "col": 14,
-              "endCol": 16,
-              "raw": "13"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:124": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 124
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navBtn",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 271,
-          "properties": {
-            "padding": {
-              "line": 271,
-              "col": 21,
-              "endCol": 22,
-              "raw": "6"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:130": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 130
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.dayHeaders",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 283,
-          "properties": {
-            "flexDirection": {
-              "line": 284,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "marginBottom": {
-              "line": 285,
-              "col": 18,
-              "endCol": 19,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:132": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 132
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.dayHeaderCell",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 287,
-          "properties": {
-            "flex": {
-              "line": 288,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "alignItems": {
-              "line": 289,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "paddingVertical": {
-              "line": 290,
-              "col": 21,
-              "endCol": 22,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:133": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 133
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.dayHeaderText",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 292,
-          "properties": {
-            "fontSize": {
-              "line": 294,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:141": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 141
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.grid",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 300,
-          "properties": {
-            "flexDirection": {
-              "line": 301,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "flexWrap": {
-              "line": 302,
-              "col": 14,
-              "endCol": 20,
-              "raw": "'wrap'"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:144": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 144
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.dayCell",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 304,
-          "properties": {
-            "aspectRatio": {
-              "line": 306,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            },
-            "alignItems": {
-              "line": 307,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 308,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            },
-            "position": {
-              "line": 309,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'relative'"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:154": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 154
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.dayCell",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 304,
-          "properties": {
-            "aspectRatio": {
-              "line": 306,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            },
-            "alignItems": {
-              "line": 307,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 308,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            },
-            "position": {
-              "line": 309,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'relative'"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:164": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 164
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.dayNumber",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 320,
-          "properties": {
-            "fontSize": {
-              "line": 322,
-              "col": 14,
-              "endCol": 16,
-              "raw": "14"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:174": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 174
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.dayDecor",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 333,
-          "properties": {
-            "position": {
-              "line": 334,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'absolute'"
-            },
-            "bottom": {
-              "line": 335,
-              "col": 12,
-              "endCol": 13,
-              "raw": "2"
-            },
-            "right": {
-              "line": 336,
-              "col": 11,
-              "endCol": 12,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:179": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 179
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.entryDot",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 338,
-          "properties": {
-            "position": {
-              "line": 339,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'absolute'"
-            },
-            "bottom": {
-              "line": 340,
-              "col": 12,
-              "endCol": 13,
-              "raw": "3"
-            },
-            "width": {
-              "line": 341,
-              "col": 11,
-              "endCol": 12,
-              "raw": "5"
-            },
-            "height": {
-              "line": 342,
-              "col": 12,
-              "endCol": 13,
-              "raw": "5"
-            },
-            "borderRadius": {
-              "line": 343,
-              "col": 18,
-              "endCol": 21,
-              "raw": "2.5"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:189": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 189
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.selectedPanel",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 346,
-          "properties": {
-            "borderWidth": {
-              "line": 351,
-              "col": 17,
-              "endCol": 18,
-              "raw": "1"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:190": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 190
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.selectedHeader",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 354,
-          "properties": {
-            "flexDirection": {
-              "line": 355,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 356,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 357,
-              "col": 9,
-              "endCol": 10,
-              "raw": "8"
-            },
-            "paddingBottom": {
-              "line": 358,
-              "col": 19,
-              "endCol": 20,
-              "raw": "4"
-            },
-            "borderBottomWidth": {
-              "line": 360,
-              "col": 23,
-              "endCol": 24,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:191": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 191
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.selectedDate",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 362,
-          "properties": {
-            "fontSize": {
-              "line": 364,
-              "col": 14,
-              "endCol": 16,
-              "raw": "20"
-            },
-            "flex": {
-              "line": 366,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:196": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 196
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.noEntries",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 368,
-          "properties": {
-            "alignItems": {
-              "line": 369,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 371,
-              "col": 9,
-              "endCol": 10,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:197": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 197
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.noEntriesText",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 373,
-          "properties": {
-            "fontSize": {
-              "line": 375,
-              "col": 14,
-              "endCol": 16,
-              "raw": "14"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:198": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 198
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.noEntriesHint",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 378,
-          "properties": {
-            "fontSize": {
-              "line": 380,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            },
-            "textAlign": {
-              "line": 382,
-              "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:204": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 204
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.entryCard",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 384,
-          "properties": {
-            "flexDirection": {
-              "line": 385,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 386,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 390,
-              "col": 9,
-              "endCol": 10,
-              "raw": "8"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:209": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 209
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.entryCardContent",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 392,
-          "properties": {
-            "flex": {
-              "line": 392,
-              "col": 28,
-              "endCol": 29,
-              "raw": "1"
-            },
-            "gap": {
-              "line": 392,
-              "col": 36,
-              "endCol": 37,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:210": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 210
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.entryTitle",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 393,
-          "properties": {
-            "fontSize": {
-              "line": 395,
-              "col": 14,
-              "endCol": 16,
-              "raw": "14"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:213": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 213
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.entryPreview",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 398,
-          "properties": {
-            "fontSize": {
-              "line": 400,
-              "col": 14,
-              "endCol": 16,
-              "raw": "12"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:217": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 217
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.entryMeta",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 403,
-          "properties": {
-            "flexDirection": {
-              "line": 404,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 405,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 406,
-              "col": 9,
-              "endCol": 10,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:218": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 218
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.entryNotebook",
-          "file": "app/(tabs)/calendar.tsx",
-          "defLine": 408,
-          "properties": {
-            "fontSize": {
-              "line": 410,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "maxWidth": {
-              "line": 412,
-              "col": 14,
-              "endCol": 16,
-              "raw": "80"
-            }
-          }
-        }
-      ]
-    },
-    "SpringCalendar@app/(tabs)/calendar.tsx:228": {
-      "element": {
-        "file": "app/(tabs)/calendar.tsx",
-        "line": 228
-      },
-      "styles": [
-        {
-          "origin": "inline",
-          "file": "app/(tabs)/calendar.tsx",
-          "properties": {
-            "height": {
-              "line": 228,
-              "col": 31,
-              "endCol": 33,
-              "raw": "32"
-            }
-          }
-        }
-      ]
-    },
     "FavoritesScreen@app/(tabs)/favorites.tsx:39": {
       "element": {
         "file": "app/(tabs)/favorites.tsx",
@@ -10372,20 +9743,91 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:257": {
+    "SectionHeader@app/(tabs)/settings.tsx:49": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 257
+        "file": "app/(tabs)/settings.tsx",
+        "line": 49
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "sStyles.sectionHeader",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 57,
+          "properties": {}
+        }
+      ]
+    },
+    "SectionHeader@app/(tabs)/settings.tsx:50": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 50
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "sStyles.sectionTitle",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 58,
+          "properties": {
+            "fontSize": {
+              "line": 60,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            },
+            "textTransform": {
+              "line": 62,
+              "col": 19,
+              "endCol": 30,
+              "raw": "'uppercase'"
+            },
+            "letterSpacing": {
+              "line": 63,
+              "col": 19,
+              "endCol": 20,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "SectionHeader@app/(tabs)/settings.tsx:51": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 51
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "sStyles.sectionTitleJa",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 65,
+          "properties": {
+            "fontSize": {
+              "line": 67,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:242": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 242
       },
       "styles": [
         {
           "origin": "stylesheet",
           "ref": "styles.root",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 379,
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 462,
           "properties": {
             "flex": {
-              "line": 379,
+              "line": 462,
               "col": 16,
               "endCol": 17,
               "raw": "1"
@@ -10394,32 +9836,32 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:263": {
+    "SettingsScreen@app/(tabs)/settings.tsx:248": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 263
+        "file": "app/(tabs)/settings.tsx",
+        "line": 248
       },
       "styles": [
         {
           "origin": "stylesheet",
           "ref": "styles.header",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 384,
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 467,
           "properties": {
             "flexDirection": {
-              "line": 385,
+              "line": 468,
               "col": 19,
               "endCol": 24,
               "raw": "'row'"
             },
             "justifyContent": {
-              "line": 386,
+              "line": 469,
               "col": 20,
               "endCol": 35,
               "raw": "'space-between'"
             },
             "alignItems": {
-              "line": 387,
+              "line": 470,
               "col": 16,
               "endCol": 28,
               "raw": "'flex-start'"
@@ -10428,20 +9870,20 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:265": {
+    "SettingsScreen@app/(tabs)/settings.tsx:250": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 265
+        "file": "app/(tabs)/settings.tsx",
+        "line": 250
       },
       "styles": [
         {
           "origin": "stylesheet",
           "ref": "styles.title",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 390,
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 473,
           "properties": {
             "fontSize": {
-              "line": 392,
+              "line": 475,
               "col": 14,
               "endCol": 16,
               "raw": "30"
@@ -10450,48 +9892,48 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:266": {
+    "SettingsScreen@app/(tabs)/settings.tsx:252": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 266
+        "file": "app/(tabs)/settings.tsx",
+        "line": 252
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.titleJa",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 395,
+          "ref": "styles.headerNeko",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 478,
           "properties": {
-            "fontSize": {
-              "line": 397,
-              "col": 14,
-              "endCol": 16,
-              "raw": "16"
+            "width": {
+              "line": 479,
+              "col": 11,
+              "endCol": 13,
+              "raw": "72"
+            },
+            "height": {
+              "line": 480,
+              "col": 12,
+              "endCol": 14,
+              "raw": "72"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:272": {
+    "SettingsScreen@app/(tabs)/settings.tsx:261": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 272
+        "file": "app/(tabs)/settings.tsx",
+        "line": 261
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.recorderCard",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 400,
+          "ref": "styles.card",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 482,
           "properties": {
-            "alignItems": {
-              "line": 404,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
             "borderWidth": {
-              "line": 407,
+              "line": 487,
               "col": 17,
               "endCol": 18,
               "raw": "1"
@@ -10504,248 +9946,326 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:274": {
+    "SettingsScreen@app/(tabs)/settings.tsx:262": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
+        "file": "app/(tabs)/settings.tsx",
+        "line": 262
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.coverThemeGrid",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 489,
+          "properties": {
+            "flexDirection": {
+              "line": 490,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "flexWrap": {
+              "line": 491,
+              "col": 14,
+              "endCol": 20,
+              "raw": "'wrap'"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:266": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 266
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.coverChip",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 494,
+          "properties": {
+            "width": {
+              "line": 495,
+              "col": 11,
+              "endCol": 16,
+              "raw": "'47%'"
+            },
+            "height": {
+              "line": 496,
+              "col": 12,
+              "endCol": 14,
+              "raw": "90"
+            },
+            "borderWidth": {
+              "line": 498,
+              "col": 17,
+              "endCol": 18,
+              "raw": "2"
+            },
+            "borderColor": {
+              "line": 499,
+              "col": 17,
+              "endCol": 30,
+              "raw": "'transparent'"
+            },
+            "overflow": {
+              "line": 500,
+              "col": 14,
+              "endCol": 22,
+              "raw": "'hidden'"
+            },
+            "position": {
+              "line": 501,
+              "col": 14,
+              "endCol": 24,
+              "raw": "'relative'"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:274": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
         "line": 274
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.catDecor",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 410,
+          "ref": "styles.coverChipImage",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 507,
           "properties": {
-            "alignItems": {
-              "line": 411,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "position": {
-              "line": 412,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'relative'"
+            "width": {
+              "line": 508,
+              "col": 11,
+              "endCol": 17,
+              "raw": "'100%'"
             },
             "height": {
-              "line": 413,
+              "line": 509,
               "col": 12,
-              "endCol": 14,
-              "raw": "48"
-            },
-            "width": {
-              "line": 414,
-              "col": 11,
-              "endCol": 13,
-              "raw": "60"
+              "endCol": 18,
+              "raw": "'100%'"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:275": {
+    "SettingsScreen@app/(tabs)/settings.tsx:280": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 275
+        "file": "app/(tabs)/settings.tsx",
+        "line": 280
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.catEar",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 416,
+          "ref": "styles.checkmark",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 525,
           "properties": {
             "position": {
-              "line": 417,
+              "line": 526,
               "col": 14,
               "endCol": 24,
               "raw": "'absolute'"
             },
-            "width": {
-              "line": 418,
-              "col": 11,
-              "endCol": 13,
-              "raw": "14"
-            },
-            "height": {
-              "line": 419,
-              "col": 12,
-              "endCol": 14,
-              "raw": "16"
-            },
-            "borderTopLeftRadius": {
-              "line": 421,
-              "col": 25,
-              "endCol": 26,
-              "raw": "8"
-            },
-            "borderTopRightRadius": {
-              "line": 422,
-              "col": 26,
-              "endCol": 27,
-              "raw": "8"
-            },
             "top": {
-              "line": 423,
+              "line": 527,
               "col": 9,
               "endCol": 10,
-              "raw": "0"
-            }
-          }
-        },
-        {
-          "origin": "stylesheet",
-          "ref": "styles.catEarLeft",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 425,
-          "properties": {
-            "left": {
-              "line": 425,
-              "col": 22,
-              "endCol": 23,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:276": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 276
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.catEar",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 416,
-          "properties": {
-            "position": {
-              "line": 417,
-              "col": 14,
-              "endCol": 24,
-              "raw": "'absolute'"
+              "raw": "5"
             },
-            "width": {
-              "line": 418,
-              "col": 11,
-              "endCol": 13,
-              "raw": "14"
-            },
-            "height": {
-              "line": 419,
-              "col": 12,
-              "endCol": 14,
-              "raw": "16"
-            },
-            "borderTopLeftRadius": {
-              "line": 421,
-              "col": 25,
-              "endCol": 26,
-              "raw": "8"
-            },
-            "borderTopRightRadius": {
-              "line": 422,
-              "col": 26,
-              "endCol": 27,
-              "raw": "8"
-            },
-            "top": {
-              "line": 423,
-              "col": 9,
-              "endCol": 10,
-              "raw": "0"
-            }
-          }
-        },
-        {
-          "origin": "stylesheet",
-          "ref": "styles.catEarRight",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 426,
-          "properties": {
             "right": {
-              "line": 426,
-              "col": 24,
-              "endCol": 25,
-              "raw": "4"
+              "line": 528,
+              "col": 11,
+              "endCol": 12,
+              "raw": "5"
+            },
+            "backgroundColor": {
+              "line": 529,
+              "col": 21,
+              "endCol": 44,
+              "raw": "'rgba(255,255,255,0.9)'"
+            },
+            "borderRadius": {
+              "line": 530,
+              "col": 18,
+              "endCol": 20,
+              "raw": "10"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:277": {
+    "SettingsScreen@app/(tabs)/settings.tsx:284": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 277
+        "file": "app/(tabs)/settings.tsx",
+        "line": 284
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.catHead",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 427,
+          "ref": "styles.coverChipLabelBar",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 511,
           "properties": {
             "position": {
-              "line": 428,
+              "line": 512,
               "col": 14,
               "endCol": 24,
               "raw": "'absolute'"
             },
             "bottom": {
-              "line": 429,
+              "line": 513,
               "col": 12,
               "endCol": 13,
               "raw": "0"
+            },
+            "left": {
+              "line": 514,
+              "col": 10,
+              "endCol": 11,
+              "raw": "0"
+            },
+            "right": {
+              "line": 515,
+              "col": 11,
+              "endCol": 12,
+              "raw": "0"
+            },
+            "paddingVertical": {
+              "line": 516,
+              "col": 21,
+              "endCol": 22,
+              "raw": "3"
+            },
+            "paddingHorizontal": {
+              "line": 517,
+              "col": 23,
+              "endCol": 24,
+              "raw": "6"
+            },
+            "alignItems": {
+              "line": 518,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:283": {
+    "SettingsScreen@app/(tabs)/settings.tsx:285": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 283
+        "file": "app/(tabs)/settings.tsx",
+        "line": 285
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.waveform",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 431,
-          "properties": {
-            "marginVertical": {
-              "line": 432,
-              "col": 20,
-              "endCol": 21,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:288": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 288
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.timer",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 434,
+          "ref": "styles.coverChipLabel",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 520,
           "properties": {
             "fontSize": {
-              "line": 436,
+              "line": 522,
               "col": 14,
               "endCol": 16,
-              "raw": "40"
+              "raw": "10"
             },
-            "letterSpacing": {
-              "line": 438,
+            "color": {
+              "line": 523,
+              "col": 11,
+              "endCol": 20,
+              "raw": "'#FFFFFF'"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:295": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 295
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.card",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 482,
+          "properties": {
+            "borderWidth": {
+              "line": 487,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:297": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 297
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.fontRow",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 532,
+          "properties": {
+            "flexDirection": {
+              "line": 533,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 534,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:306": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 306
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.fontInfo",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 548,
+          "properties": {
+            "gap": {
+              "line": 548,
               "col": 19,
               "endCol": 20,
               "raw": "2"
@@ -10754,264 +10274,98 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:293": {
+    "SettingsScreen@app/(tabs)/settings.tsx:307": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 293
+        "file": "app/(tabs)/settings.tsx",
+        "line": 307
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.recordBtn",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 440,
-          "properties": {
-            "width": {
-              "line": 441,
-              "col": 11,
-              "endCol": 13,
-              "raw": "72"
-            },
-            "height": {
-              "line": 442,
-              "col": 12,
-              "endCol": 14,
-              "raw": "72"
-            },
-            "borderRadius": {
-              "line": 443,
-              "col": 18,
-              "endCol": 20,
-              "raw": "36"
-            },
-            "alignItems": {
-              "line": 445,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 446,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:311": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 311
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.recordHint",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 452,
+          "ref": "styles.fontLabel",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 549,
           "properties": {
             "fontSize": {
-              "line": 454,
+              "line": 550,
               "col": 14,
               "endCol": 16,
-              "raw": "13"
+              "raw": "15"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:314": {
+    "SettingsScreen@app/(tabs)/settings.tsx:310": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 314
+        "file": "app/(tabs)/settings.tsx",
+        "line": 310
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.recordHintJa",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 457,
+          "ref": "styles.fontLabelJa",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 553,
           "properties": {
             "fontSize": {
-              "line": 459,
+              "line": 555,
               "col": 14,
               "endCol": 16,
-              "raw": "13"
+              "raw": "10"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:318": {
+    "SettingsScreen@app/(tabs)/settings.tsx:312": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 318
+        "file": "app/(tabs)/settings.tsx",
+        "line": 312
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.errorText",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 462,
+          "ref": "styles.fontPreview",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 558,
           "properties": {
+            "flex": {
+              "line": 559,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
             "fontSize": {
-              "line": 464,
+              "line": 560,
               "col": 14,
               "endCol": 16,
-              "raw": "12"
+              "raw": "14"
             },
             "textAlign": {
-              "line": 466,
+              "line": 562,
               "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
+              "endCol": 22,
+              "raw": "'right'"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:322": {
+    "SettingsScreen@app/(tabs)/settings.tsx:329": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 322
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.sectionTitle",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 468,
-          "properties": {
-            "fontSize": {
-              "line": 470,
-              "col": 14,
-              "endCol": 16,
-              "raw": "20"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:327": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 327
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.emptyState",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 474,
-          "properties": {
-            "alignItems": {
-              "line": 475,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "paddingVertical": {
-              "line": 476,
-              "col": 21,
-              "endCol": 23,
-              "raw": "32"
-            },
-            "gap": {
-              "line": 477,
-              "col": 9,
-              "endCol": 10,
-              "raw": "8"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:329": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
+        "file": "app/(tabs)/settings.tsx",
         "line": 329
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.emptyText",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 479,
+          "ref": "styles.card",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 482,
           "properties": {
-            "fontSize": {
-              "line": 481,
-              "col": 14,
-              "endCol": 16,
-              "raw": "18"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:330": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 330
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.emptySubtext",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 484,
-          "properties": {
-            "fontSize": {
-              "line": 486,
-              "col": 14,
-              "endCol": 16,
-              "raw": "13"
-            },
-            "textAlign": {
-              "line": 488,
-              "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:337": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 337
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.memoCard",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 490,
-          "properties": {
-            "flexDirection": {
-              "line": 491,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 492,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
             "borderWidth": {
-              "line": 499,
+              "line": 487,
               "col": 17,
               "endCol": 18,
               "raw": "1"
@@ -11024,70 +10378,264 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:338": {
+    "SettingsScreen@app/(tabs)/settings.tsx:330": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 338
+        "file": "app/(tabs)/settings.tsx",
+        "line": 330
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.playBtn",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 501,
+          "ref": "styles.toggleRow",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 564,
           "properties": {
-            "padding": {
-              "line": 501,
-              "col": 22,
-              "endCol": 23,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:348": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 348
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.memoInfo",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 502,
-          "properties": {
-            "flex": {
-              "line": 502,
-              "col": 20,
-              "endCol": 21,
-              "raw": "1"
+            "flexDirection": {
+              "line": 565,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
             },
-            "gap": {
-              "line": 502,
-              "col": 28,
-              "endCol": 29,
-              "raw": "4"
+            "alignItems": {
+              "line": 566,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 567,
+              "col": 20,
+              "endCol": 35,
+              "raw": "'space-between'"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:350": {
+    "SettingsScreen@app/(tabs)/settings.tsx:331": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
+        "file": "app/(tabs)/settings.tsx",
+        "line": 331
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.toggleInfo",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 570,
+          "properties": {
+            "flexDirection": {
+              "line": 571,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 572,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "flex": {
+              "line": 574,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:334": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 334
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.toggleLabel",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 576,
+          "properties": {
+            "fontSize": {
+              "line": 578,
+              "col": 14,
+              "endCol": 16,
+              "raw": "15"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:335": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 335
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.toggleLabelJa",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 581,
+          "properties": {
+            "fontSize": {
+              "line": 583,
+              "col": 14,
+              "endCol": 16,
+              "raw": "10"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:349": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 349
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.card",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 482,
+          "properties": {
+            "borderWidth": {
+              "line": 487,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:350": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
         "line": 350
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.memoTitle",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 503,
+          "ref": "styles.langRow",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 586,
+          "properties": {
+            "flexDirection": {
+              "line": 587,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:352": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 352
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.langChip",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 590,
+          "properties": {
+            "flex": {
+              "line": 591,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "flexDirection": {
+              "line": 592,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 593,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 594,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 595,
+              "col": 9,
+              "endCol": 10,
+              "raw": "6"
+            },
+            "paddingVertical": {
+              "line": 596,
+              "col": 21,
+              "endCol": 23,
+              "raw": "10"
+            },
+            "borderWidth": {
+              "line": 598,
+              "col": 17,
+              "endCol": 20,
+              "raw": "1.5"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:360": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 360
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.langFlag",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 606,
           "properties": {
             "fontSize": {
-              "line": 505,
+              "line": 608,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:368": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 368
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.langLabel",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 610,
+          "properties": {
+            "fontSize": {
+              "line": 612,
               "col": 14,
               "endCol": 16,
               "raw": "14"
@@ -11096,110 +10644,219 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:352": {
+    "SettingsScreen@app/(tabs)/settings.tsx:383": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 352
+        "file": "app/(tabs)/settings.tsx",
+        "line": 383
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.memoMeta",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 508,
+          "ref": "styles.card",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 482,
+          "properties": {
+            "borderWidth": {
+              "line": 487,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:385": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 385
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupSection",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 614,
+          "properties": {}
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:386": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 386
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupInfo",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 617,
           "properties": {
             "flexDirection": {
-              "line": 509,
+              "line": 618,
               "col": 19,
               "endCol": 24,
               "raw": "'row'"
             },
             "alignItems": {
-              "line": 510,
+              "line": 619,
+              "col": 16,
+              "endCol": 28,
+              "raw": "'flex-start'"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:388": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 388
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupTextWrap",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 622,
+          "properties": {
+            "flex": {
+              "line": 623,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "gap": {
+              "line": 624,
+              "col": 9,
+              "endCol": 10,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:389": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 389
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupLabel",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 626,
+          "properties": {
+            "fontSize": {
+              "line": 628,
+              "col": 14,
+              "endCol": 16,
+              "raw": "15"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:390": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 390
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupHint",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 631,
+          "properties": {
+            "fontSize": {
+              "line": 633,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "lineHeight": {
+              "line": 635,
+              "col": 16,
+              "endCol": 18,
+              "raw": "16"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:393": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 393
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupBtn",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 637,
+          "properties": {
+            "flexDirection": {
+              "line": 638,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 639,
               "col": 16,
               "endCol": 24,
               "raw": "'center'"
             },
+            "justifyContent": {
+              "line": 640,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
             "gap": {
-              "line": 511,
+              "line": 641,
               "col": 9,
               "endCol": 10,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:354": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 354
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.memoMetaText",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 513,
-          "properties": {
-            "fontSize": {
-              "line": 515,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
+              "raw": "6"
             },
-            "marginRight": {
-              "line": 517,
-              "col": 17,
-              "endCol": 18,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:356": {
-      "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 356
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.memoMetaText",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 513,
-          "properties": {
-            "fontSize": {
-              "line": 515,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
+            "paddingVertical": {
+              "line": 642,
+              "col": 21,
+              "endCol": 23,
+              "raw": "10"
             },
-            "marginRight": {
-              "line": 517,
-              "col": 17,
-              "endCol": 18,
-              "raw": "4"
+            "paddingHorizontal": {
+              "line": 643,
+              "col": 23,
+              "endCol": 25,
+              "raw": "14"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:359": {
+    "SettingsScreen@app/(tabs)/settings.tsx:404": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 359
+        "file": "app/(tabs)/settings.tsx",
+        "line": 404
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.playingLabel",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 519,
+          "ref": "styles.backupBtnText",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 646,
           "properties": {
             "fontSize": {
-              "line": 521,
+              "line": 648,
               "col": 14,
               "endCol": 16,
               "raw": "13"
@@ -11208,43 +10865,386 @@
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:362": {
+    "SettingsScreen@app/(tabs)/settings.tsx:410": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 362
+        "file": "app/(tabs)/settings.tsx",
+        "line": 410
       },
       "styles": [
         {
           "origin": "stylesheet",
-          "ref": "styles.deleteBtn",
-          "file": "app/(tabs)/audio.tsx",
-          "defLine": 524,
+          "ref": "styles.divider",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 651,
           "properties": {
-            "padding": {
-              "line": 525,
-              "col": 13,
-              "endCol": 14,
-              "raw": "8"
+            "height": {
+              "line": 652,
+              "col": 12,
+              "endCol": 13,
+              "raw": "1"
             }
           }
         }
       ]
     },
-    "AudioMemoScreen@app/(tabs)/audio.tsx:372": {
+    "SettingsScreen@app/(tabs)/settings.tsx:413": {
       "element": {
-        "file": "app/(tabs)/audio.tsx",
-        "line": 372
+        "file": "app/(tabs)/settings.tsx",
+        "line": 413
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupSection",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 614,
+          "properties": {}
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:414": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 414
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupInfo",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 617,
+          "properties": {
+            "flexDirection": {
+              "line": 618,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 619,
+              "col": 16,
+              "endCol": 28,
+              "raw": "'flex-start'"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:416": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 416
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupTextWrap",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 622,
+          "properties": {
+            "flex": {
+              "line": 623,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "gap": {
+              "line": 624,
+              "col": 9,
+              "endCol": 10,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:417": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 417
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupLabel",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 626,
+          "properties": {
+            "fontSize": {
+              "line": 628,
+              "col": 14,
+              "endCol": 16,
+              "raw": "15"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:418": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 418
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupHint",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 631,
+          "properties": {
+            "fontSize": {
+              "line": 633,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "lineHeight": {
+              "line": 635,
+              "col": 16,
+              "endCol": 18,
+              "raw": "16"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:421": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 421
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupBtn",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 637,
+          "properties": {
+            "flexDirection": {
+              "line": 638,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 639,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 640,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 641,
+              "col": 9,
+              "endCol": 10,
+              "raw": "6"
+            },
+            "paddingVertical": {
+              "line": 642,
+              "col": 21,
+              "endCol": 23,
+              "raw": "10"
+            },
+            "paddingHorizontal": {
+              "line": 643,
+              "col": 23,
+              "endCol": 25,
+              "raw": "14"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:432": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 432
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.backupBtnText",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 646,
+          "properties": {
+            "fontSize": {
+              "line": 648,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:441": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 441
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.card",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 482,
+          "properties": {
+            "borderWidth": {
+              "line": 487,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:442": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 442
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.aboutRow",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 656,
+          "properties": {
+            "flexDirection": {
+              "line": 657,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 658,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:443": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 443
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.aboutNeko",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 661,
+          "properties": {
+            "width": {
+              "line": 662,
+              "col": 11,
+              "endCol": 13,
+              "raw": "56"
+            },
+            "height": {
+              "line": 663,
+              "col": 12,
+              "endCol": 14,
+              "raw": "56"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:448": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 448
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.aboutInfo",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 665,
+          "properties": {
+            "gap": {
+              "line": 665,
+              "col": 20,
+              "endCol": 21,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:449": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 449
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.appName",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 666,
+          "properties": {
+            "fontSize": {
+              "line": 668,
+              "col": 14,
+              "endCol": 16,
+              "raw": "20"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:450": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 450
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.appVersion",
+          "file": "app/(tabs)/settings.tsx",
+          "defLine": 671,
+          "properties": {
+            "fontSize": {
+              "line": 673,
+              "col": 14,
+              "endCol": 16,
+              "raw": "12"
+            }
+          }
+        }
+      ]
+    },
+    "SettingsScreen@app/(tabs)/settings.tsx:455": {
+      "element": {
+        "file": "app/(tabs)/settings.tsx",
+        "line": 455
       },
       "styles": [
         {
           "origin": "inline",
-          "file": "app/(tabs)/audio.tsx",
+          "file": "app/(tabs)/settings.tsx",
           "properties": {
             "height": {
-              "line": 372,
+              "line": 455,
               "col": 31,
               "endCol": 33,
-              "raw": "32"
+              "raw": "40"
             }
           }
         }
