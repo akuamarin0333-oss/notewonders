@@ -7,6 +7,7 @@ import { useEffect, Component, type ReactNode } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Alert, Platform, ScrollView, Text, View, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 // ─── Remove browser focus outline on web ────────────────────────────────────
 if (Platform.OS === 'web' && typeof document !== 'undefined') {
@@ -20,7 +21,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
 if (Platform.OS !== 'web') {
   // ErrorUtils is available on React Native (JSC / Hermes)
   const globalHandler = (error: Error, isFatal: boolean) => {
-    const title = isFatal ? '💥 致命的なエラーが発生しました' : '⚠️ エラーが発生しました';
+    const title = isFatal ? '致命的なエラーが発生しました' : 'エラーが発生しました';
     const message =
       `${error?.message ?? String(error)}\n\n` +
       (error?.stack ? `スタック:\n${error.stack.slice(0, 600)}` : '');
@@ -53,7 +54,7 @@ if (Platform.OS !== 'web') {
       reason instanceof Error
         ? `${reason.message}\n\n${reason.stack?.slice(0, 400) ?? ''}`
         : String(reason);
-    Alert.alert('⚠️ 未処理のPromise Rejection', message, [{ text: 'OK' }]);
+    Alert.alert('未処理のPromise Rejection', message, [{ text: 'OK' }]);
     if (prevHandler) prevHandler(event);
   };
 }
@@ -84,7 +85,7 @@ class AppErrorBoundary extends Component<
     const message =
       `${error?.message ?? String(error)}\n\n` +
       `コンポーネントスタック:\n${info.componentStack?.slice(0, 400) ?? ''}`;
-    Alert.alert('🔴 レンダリングエラー', message, [
+    Alert.alert('レンダリングエラー', message, [
       {
         text: 'リトライ',
         onPress: () => this.setState({ hasError: false, error: null }),
@@ -106,7 +107,7 @@ class AppErrorBoundary extends Component<
             padding: 24,
           }}
         >
-          <Text style={{ fontSize: 40, marginBottom: 16 }}>🔴</Text>
+          <Ionicons name="warning" size={48} color="#c0392b" style={{ marginBottom: 16 }} />
           <Text
             style={{
               fontSize: 18,
@@ -168,7 +169,7 @@ export default function RootLayout() {
     if (error) {
       console.error('[App] ❌ フォント読み込みエラー:', error);
       Alert.alert(
-        '⚠️ フォント読み込みエラー',
+        'フォント読み込みエラー',
         `フォントの読み込みに失敗しました。\n\n${error?.message ?? String(error)}`,
         [{ text: 'OK' }],
       );
