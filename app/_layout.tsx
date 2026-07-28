@@ -17,40 +17,29 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
   document.head.appendChild(style);
 }
 
-// ─── Global JS error handler (unhandled JS exceptions) ──────────────────────
+// ─── Global JS error handler (React Native only — ErrorUtils is Hermes/JSC internal) ──
 if (Platform.OS !== 'web') {
-  // ErrorUtils is available on React Native (JSC / Hermes)
-  const globalHandler = (error: Error, isFatal: boolean) => {
-    const title = isFatal ? '致命的なエラーが発生しました' : 'エラーが発生しました';
-    const message =
-      `${error?.message ?? String(error)}\n\n` +
-      (error?.stack ? `スタック:\n${error.stack.slice(0, 600)}` : '');
-    Alert.alert(title, message, [{ text: 'OK' }]);
-  };
+  try {
+    // @ts-ignore – ErrorUtils is a React Native runtime global, not in TS defs
+    const EU = global.ErrorUtils as {
+      getGlobalHandler: () => ((error: Error, isFatal: boolean) => void) | null;
+      setGlobalHandler: (handler: (error: Error, isFatal: boolean) => void) => void;
+    } | undefined;
 
-  // @ts-ignore – ErrorUtils is a React Native internal global
-  if (typeof ErrorUtils !== 'undefined') {
-    // @ts-ignore
-    const previousHandler = ErrorUtils.getGlobalHandler();
-    // @ts-ignore
-    ErrorUtils.setGlobalHandler((error: Error, isFatal: boolean) => {
-      globalHandler(error, isFatal);
-      // Chain to the original handler so Hermes / Metro still get it
-      if (previousHandler) previousHandler(error, isFatal);
-    });
+    if (EU) {
+      const previousHandler = EU.getGlobalHandler();
+      EU.setGlobalHandler((error: Error, isFatal: boolean) => {
+        const title = isFatal ? '致命的なエラーが発生しました' : 'エラーが発生しました';
+        const message =
+          `${error?.message ?? String(error)}\n\n` +
+          (error?.stack ? `スタック:\n${error.stack.slice(0, 600)}` : '');
+        Alert.alert(title, message, [{ text: 'OK' }]);
+        if (previousHandler) previousHandler(error, isFatal);
+      });
+    }
+  } catch (_) {
+    // Silently ignore if ErrorUtils is not available
   }
-
-  // Unhandled Promise rejections
-  const prevHandler = (global as any).onunhandledrejection;
-  (global as any).onunhandledrejection = (event: PromiseRejectionEvent) => {
-    const reason = event?.reason;
-    const message =
-      reason instanceof Error
-        ? `${reason.message}\n\n${reason.stack?.slice(0, 400) ?? ''}`
-        : String(reason);
-    Alert.alert('未処理のPromise Rejection', message, [{ text: 'OK' }]);
-    if (prevHandler) prevHandler(event);
-  };
 }
 
 SplashScreen.preventAutoHideAsync();
