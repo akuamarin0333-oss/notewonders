@@ -41,12 +41,6 @@ if (Platform.OS !== 'web') {
   }
 
   // Unhandled Promise rejections
-  const originalPromiseRejectionHandler =
-    // @ts-ignore
-    global.HermesInternal?.hasPromise?.()
-      ? undefined
-      : undefined;
-
   const prevHandler = (global as any).onunhandledrejection;
   (global as any).onunhandledrejection = (event: PromiseRejectionEvent) => {
     const reason = event?.reason;
