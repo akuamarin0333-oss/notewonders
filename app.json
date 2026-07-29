@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "fastshot",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.fastshot.notewonders"
@@ -60,8 +60,7 @@
       "expo-web-browser"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "baseUrl": "/648fde09-4c16-4b16-9cb0-5901ae12c80f/dev-preview/"
+      "typedRoutes": true
     },
     "owner": "shironyandiary",
     "extra": {

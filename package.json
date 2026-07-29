@@ -11,9 +11,7 @@
   "dependencies": {
     "@expo-google-fonts/caveat": "^0.4.2",
     "@expo-google-fonts/inter": "^0.4.2",
-    "@expo/cli": "^54.0.10",
     "@expo/vector-icons": "^15.0.2",
-    "@radix-ui/react-dialog": "^1.1.15",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/datetimepicker": "8.4.4",
     "@react-navigation/bottom-tabs": "^7.3.10",
@@ -21,7 +19,7 @@
     "@react-navigation/native": "^7.1.6",
     "expo": "~54.0.36",
     "expo-asset": "~12.0.13",
-    "expo-audio": "^0.4.9",
+    "expo-audio": "~0.4.9",
     "expo-blur": "~15.0.7",
     "expo-constants": "~18.0.9",
     "expo-file-system": "~19.0.23",
@@ -46,7 +44,6 @@
     "react-native-svg": "15.12.1",
     "react-native-web": "^0.21.0",
     "react-native-webview": "13.15.0",
-    "react-native-worklets": "0.5.1",
     "zustand": "^5.0.10"
   },
   "devDependencies": {
@@ -64,6 +61,10 @@
     "jest-expo": "~52.0.6",
     "oxlint": "^1.2.0",
     "typescript": "~5.9.2"
+  },
+  "overrides": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   },
   "jest": {
     "preset": "jest-expo",
@@ -86,8 +87,7 @@
     "install": {
       "exclude": [
         "expo-audio",
-        "jest-expo",
-        "react-native-worklets"
+        "jest-expo"
       ]
     }
   }
