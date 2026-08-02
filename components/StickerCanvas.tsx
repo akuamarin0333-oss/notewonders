@@ -27,8 +27,28 @@ export const STICKER_IMAGES: Record<string, number> = {
   sticker_heart_green: require('@/assets/sticker_heart_green.png'),
   sticker_heart_arrow: require('@/assets/sticker_heart_arrow.png'),
   sticker_heart_sparkle: require('@/assets/sticker_heart_sparkle.png'),
-  // ネコ
+  // ネコ (built-in)
   sticker_cat_snowman: require('@/assets/sticker_cat_snowman.png'),
+  // ネコ (user-upload cat stickers)
+  sticker_moon_cat: require('@/assets/sticker_moon_cat.png'),
+  sticker_onsen_cat: require('@/assets/sticker_onsen_cat.png'),
+  sticker_icecream_cat: require('@/assets/sticker_icecream_cat.png'),
+  sticker_flower_cat: require('@/assets/sticker_flower_cat.png'),
+  sticker_pancake_cat: require('@/assets/sticker_pancake_cat.png'),
+  sticker_cooking_cat: require('@/assets/sticker_cooking_cat.png'),
+  sticker_shopping_cat: require('@/assets/sticker_shopping_cat.png'),
+  sticker_thunder_cat: require('@/assets/sticker_thunder_cat.png'),
+  sticker_sunny_cat: require('@/assets/sticker_sunny_cat.png'),
+  sticker_cloud_cat: require('@/assets/sticker_cloud_cat.png'),
+  sticker_snowy_cat: require('@/assets/sticker_snowy_cat.png'),
+  sticker_butterfly_cat: require('@/assets/sticker_butterfly_cat.png'),
+  sticker_beach_cat: require('@/assets/sticker_beach_cat.png'),
+  sticker_winter_cat: require('@/assets/sticker_winter_cat.png'),
+  sticker_autumn_cat: require('@/assets/sticker_autumn_cat.png'),
+  sticker_festival_cat: require('@/assets/sticker_festival_cat.png'),
+  sticker_pumpkin_cat: require('@/assets/sticker_pumpkin_cat.png'),
+  sticker_stargazing_cat: require('@/assets/sticker_stargazing_cat.png'),
+  sticker_bath_cat: require('@/assets/sticker_bath_cat.png'),
   // はる
   sticker_flower_garden: require('@/assets/sticker_flower_garden.png'),
   sticker_cherry_blossom: require('@/assets/sticker_cherry_blossom.png'),
@@ -91,22 +111,27 @@ function DraggableSticker({
 
   const panResponder = useRef(
     PanResponder.create({
+      // Capture on start so we get the full gesture lifecycle
       onStartShouldSetPanResponder: () => true,
+      // Also capture if the user starts moving (for child elements that may consume start)
       onMoveShouldSetPanResponder: (_, gs) =>
-        Math.abs(gs.dx) > 3 || Math.abs(gs.dy) > 3,
+        Math.abs(gs.dx) > 5 || Math.abs(gs.dy) > 5,
       onPanResponderGrant: () => {
         didMove.current = false;
       },
       onPanResponderMove: (_, gs) => {
-        didMove.current = true;
-        onUpdate({
-          x: lastPos.current.x + gs.dx,
-          y: lastPos.current.y + gs.dy,
-        });
+        // Only mark as drag if movement exceeds threshold
+        if (Math.abs(gs.dx) > 5 || Math.abs(gs.dy) > 5) {
+          didMove.current = true;
+          onUpdate({
+            x: lastPos.current.x + gs.dx,
+            y: lastPos.current.y + gs.dy,
+          });
+        }
       },
       onPanResponderRelease: (_, gs) => {
         if (!didMove.current) {
-          // Tap: toggle select
+          // Tap: toggle select/deselect
           onSelect();
         } else {
           lastPos.current = {
@@ -145,7 +170,7 @@ function DraggableSticker({
         },
       ]}
     >
-      {/* Drag handle covers the sticker image */}
+      {/* Drag handle covers the sticker image — only handles dragging, not control buttons */}
       <View {...panResponder.panHandlers} style={StyleSheet.absoluteFillObject}>
         <Image
           source={source}
@@ -157,31 +182,32 @@ function DraggableSticker({
       {/* Controls — only visible when selected */}
       {isSelected && (
         <>
-          {/* Delete button — top right */}
-          <TouchableOpacity
+          {/* Delete button — top right, rendered outside PanResponder view */}
+          <View
             style={styles.deleteBtn}
-            onPress={onRemove}
-            hitSlop={{ top: 6, right: 6, bottom: 6, left: 6 }}
+            // Use responder system directly so it beats the PanResponder
+            onStartShouldSetResponder={() => true}
+            onResponderGrant={onRemove}
           >
             <Text style={styles.deleteBtnText}>×</Text>
-          </TouchableOpacity>
+          </View>
 
           {/* Scale buttons — left side, vertically centred */}
           <View style={[styles.scaleButtons, { top: size / 2 - 36 }]}>
-            <TouchableOpacity
+            <View
               style={styles.scaleBtn}
-              onPress={handleScaleUp}
-              hitSlop={{ top: 4, right: 4, bottom: 4, left: 4 }}
+              onStartShouldSetResponder={() => true}
+              onResponderGrant={handleScaleUp}
             >
               <Text style={styles.scaleBtnText}>＋</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </View>
+            <View
               style={styles.scaleBtn}
-              onPress={handleScaleDown}
-              hitSlop={{ top: 4, right: 4, bottom: 4, left: 4 }}
+              onStartShouldSetResponder={() => true}
+              onResponderGrant={handleScaleDown}
             >
               <Text style={styles.scaleBtnText}>－</Text>
-            </TouchableOpacity>
+            </View>
           </View>
         </>
       )}
@@ -244,6 +270,7 @@ const styles = StyleSheet.create({
   },
   stickerWrapper: {
     position: 'absolute',
+    overflow: 'visible',
   },
   deleteBtn: {
     position: 'absolute',

@@ -215,25 +215,41 @@ function PolaroidItem({ photo, onPickPhoto, onRemove, onUpdatePhoto, onToggleTra
   photoRef.current = photo;
   const onUpdateRef = useRef(onUpdatePhoto);
   onUpdateRef.current = onUpdatePhoto;
+  const onRemoveRef = useRef(onRemove);
+  onRemoveRef.current = onRemove;
+  const onToggleRef = useRef(onToggleTransform);
+  onToggleRef.current = onToggleTransform;
+
+  // Track whether we initiated the drag on the image body (not a button)
+  const isDragging = useRef(false);
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => photoRef.current.isTransformMode,
-      onMoveShouldSetPanResponder: () => photoRef.current.isTransformMode,
+      // Only capture START if transform mode is active — but defer to children (buttons) first
+      onStartShouldSetPanResponder: () => false,
+      // Capture MOVE gestures when in transform mode (drag)
+      onMoveShouldSetPanResponder: (_, gs) =>
+        photoRef.current.isTransformMode &&
+        (Math.abs(gs.dx) > 4 || Math.abs(gs.dy) > 4),
       onPanResponderGrant: () => {
+        isDragging.current = true;
         basePos.current = { x: photoRef.current.x, y: photoRef.current.y };
       },
       onPanResponderMove: (_, gs) => {
+        if (!isDragging.current) return;
         onUpdateRef.current(photoRef.current.id, {
           x: basePos.current.x + gs.dx,
           y: basePos.current.y + gs.dy,
         });
       },
       onPanResponderRelease: (_, gs) => {
-        basePos.current = {
-          x: basePos.current.x + gs.dx,
-          y: basePos.current.y + gs.dy,
-        };
+        if (isDragging.current) {
+          basePos.current = {
+            x: basePos.current.x + gs.dx,
+            y: basePos.current.y + gs.dy,
+          };
+        }
+        isDragging.current = false;
       },
     })
   ).current;
@@ -251,9 +267,11 @@ function PolaroidItem({ photo, onPickPhoto, onRemove, onUpdatePhoto, onToggleTra
       <View style={styles.polaroidTapeRow}>
         <MaskingTape width={74} color={tapeColor} />
         <View style={styles.polaroidTapeControls}>
-          <TouchableOpacity
+          {/* Toggle transform mode button — uses responder system to beat PanResponder */}
+          <View
             style={[styles.polaroidToggleBtn, photo.isTransformMode && styles.polaroidToggleBtnOn]}
-            onPress={() => onToggleTransform(photo.id)}
+            onStartShouldSetResponder={() => true}
+            onResponderGrant={() => onToggleRef.current(photo.id)}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
             <Ionicons
@@ -261,15 +279,16 @@ function PolaroidItem({ photo, onPickPhoto, onRemove, onUpdatePhoto, onToggleTra
               size={12}
               color={photo.isTransformMode ? Colors.white : Colors.textLight}
             />
-          </TouchableOpacity>
+          </View>
           {photo.isTransformMode && (
-            <TouchableOpacity
+            <View
               style={styles.polaroidRemoveBtn}
-              onPress={() => onRemove(photo.id)}
+              onStartShouldSetResponder={() => true}
+              onResponderGrant={() => onRemoveRef.current(photo.id)}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Ionicons name="close" size={11} color={Colors.white} />
-            </TouchableOpacity>
+            </View>
           )}
         </View>
       </View>
@@ -281,20 +300,28 @@ function PolaroidItem({ photo, onPickPhoto, onRemove, onUpdatePhoto, onToggleTra
       ]}>
         {photo.isTransformMode && (
           <View style={styles.polaroidScaleRow}>
-            <TouchableOpacity
+            {/* Scale down button */}
+            <View
               style={styles.polaroidScaleBtn}
-              onPress={() => onUpdateRef.current(photo.id, { scale: Math.max(0.4, photo.scale - 0.15) })}
+              onStartShouldSetResponder={() => true}
+              onResponderGrant={() =>
+                onUpdateRef.current(photo.id, { scale: Math.max(0.4, photoRef.current.scale - 0.15) })
+              }
               hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
             >
               <Ionicons name="remove-outline" size={12} color={Colors.primary} />
-            </TouchableOpacity>
-            <TouchableOpacity
+            </View>
+            {/* Scale up button */}
+            <View
               style={styles.polaroidScaleBtn}
-              onPress={() => onUpdateRef.current(photo.id, { scale: Math.min(3.5, photo.scale + 0.15) })}
+              onStartShouldSetResponder={() => true}
+              onResponderGrant={() =>
+                onUpdateRef.current(photo.id, { scale: Math.min(3.5, photoRef.current.scale + 0.15) })
+              }
               hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
             >
               <Ionicons name="add-outline" size={12} color={Colors.primary} />
-            </TouchableOpacity>
+            </View>
           </View>
         )}
 
@@ -926,8 +953,8 @@ export default function NotebookPageView() {
                     />
                   ))}
 
-                  {/* Sticker canvas */}
-                  <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+                  {/* Sticker canvas — overflow visible so control buttons render outside sticker bounds */}
+                  <View style={[StyleSheet.absoluteFillObject, { overflow: 'visible' }]} pointerEvents="box-none">
                     <StickerCanvas
                       stickers={currentPage?.stickers ?? []}
                       onUpdateSticker={(sid, updates) =>

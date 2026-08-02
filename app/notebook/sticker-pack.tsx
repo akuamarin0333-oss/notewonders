@@ -23,7 +23,7 @@ import { useStickerStore } from '@/store/useStickerStore';
 
 // ─── Tab definitions ──────────────────────────────────────────────────────────
 
-type TabId = 'heart' | 'haru' | 'natsu' | 'aki' | 'fuyu' | 'mystickers';
+type TabId = 'heart' | 'neko' | 'haru' | 'natsu' | 'aki' | 'fuyu' | 'mystickers';
 
 interface Tab {
   id: TabId;
@@ -33,6 +33,7 @@ interface Tab {
 
 const TABS: Tab[] = [
   { id: 'heart',      label: 'ハート',     icon: 'heart' },
+  { id: 'neko',       label: 'ネコ',       icon: 'paw-outline' },
   { id: 'haru',       label: 'はる',       icon: 'flower-outline' },
   { id: 'natsu',      label: 'なつ',       icon: 'sunny' },
   { id: 'aki',        label: 'あき',       icon: 'leaf' },
@@ -82,6 +83,29 @@ const FUYU_STICKERS: StickerItem[] = [
   { type: 'sticker_cat_snowman',   label: '雪だるま猫' },
   { type: 'sticker_kotatsu',       label: 'こたつ' },
   { type: 'sticker_christmas_tree', label: 'クリスマス' },
+];
+
+// ネコステッカー (cat stickers)
+const NEKO_STICKERS: StickerItem[] = [
+  { type: 'sticker_moon_cat',       label: 'お月見猫' },
+  { type: 'sticker_onsen_cat',      label: '温泉猫' },
+  { type: 'sticker_icecream_cat',   label: 'アイス猫' },
+  { type: 'sticker_flower_cat',     label: 'お花猫' },
+  { type: 'sticker_pancake_cat',    label: 'パンケーキ猫' },
+  { type: 'sticker_cooking_cat',    label: '料理猫' },
+  { type: 'sticker_shopping_cat',   label: '買い物猫' },
+  { type: 'sticker_thunder_cat',    label: '雷猫' },
+  { type: 'sticker_sunny_cat',      label: '晴れ猫' },
+  { type: 'sticker_cloud_cat',      label: '曇り猫' },
+  { type: 'sticker_snowy_cat',      label: '雪猫' },
+  { type: 'sticker_butterfly_cat',  label: '蝶々猫' },
+  { type: 'sticker_beach_cat',      label: 'ビーチ猫' },
+  { type: 'sticker_winter_cat',     label: '冬猫' },
+  { type: 'sticker_autumn_cat',     label: '秋猫' },
+  { type: 'sticker_festival_cat',   label: 'お祭り猫' },
+  { type: 'sticker_pumpkin_cat',    label: 'かぼちゃ猫' },
+  { type: 'sticker_stargazing_cat', label: '星空猫' },
+  { type: 'sticker_bath_cat',       label: 'お風呂猫' },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -249,6 +273,7 @@ export default function StickerPack() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'heart':      return renderStickerGrid(HEART_STICKERS);
+      case 'neko':       return renderStickerGrid(NEKO_STICKERS);
       case 'haru':       return renderStickerGrid(HARU_STICKERS);
       case 'natsu':      return renderStickerGrid(NATSU_STICKERS);
       case 'aki':        return renderStickerGrid(AKI_STICKERS);
