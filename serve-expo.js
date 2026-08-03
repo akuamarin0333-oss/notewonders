@@ -55,6 +55,17 @@ function getManifest(host, platform) {
   const bundlePath = platformMeta.bundle;
   const baseUrl = `http://${host}`;
 
+  // Reject Hermes precompiled bytecode (.hbc) — Expo Go cannot execute these.
+  // They are produced by EAS production builds and must not be served to Expo Go.
+  if (bundlePath.endsWith('.hbc')) {
+    throw new Error(
+      `Platform "${platform}" bundle is a precompiled Hermes bytecode file (.hbc).\n` +
+      `Expo Go requires plain JavaScript bundles (.js).\n` +
+      `The stale .hbc files in dist/ are from a previous EAS/production build.\n` +
+      `Solution: remove dist/_expo/static/js/${platform}/*.hbc and rebuild.`
+    );
+  }
+
   // Match Expo CLI dev server manifest exactly:
   // - assets: [] (empty, like the dev server — assets are embedded in bundle)
   // - expoGo config matches dev server format
