@@ -152,8 +152,16 @@ export default function CoverScreen() {
           <SakuraSvg color={theme.accent} size={18} />
         </View>
 
-        {/* Spacer */}
-        <View style={styles.titleSpacer} />
+        {/* Title block */}
+        <View style={styles.titleBlock}>
+          <Text style={[styles.titleMain, { color: textColor }]}>Neko Notebook</Text>
+          <Text style={[styles.titleJa, { color: theme.accent }]}>ねこノート</Text>
+          <View style={[styles.editionPill, { borderColor: theme.accent }]}>
+            <SakuraSvg color={theme.accent} size={11} />
+            <Text style={[styles.editionText, { color: theme.accent }]}>SPRING EDITION</Text>
+            <SakuraSvg color={theme.accent} size={11} />
+          </View>
+        </View>
 
         {/* Cat mascot */}
         <View style={styles.catSection}>
@@ -245,9 +253,39 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
   },
-  titleSpacer: {
-    height: 24,
+  titleBlock: {
+    alignItems: 'center',
+    gap: 4,
     zIndex: 2,
+    paddingTop: 8,
+  },
+  titleMain: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 38,
+    fontStyle: 'italic',
+    letterSpacing: 0.5,
+    lineHeight: 44,
+  },
+  titleJa: {
+    fontFamily: Fonts.handwritten,
+    fontSize: 20,
+    letterSpacing: 3,
+  },
+  editionPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderRadius: BorderRadius.round,
+    paddingHorizontal: 14,
+    paddingVertical: 4,
+    marginTop: 4,
+  },
+  editionText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 11,
+    letterSpacing: 2.5,
   },
   catSection: {
     alignItems: 'center',

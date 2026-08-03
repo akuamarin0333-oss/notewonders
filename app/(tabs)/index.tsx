@@ -208,6 +208,7 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <View style={styles.headerLeft}>
             <Text style={styles.headerTitle}>Neko Notebook</Text>
+            <Text style={styles.headerJa}>ねこノート</Text>
           </View>
           <TouchableOpacity style={styles.settingsBtn} onPress={() => router.push('/(tabs)/settings')}>
             <Ionicons name="settings-outline" size={22} color={Colors.textLight} />
@@ -226,6 +227,37 @@ export default function HomeScreen() {
             <Text style={styles.greetingText}>{greeting}</Text>
             <SakuraSvg color={Colors.primary} size={13} />
           </View>
+        </View>
+
+        {/* Quick access row */}
+        <View style={styles.quickRow}>
+          <TouchableOpacity
+            style={[styles.quickCard, Shadow.small]}
+            onPress={() => router.push('/(tabs)/pet')}
+            activeOpacity={0.82}
+          >
+            <Text style={styles.quickCardEmoji}>🐾</Text>
+            <Text style={styles.quickCardLabel}>なでなで</Text>
+            <Text style={styles.quickCardSub}>Pet a Cat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.quickCard, Shadow.small]}
+            onPress={() => router.push('/(tabs)/audio')}
+            activeOpacity={0.82}
+          >
+            <Text style={styles.quickCardEmoji}>🎙</Text>
+            <Text style={styles.quickCardLabel}>おとメモ</Text>
+            <Text style={styles.quickCardSub}>Audio Memo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.quickCard, Shadow.small]}
+            onPress={() => router.push('/(tabs)/calendar')}
+            activeOpacity={0.82}
+          >
+            <Text style={styles.quickCardEmoji}>🌸</Text>
+            <Text style={styles.quickCardLabel}>カレンダー</Text>
+            <Text style={styles.quickCardSub}>Calendar</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Notebook grid */}
@@ -486,6 +518,36 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: Colors.text,
     lineHeight: 21,
+  },
+  quickRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: Spacing.md,
+  },
+  quickCard: {
+    flex: 1,
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.lg,
+    padding: Spacing.sm,
+    alignItems: 'center',
+    gap: 3,
+    borderColor: Colors.border,
+    borderWidth: 1,
+    borderCurve: 'continuous',
+  },
+  quickCardEmoji: {
+    fontSize: 24,
+    lineHeight: 30,
+  },
+  quickCardLabel: {
+    fontFamily: Fonts.handwritten,
+    fontSize: 13,
+    color: Colors.text,
+  },
+  quickCardSub: {
+    fontFamily: Fonts.regular,
+    fontSize: 9,
+    color: Colors.textMuted,
   },
   grid: {
     flexDirection: 'row',
