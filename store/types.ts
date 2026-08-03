@@ -100,6 +100,8 @@ export interface AppSettings {
   fontStyle: FontStyle;
   springTheme: boolean;
   language: Language;
+  /** The user-customisable prefix of "○○ノート" (default: "ネコ") */
+  notebookName?: string;
 }
 
 export interface CalendarEntry {

@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors, BorderRadius } from '@/constants/Theme';
 import { Fonts } from '@/constants/Typography';
-import { useTranslation } from '@/constants/i18n';
 
 type TabIconProps = {
   name: keyof typeof Ionicons.glyphMap;
@@ -41,7 +40,7 @@ const tabStyles = StyleSheet.create({
     paddingBottom: 2,
     borderRadius: BorderRadius.sm,
     gap: 2,
-    minWidth: 48,
+    minWidth: 64,
   },
   iconWrapActive: {
     backgroundColor: '#FFF0F5',
@@ -57,7 +56,6 @@ const tabStyles = StyleSheet.create({
 
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
-  const t = useTranslation();
 
   return (
     <Tabs
@@ -80,7 +78,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon name="home" focused={focused} label={t.tabHome} />
+            <TabIcon name="home" focused={focused} label="ホーム" />
           ),
         }}
       />
@@ -88,15 +86,7 @@ export default function TabsLayout() {
         name="calendar"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon name="calendar-outline" focused={focused} label={t.tabCalendar} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="favorites"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name="star-outline" focused={focused} label={t.tabFavorites} />
+            <TabIcon name="calendar-outline" focused={focused} label="カレンダー" />
           ),
         }}
       />
@@ -104,17 +94,13 @@ export default function TabsLayout() {
         name="settings"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon name="settings-outline" focused={focused} label={t.tabSettings} />
+            <TabIcon name="settings-outline" focused={focused} label="設定" />
           ),
         }}
       />
-      {/* Hidden tabs — keep routes but don't show in tab bar */}
+      {/* favorites is kept as a route but hidden from tab bar */}
       <Tabs.Screen
-        name="pet"
-        options={{ href: null }}
-      />
-      <Tabs.Screen
-        name="audio"
+        name="favorites"
         options={{ href: null }}
       />
     </Tabs>

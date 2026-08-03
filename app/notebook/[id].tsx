@@ -808,8 +808,12 @@ export default function NotebookPageView() {
                     },
                   ]}
                 >
-                  {/* Page content: title + date + text input */}
+                  {/* Page content: date → title → body text (top to bottom) */}
                   <View style={styles.leftPageContent}>
+                    {/* 1. Date */}
+                    <Text style={[styles.pageDate, { color: pageTheme.dateColor }]}>{pageDate}</Text>
+
+                    {/* 2. Title */}
                     <TextInput
                       style={[styles.pageTitle, { color: pageTheme.dateColor }]}
                       placeholder="タイトル..."
@@ -821,9 +825,8 @@ export default function NotebookPageView() {
                       numberOfLines={2}
                       scrollEnabled={false}
                     />
-                    <Text style={[styles.pageDate, { color: pageTheme.dateColor }]}>{pageDate}</Text>
 
-                    {/* Inline text on ruled lines — no border, handwriting style */}
+                    {/* 3. Body text on ruled lines — no border, handwriting style */}
                     <TextInput
                       style={[
                         styles.pageContent,

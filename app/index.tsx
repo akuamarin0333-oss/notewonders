@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Animated,
   useWindowDimensions,
+  TextInput,
+  Pressable,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
@@ -24,34 +26,33 @@ const THEMES: {
   bg: string;
   accent: string;
 }[] = [
-  { key: 'spring', label: 'Spring', labelJa: 'はる', bg: '#FADADD', accent: '#D45B7A' },
-  { key: 'fluffy', label: 'Fluffy', labelJa: 'ふわふわ', bg: '#F5F0EB', accent: '#F9A8C9' },
-  { key: 'leather', label: 'Leather', labelJa: 'レザー', bg: '#8B6340', accent: '#C4956A' },
-  { key: 'blue', label: 'Blue', labelJa: 'ブルー', bg: '#A8D8EA', accent: '#4A90C4' },
+  { key: 'blue',    label: 'Blue',   labelJa: 'ブルー',     bg: '#A8D8EA', accent: '#4A90C4' },
+  { key: 'fluffy',  label: 'Fluffy', labelJa: 'ふわふわ',   bg: '#F5F0EB', accent: '#F9A8C9' },
+  { key: 'spring',  label: 'Spring', labelJa: 'はる',       bg: '#FADADD', accent: '#D45B7A' },
+  { key: 'leather', label: 'Leather',labelJa: 'レザー',     bg: '#8B6340', accent: '#C4956A' },
 ];
 
-// Cover background colors for the main cover display
 const COVER_BG: Record<CoverTheme, string> = {
   leather: '#8B6340',
-  fluffy: '#F5F0EB',
-  spring: '#FADADD',
-  blue: '#A8D8EA',
+  fluffy:  '#F5F0EB',
+  spring:  '#FADADD',
+  blue:    '#A8D8EA',
 };
 
 const COVER_IMAGES: Record<CoverTheme, number> = {
   leather: require('@/assets/cover_leather_new.png'),
-  fluffy: require('@/assets/cover_fluffy_new.png'),
-  spring: require('@/assets/cover_spring_new.png'),
-  blue: require('@/assets/cover_blue_new.png'),
+  fluffy:  require('@/assets/cover_fluffy_new.png'),
+  spring:  require('@/assets/cover_spring_new.png'),
+  blue:    require('@/assets/cover_blue_new.png'),
 };
 
 function PawSvg({ color, size = 22 }: { color: string; size?: number }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 32 32">
-      <Ellipse cx={16} cy={22} rx={7} ry={5.5} fill={color} />
-      <Circle cx={8.5} cy={13.5} r={3.5} fill={color} />
-      <Circle cx={16} cy={11} r={3.5} fill={color} />
-      <Circle cx={23.5} cy={13.5} r={3.5} fill={color} />
+      <Ellipse cx={16} cy={22} rx={7}   ry={5.5} fill={color} />
+      <Circle  cx={8.5} cy={13.5} r={3.5} fill={color} />
+      <Circle  cx={16}  cy={11}   r={3.5} fill={color} />
+      <Circle  cx={23.5} cy={13.5} r={3.5} fill={color} />
       <Ellipse cx={12} cy={22} rx={1.8} ry={2.2} fill="rgba(255,255,255,0.45)" />
       <Ellipse cx={16} cy={24} rx={1.8} ry={2.2} fill="rgba(255,255,255,0.45)" />
       <Ellipse cx={20} cy={22} rx={1.8} ry={2.2} fill="rgba(255,255,255,0.45)" />
@@ -71,37 +72,70 @@ function SakuraSvg({ color = '#FFB7C5', size = 14 }: { color?: string; size?: nu
   );
 }
 
+function CloverSvg({ color = '#7DBF7A', size = 16 }: { color?: string; size?: number }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 32 32">
+      <Circle cx={10} cy={10} r={5.5} fill={color} opacity={0.85} />
+      <Circle cx={22} cy={10} r={5.5} fill={color} opacity={0.85} />
+      <Circle cx={10} cy={22} r={5.5} fill={color} opacity={0.85} />
+      <Circle cx={22} cy={22} r={5.5} fill={color} opacity={0.85} />
+      <Path d="M16 16 L16 30" stroke={color} strokeWidth={2.5} strokeLinecap="round" />
+    </Svg>
+  );
+}
+
 export default function CoverScreen() {
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
   const { settings, updateSettings } = useAppStore();
   const [selectedTheme, setSelectedTheme] = useState<CoverTheme>(settings.coverTheme);
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const openAnim = useRef(new Animated.Value(0)).current;
 
-  const theme = THEMES.find((t) => t.key === selectedTheme) ?? THEMES[1];
-  const isLeather = selectedTheme === 'leather';
-  const textColor = isLeather ? '#FFF5EB' : Colors.text;
+  // Editable notebook name — "ネコ" part is editable
+  const [notebookPrefix, setNotebookPrefix] = useState(settings.notebookName ?? 'ネコ');
+  const [editingName, setEditingName] = useState(false);
+  const nameInputRef = useRef<TextInput>(null);
+
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const openAnim  = useRef(new Animated.Value(0)).current;
+
+  const theme      = THEMES.find((t) => t.key === selectedTheme) ?? THEMES[1];
+  const isLeather  = selectedTheme === 'leather';
+  const textColor  = isLeather ? '#FFF5EB' : Colors.text;
   const mutedColor = isLeather ? 'rgba(255,245,235,0.6)' : Colors.textLight;
-  const bgColor = COVER_BG[selectedTheme];
+  const bgColor    = COVER_BG[selectedTheme];
 
   const handleTap = useCallback(() => {
-    updateSettings({ coverTheme: selectedTheme });
+    updateSettings({ coverTheme: selectedTheme, notebookName: notebookPrefix });
     Animated.sequence([
       Animated.timing(scaleAnim, { toValue: 0.97, duration: 100, useNativeDriver: true }),
-      Animated.timing(scaleAnim, { toValue: 1.02, duration: 80, useNativeDriver: true }),
-      Animated.timing(openAnim, { toValue: 1, duration: 480, useNativeDriver: true }),
+      Animated.timing(scaleAnim, { toValue: 1.02, duration: 80,  useNativeDriver: true }),
+      Animated.timing(openAnim,  { toValue: 1,    duration: 480, useNativeDriver: true }),
     ]).start(() => {
       router.replace('/(tabs)');
     });
-  }, [selectedTheme, updateSettings, scaleAnim, openAnim]);
+  }, [selectedTheme, notebookPrefix, updateSettings, scaleAnim, openAnim]);
 
   const handleSelectTheme = useCallback((t: CoverTheme) => {
     setSelectedTheme(t);
     updateSettings({ coverTheme: t });
   }, [updateSettings]);
 
-  const coverOpacity = openAnim.interpolate({ inputRange: [0, 0.75, 1], outputRange: [1, 1, 0] });
+  const handleNamePress = useCallback(() => {
+    setEditingName(true);
+    setTimeout(() => nameInputRef.current?.focus(), 50);
+  }, []);
+
+  const handleNameBlur = useCallback(() => {
+    setEditingName(false);
+    const trimmed = notebookPrefix.trim() || 'ネコ';
+    setNotebookPrefix(trimmed);
+    updateSettings({ notebookName: trimmed });
+  }, [notebookPrefix, updateSettings]);
+
+  const coverOpacity = openAnim.interpolate({
+    inputRange:  [0, 0.75, 1],
+    outputRange: [1, 1,    0],
+  });
   const coverScale = Animated.multiply(
     scaleAnim,
     openAnim.interpolate({ inputRange: [0, 1], outputRange: [1, 1.06] })
@@ -118,17 +152,17 @@ export default function CoverScreen() {
         style={[
           styles.coverContainer,
           {
-            opacity: coverOpacity,
-            transform: [{ scale: coverScale }],
-            paddingTop: insets.top + 10,
-            paddingBottom: insets.bottom + 10,
-            minHeight: height,
+            opacity:         coverOpacity,
+            transform:       [{ scale: coverScale }],
+            paddingTop:      insets.top + 10,
+            paddingBottom:   insets.bottom + 10,
+            minHeight:       height,
             backgroundColor: bgColor,
           },
         ]}
       >
         {/* Leather texture lines */}
-        {isLeather && [0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+        {isLeather && [0,1,2,3,4,5,6,7].map((i) => (
           <View key={i} style={[styles.leatherLine, { top: 60 + i * 60 }]} />
         ))}
 
@@ -141,7 +175,7 @@ export default function CoverScreen() {
           ]}
         />
 
-        {/* Scattered sakura decorations */}
+        {/* Scattered decorations */}
         <View style={[styles.decor, { top: insets.top + 22, left: 28 }]} pointerEvents="none">
           <SakuraSvg color={theme.accent} size={16} />
         </View>
@@ -151,11 +185,48 @@ export default function CoverScreen() {
         <View style={[styles.decor, { top: insets.top + 55, right: 22 }]} pointerEvents="none">
           <SakuraSvg color={theme.accent} size={18} />
         </View>
+        <View style={[styles.decor, { top: insets.top + 45, left: 52 }]} pointerEvents="none">
+          <CloverSvg color={isLeather ? 'rgba(255,245,235,0.5)' : '#7DBF7A'} size={14} />
+        </View>
+        <View style={[styles.decor, { top: insets.top + 22, left: 120 }]} pointerEvents="none">
+          <CloverSvg color={isLeather ? 'rgba(255,245,235,0.5)' : '#7DBF7A'} size={10} />
+        </View>
 
-        {/* Title block */}
+        {/* ─── Title block with editable name ─── */}
         <View style={styles.titleBlock}>
-          <Text style={[styles.titleMain, { color: textColor }]}>Neko Notebook</Text>
-          <Text style={[styles.titleJa, { color: theme.accent }]}>ねこノート</Text>
+          {/* Tappable title: "○○ノート" — tap to edit the prefix */}
+          <Pressable onPress={handleNamePress} style={styles.titlePressable}>
+            {editingName ? (
+              <View style={styles.editRow}>
+                <TextInput
+                  ref={nameInputRef}
+                  value={notebookPrefix}
+                  onChangeText={setNotebookPrefix}
+                  onBlur={handleNameBlur}
+                  style={[
+                    styles.titleInput,
+                    { color: textColor, borderBottomColor: theme.accent },
+                  ]}
+                  maxLength={8}
+                  autoFocus
+                  selectTextOnFocus
+                  returnKeyType="done"
+                  onSubmitEditing={handleNameBlur}
+                />
+                <Text style={[styles.titleMain, { color: textColor }]}>ノート</Text>
+              </View>
+            ) : (
+              <View style={styles.editRow}>
+                <Text style={[styles.titleMain, { color: textColor }]}>
+                  {notebookPrefix}
+                </Text>
+                <Text style={[styles.titleMain, { color: textColor }]}>ノート</Text>
+                <View style={[styles.editHint, { borderColor: theme.accent }]}>
+                  <Text style={[styles.editHintText, { color: theme.accent }]}>編集</Text>
+                </View>
+              </View>
+            )}
+          </Pressable>
           <View style={[styles.editionPill, { borderColor: theme.accent }]}>
             <SakuraSvg color={theme.accent} size={11} />
             <Text style={[styles.editionText, { color: theme.accent }]}>SPRING EDITION</Text>
@@ -178,7 +249,7 @@ export default function CoverScreen() {
           <PawSvg color={theme.accent} size={20} />
         </TouchableOpacity>
 
-        {/* カバーをえらぶ section */}
+        {/* Cover picker section */}
         <View style={styles.themeSection}>
           <Text style={[styles.themeSectionLabel, { color: mutedColor }]}>カバーをえらぶ</Text>
           <View style={styles.themeRow}>
@@ -197,7 +268,6 @@ export default function CoverScreen() {
                       : { borderColor: 'rgba(92,74,74,0.2)' },
                   ]}
                 >
-                  {/* Cover image thumbnail */}
                   <Image
                     source={COVER_IMAGES[t.key]}
                     style={StyleSheet.absoluteFillObject}
@@ -255,21 +325,55 @@ const styles = StyleSheet.create({
   },
   titleBlock: {
     alignItems: 'center',
-    gap: 4,
+    gap: 6,
     zIndex: 2,
     paddingTop: 8,
+  },
+  titlePressable: {
+    alignItems: 'center',
+  },
+  editRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 0,
   },
   titleMain: {
     fontFamily: Fonts.handwrittenBold,
     fontSize: 38,
     fontStyle: 'italic',
     letterSpacing: 0.5,
-    lineHeight: 44,
+    lineHeight: 48,
   },
-  titleJa: {
-    fontFamily: Fonts.handwritten,
-    fontSize: 20,
-    letterSpacing: 3,
+  titleInput: {
+    fontFamily: Fonts.handwrittenBold,
+    fontSize: 38,
+    fontStyle: 'italic',
+    letterSpacing: 0.5,
+    lineHeight: 48,
+    borderBottomWidth: 2,
+    paddingBottom: 2,
+    minWidth: 60,
+    maxWidth: 180,
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+    // Remove default web outline
+    outlineWidth: 0,
+    outlineStyle: 'none',
+    outline: 'none',
+  } as object,
+  editHint: {
+    marginLeft: 8,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderRadius: BorderRadius.sm,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginTop: 4,
+  },
+  editHintText: {
+    fontSize: 10,
+    fontFamily: Fonts.regular,
+    letterSpacing: 1,
   },
   editionPill: {
     flexDirection: 'row',
@@ -280,7 +384,7 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.round,
     paddingHorizontal: 14,
     paddingVertical: 4,
-    marginTop: 4,
+    marginTop: 2,
   },
   editionText: {
     fontFamily: Fonts.semiBold,
@@ -331,8 +435,8 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   themeChip: {
-    width: 56,
-    height: 56,
+    width: 60,
+    height: 60,
     borderRadius: BorderRadius.md,
     borderWidth: 2,
     overflow: 'hidden',
@@ -342,15 +446,15 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   themeChipSelected: {
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset:  { width: 0, height: 2 },
     shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 4,
+    shadowRadius:  6,
+    elevation:     4,
   },
   themeChipCheck: {
     position: 'absolute',
     bottom: 3,
-    right: 3,
+    right:  3,
   },
   themeChipLabel: {
     fontFamily: Fonts.regular,
