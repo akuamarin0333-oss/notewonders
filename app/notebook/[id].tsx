@@ -113,6 +113,15 @@ const PAGE_THEMES: Record<CoverTheme, PageTheme> = {
   },
 };
 
+// ─── Theme → notebook background image map ──────────────────────────────────
+
+const NOTEBOOK_BG_IMAGES: Record<CoverTheme, number> = {
+  fluffy: require('@/assets/notebook_bg_brown.png') as number,
+  leather: require('@/assets/notebook_bg_blue.png') as number,
+  spring: require('@/assets/notebook_bg_pink.png') as number,
+  blue: require('@/assets/notebook_bg_blue.png') as number,
+};
+
 // ─── Masking tape decoration ──────────────────────────────────────────────────
 
 function MaskingTape({ width = 76, color = 'rgba(249,168,201,0.72)' }: { width?: number; color?: string }) {
@@ -679,27 +688,13 @@ export default function NotebookPageView() {
 
   // ─── Render ──────────────────────────────────────────────────────────────────
 
-  const bgColor = notebook.coverTheme === 'blue' ? '#4A90C4' : '#C8A882';
+  const notebookBgSource = NOTEBOOK_BG_IMAGES[notebook.coverTheme ?? 'fluffy'];
+
+  // Theme-based UI colors for toolbar/header (derived from theme)
+  const bgColor = notebook.coverTheme === 'blue' ? '#3A6E9A' : '#C8A882';
 
   return (
     <View style={[styles.root, { backgroundColor: bgColor }]}>
-      {/* Wooden table / fabric texture background */}
-      <View style={StyleSheet.absoluteFillObject}>
-        {/* Subtle wood grain lines */}
-        {Array.from({ length: 8 }).map((_, i) => (
-          <View
-            key={i}
-            style={{
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              top: 60 + i * 80,
-              height: 1,
-              backgroundColor: 'rgba(160,120,80,0.18)',
-            }}
-          />
-        ))}
-      </View>
 
       {/* Top stamp bar */}
       <View style={[styles.topBar, { paddingTop: insets.top + 6 }]}>
@@ -782,63 +777,37 @@ export default function NotebookPageView() {
               },
             ]}
           >
-            {/* Real book spread */}
+            {/* Notebook spread with background image */}
             <View
               style={[
                 styles.bookOuter,
                 {
                   width: spreadWidth,
                   height: spreadHeight,
-                  shadowColor: '#2A1A0A',
-                  shadowOffset: { width: 0, height: 8 },
-                  shadowOpacity: 0.45,
-                  shadowRadius: 18,
-                  elevation: 16,
+                  backgroundColor: 'transparent',
+                  overflow: 'hidden',
                 },
               ]}
             >
-              {/* Cover edge - top strip */}
-              <View
-                style={{
-                  height: 8,
-                  backgroundColor: pageTheme.coverEdgeColor,
-                  borderTopLeftRadius: 6,
-                  borderTopRightRadius: 6,
-                }}
+              {/* Background image fills entire spread area */}
+              <Image
+                source={notebookBgSource}
+                style={StyleSheet.absoluteFillObject}
+                contentFit="fill"
+                priority="high"
               />
-
-              {/* Pages area */}
+              {/* Pages area — transparent over background image */}
               <View style={{ flex: 1, flexDirection: 'row' }}>
-                {/* Left page — writing */}
+                {/* Left page — writing (transparent, image provides bg) */}
                 <View
                   style={[
                     styles.leftPage,
                     {
                       width: leftW,
-                      backgroundColor: pageTheme.leftBg,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                 >
-                  {/* Ruled lines drawn as SVG below content */}
-                  <RuledLines
-                    width={leftW}
-                    height={spreadHeight - 16}
-                    color={pageTheme.ruleLine}
-                    startY={PAGE_TOP_PADDING + HEADER_HEIGHT}
-                  />
-
-                  {/* Left red margin line */}
-                  <View
-                    style={{
-                      position: 'absolute',
-                      left: 28,
-                      top: PAGE_TOP_PADDING + HEADER_HEIGHT - 6,
-                      bottom: 8,
-                      width: 1,
-                      backgroundColor: 'rgba(230,100,100,0.3)',
-                    }}
-                  />
-
                   {/* Page content: title + date + text input */}
                   <View style={styles.leftPageContent}>
                     <TextInput
@@ -861,7 +830,6 @@ export default function NotebookPageView() {
                         {
                           color: Colors.text,
                           lineHeight: LINE_SPACING,
-                          // Offset text to sit ON the rule line (baseline)
                           paddingTop: LINE_SPACING - 18,
                         },
                       ]}
@@ -874,45 +842,18 @@ export default function NotebookPageView() {
                       scrollEnabled={false}
                     />
                   </View>
-
-                  {renderLeftPageDecors()}
                 </View>
 
-                {/* Spine — realistic book spine */}
-                <View style={[styles.spine, { backgroundColor: pageTheme.spineColor }]}>
-                  {/* Spine highlight */}
-                  <View
-                    style={{
-                      position: 'absolute',
-                      left: 2,
-                      top: 0,
-                      bottom: 0,
-                      width: 3,
-                      backgroundColor: 'rgba(255,255,255,0.12)',
-                    }}
-                  />
-                  {/* Center shadow line */}
-                  <View style={styles.spineInner} />
-                  {/* Right shadow */}
-                  <View
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      width: 4,
-                      backgroundColor: 'rgba(0,0,0,0.25)',
-                    }}
-                  />
-                </View>
+                {/* Spine spacer — transparent, image provides spine visual */}
+                <View style={{ width: SPINE_W, backgroundColor: 'transparent' }} />
 
-                {/* Right page — photos + stickers */}
+                {/* Right page — photos + stickers (transparent, image provides bg) */}
                 <View
                   style={[
                     styles.rightPage,
                     {
                       width: rightW,
-                      backgroundColor: pageTheme.rightBg,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                   onLayout={(e) =>
@@ -922,24 +863,6 @@ export default function NotebookPageView() {
                     })
                   }
                 >
-                  {/* Subtle dot grid on right page */}
-                  <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
-                    <Svg width={rightW} height={spreadHeight - 16} style={StyleSheet.absoluteFillObject}>
-                      {Array.from({ length: Math.ceil((spreadHeight - 16) / 18) }).map((_, row) =>
-                        Array.from({ length: Math.ceil(rightW / 18) }).map((__, col) => (
-                          <Circle
-                            key={`${row}-${col}`}
-                            cx={8 + col * 18}
-                            cy={8 + row * 18}
-                            r={0.9}
-                            fill={pageTheme.ruleLine}
-                            opacity={0.5}
-                          />
-                        ))
-                      )}
-                    </Svg>
-                  </View>
-
                   {/* Polaroid photo items */}
                   {photos.map((photo) => (
                     <PolaroidItem
@@ -966,7 +889,7 @@ export default function NotebookPageView() {
                     />
                   </View>
 
-                  {/* Theme-specific decorations */}
+                  {/* Theme-specific decorations on top of image */}
                   {renderRightPageDecors()}
 
                   {/* Sticker pack button */}
@@ -979,16 +902,6 @@ export default function NotebookPageView() {
                   </TouchableOpacity>
                 </View>
               </View>
-
-              {/* Cover edge - bottom strip */}
-              <View
-                style={{
-                  height: 8,
-                  backgroundColor: pageTheme.coverEdgeColor,
-                  borderBottomLeftRadius: 6,
-                  borderBottomRightRadius: 6,
-                }}
-              />
             </View>
           </Animated.View>
 
@@ -1188,10 +1101,12 @@ const styles = StyleSheet.create({
   },
   leftPageContent: {
     position: 'absolute',
-    top: PAGE_TOP_PADDING,
-    left: 30, // after margin line
+    // Offset to sit within the drawn page area of the background image
+    // Image has ~14px cover border + ~10px edge strip at top
+    top: 28,
+    left: 32, // after the margin line drawn in background image
     right: 8,
-    bottom: 8,
+    bottom: 20,
     zIndex: 2,
   },
   pageTitle: {
