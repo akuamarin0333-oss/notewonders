@@ -15,7 +15,7 @@ import { Colors } from '@/constants/Theme';
 //     bundle each asset individually.  Do NOT compute keys dynamically.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const STICKER_IMAGES: Record<string, ReturnType<typeof require>> = {
+export const STICKER_IMAGES: Record<string, number> = {
   // きもち + アクション
   sticker_smiley_green:     require('@/assets/sticker_smiley_green.png'),
   sticker_music_notes:      require('@/assets/sticker_music_notes.png'),

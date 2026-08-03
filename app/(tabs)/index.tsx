@@ -239,7 +239,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/(tabs)/calendar')}
             activeOpacity={0.82}
           >
-            <Text style={styles.quickCardEmoji}>🌸</Text>
+            <Ionicons name="calendar-outline" size={24} color={Colors.primary} />
             <Text style={styles.quickCardLabel}>カレンダー</Text>
             <Text style={styles.quickCardSub}>Calendar</Text>
           </TouchableOpacity>
@@ -248,7 +248,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/(tabs)/favorites')}
             activeOpacity={0.82}
           >
-            <Text style={styles.quickCardEmoji}>⭐</Text>
+            <Ionicons name="star-outline" size={24} color={Colors.primary} />
             <Text style={styles.quickCardLabel}>お気に入り</Text>
             <Text style={styles.quickCardSub}>{favCount} pages</Text>
           </TouchableOpacity>
@@ -520,10 +520,6 @@ const styles = StyleSheet.create({
     borderColor:     Colors.border,
     borderWidth:     1,
     borderCurve:     'continuous',
-  },
-  quickCardEmoji: {
-    fontSize:   24,
-    lineHeight: 30,
   },
   quickCardLabel: {
     fontFamily: Fonts.handwritten,

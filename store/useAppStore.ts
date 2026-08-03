@@ -7,14 +7,13 @@ import type {
   AudioMemo,
   AppSettings,
   CoverTheme,
-  FontStyle,
-  Language,
   Sticker,
 } from './types';
 
 interface AppState {
   notebooks: Notebook[];
   pages: Page[];
+  /** Kept for backup/restore compatibility; no longer actively managed via actions */
   audioMemos: AudioMemo[];
   settings: AppSettings;
 
@@ -31,11 +30,6 @@ interface AppState {
   addSticker: (pageId: string, sticker: Sticker) => void;
   updateSticker: (pageId: string, stickerId: string, updates: Partial<Sticker>) => void;
   removeSticker: (pageId: string, stickerId: string) => void;
-
-  // Audio actions
-  addAudioMemo: (memo: Omit<AudioMemo, 'id' | 'createdAt'>) => AudioMemo;
-  deleteAudioMemo: (id: string) => void;
-  updateAudioMemo: (id: string, updates: Partial<AudioMemo>) => void;
 
   // Settings actions
   updateSettings: (updates: Partial<AppSettings>) => void;
@@ -100,7 +94,6 @@ export const useAppStore = create<AppState>()(
           updatedAt: now,
         };
         set((s) => ({ pages: [...s.pages, page] }));
-        // Update notebook lastEdited
         get().updateNotebook(notebookId, {});
         return page;
       },
@@ -162,26 +155,6 @@ export const useAppStore = create<AppState>()(
                 }
               : p
           ),
-        }));
-      },
-
-      addAudioMemo: (memo) => {
-        const newMemo: AudioMemo = {
-          ...memo,
-          id: generateId(),
-          createdAt: Date.now(),
-        };
-        set((s) => ({ audioMemos: [...s.audioMemos, newMemo] }));
-        return newMemo;
-      },
-
-      deleteAudioMemo: (id) => {
-        set((s) => ({ audioMemos: s.audioMemos.filter((m) => m.id !== id) }));
-      },
-
-      updateAudioMemo: (id, updates) => {
-        set((s) => ({
-          audioMemos: s.audioMemos.map((m) => (m.id === id ? { ...m, ...updates } : m)),
         }));
       },
 
