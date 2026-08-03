@@ -116,10 +116,10 @@ const PAGE_THEMES: Record<CoverTheme, PageTheme> = {
 // ─── Theme → notebook background image map ──────────────────────────────────
 
 const NOTEBOOK_BG_IMAGES: Record<CoverTheme, number> = {
-  fluffy: require('@/assets/notebook_bg_brown.png') as number,
-  leather: require('@/assets/notebook_bg_blue.png') as number,
-  spring: require('@/assets/notebook_bg_pink.png') as number,
-  blue: require('@/assets/notebook_bg_blue.png') as number,
+  blue:    require('@/assets/bg_notebook_blue.png') as number,
+  fluffy:  require('@/assets/bg_notebook_cream.png') as number,
+  spring:  require('@/assets/bg_notebook_pink.png') as number,
+  leather: require('@/assets/bg_notebook_brown.png') as number,
 };
 
 // ─── Masking tape decoration ──────────────────────────────────────────────────
@@ -691,7 +691,13 @@ export default function NotebookPageView() {
   const notebookBgSource = NOTEBOOK_BG_IMAGES[notebook.coverTheme ?? 'fluffy'];
 
   // Theme-based UI colors for toolbar/header (derived from theme)
-  const bgColor = notebook.coverTheme === 'blue' ? '#3A6E9A' : '#C8A882';
+  const BG_COLORS: Record<CoverTheme, string> = {
+    blue:    '#3A6E9A',
+    fluffy:  '#C8A882',
+    spring:  '#C46080',
+    leather: '#5C3A1E',
+  };
+  const bgColor = BG_COLORS[notebook.coverTheme ?? 'fluffy'];
 
   return (
     <View style={[styles.root, { backgroundColor: bgColor }]}>
